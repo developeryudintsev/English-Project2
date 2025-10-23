@@ -54,7 +54,7 @@ export const App = () => {
                     });
                 });
 
-                setStar(completed); // 👈 можно completed или ratio
+                setStar(completed);
             }
         };
 
