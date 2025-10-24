@@ -206,33 +206,42 @@ export const AppRoutes = () => {
 
                                             <div style={cardStyle}>{btn.to === '/app' ?
                                                     <div>
-                                                        <Avatar
+                                                        <img
                                                             src={cat}
-                                                            sx={{
-                                                                marginLeft: '20%',
-                                                                marginTop: '-25%',
-                                                                border: '2px solid white',
-                                                                width: 100,
-                                                                height: 100,
+                                                            style={{
+                                                                borderRadius: "12px",
+                                                                width: "250px" ,
+                                                                height: "350px",
                                                             }}
                                                         />
-                                                        {btn.label}
+                                                        <span style={{
+                                                            fontFamily: 'sans-serif',
+                                                        }}>
+                                                            {btn.label}
+                                                        </span>
                                                     </div>
                                                 : btn.to == '/achievements' ?
                                                     <div style={{marginTop: '25%',}}>
-                                                        {btn.label}
                                                         <img
                                                             alt="achievements"
                                                             src={cubok}
                                                             style={{
-                                                                marginTop: '0%',
+                                                                marginTop: '-40%',
                                                                 width: 200,
                                                                 height: 240,
                                                             }}
                                                         />
-
+                                                        <p style={{
+                                                            fontFamily: 'sans-serif',
+                                                        }}>
+                                                            {btn.label}
+                                                        </p>
                                                     </div>
-                                                    : btn.label}</div>
+                                                    : <p style={{
+                                                        fontFamily: 'sans-serif',
+                                                    }}>
+                                                        {btn.label}
+                                                    </p>}</div>
                                         </Link>
                                     ))}
                             </div>

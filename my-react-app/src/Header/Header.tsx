@@ -55,7 +55,6 @@ export const Header = (props: HeaderType) => {
                         await setRatingMap(computed);
                         setRating(computed);
                     } else {
-                        // no data and no rating — keep rating null (will show loading)
                         setRating(null);
                     }
                 }
@@ -192,9 +191,6 @@ export const Header = (props: HeaderType) => {
                                     >
                                         (v0.7)
                                     </Typography>
-
-
-
                                     <Modal open={modalToggle} onClose={() => setModalToggle(false)}>
                                         <Box
                                             sx={{
