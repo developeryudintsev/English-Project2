@@ -9,6 +9,7 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import cat from "./picture/cat.JPG";
+import cat2 from "./picture/cat2.JPG";
 import cubok from "./picture/klipartz.com.png";
 import {useLocation} from 'react-router-dom';
 
@@ -27,7 +28,7 @@ const cardStyle: React.CSSProperties = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "15px",
+    // padding: "15px",
 };
 
 const Placeholder = ({title}: { title: string }) => (
@@ -207,18 +208,20 @@ export const AppRoutes = () => {
                                             <div style={cardStyle}>{btn.to === '/app' ?
                                                     <div>
                                                         <img
-                                                            src={cat}
+                                                            src={cat2}
                                                             style={{
                                                                 borderRadius: "12px",
                                                                 width: "250px" ,
-                                                                height: "350px",
+                                                                height: "400px",
+                                                                marginTop:'-5px'
                                                             }}
                                                         />
-                                                        <span style={{
+                                                        <p style={{
                                                             fontFamily: 'sans-serif',
+                                                            marginTop:'-50px'
                                                         }}>
                                                             {btn.label}
-                                                        </span>
+                                                        </p>
                                                     </div>
                                                 : btn.to == '/achievements' ?
                                                     <div style={{marginTop: '25%',}}>
@@ -237,11 +240,11 @@ export const AppRoutes = () => {
                                                             {btn.label}
                                                         </p>
                                                     </div>
-                                                    : <p style={{
+                                                    : <span style={{
                                                         fontFamily: 'sans-serif',
                                                     }}>
                                                         {btn.label}
-                                                    </p>}</div>
+                                                    </span>}</div>
                                         </Link>
                                     ))}
                             </div>
