@@ -61,7 +61,12 @@ const Placeholder = ({title}: { title: string }) => (
 );
 export const AppRoutes = () => {
     const location = useLocation();
-    console.log(location.pathname);
+    const [isHovered, setIsHovered] = useState(false);
+
+    const containerStyle = {
+        filter: isHovered ? 'brightness(1.1)' : 'brightness(1)',
+        transition: 'filter 0.3s ease',
+    };
     const [visibleCount, setVisibleCount] = useState<number>(4);
     const [currentIndex, setCurrentIndex] = useState(0);
     const MIN_VISIBLE = 1;
@@ -206,23 +211,27 @@ export const AppRoutes = () => {
                                         <Link key={index} to={btn.to} style={{textDecoration: "none"}}>
 
                                             <div style={cardStyle}>{btn.to === '/app' ?
-                                                    <div>
-                                                        <img
-                                                            src={cat2}
-                                                            style={{
-                                                                borderRadius: "12px",
-                                                                width: "250px" ,
-                                                                height: "400px",
-                                                                marginTop:'-5px'
-                                                            }}
-                                                        />
-                                                        <p style={{
-                                                            fontFamily: 'sans-serif',
-                                                            marginTop:'-50px'
-                                                        }}>
-                                                            {btn.label}
-                                                        </p>
-                                                    </div>
+                                                <div
+                                                    style={containerStyle}
+                                                    onMouseEnter={() => setIsHovered(true)}
+                                                    onMouseLeave={() => setIsHovered(false)}
+                                                >
+                                                    <img
+                                                        src={cat2}
+                                                        style={{
+                                                            borderRadius: "12px",
+                                                            width: "250px" ,
+                                                            height: "400px",
+                                                            marginTop:'-5px'
+                                                        }}
+                                                    />
+                                                    <p style={{
+                                                        fontFamily: 'sans-serif',
+                                                        marginTop:'-50px'
+                                                    }}>
+                                                        {btn.label}
+                                                    </p>
+                                                </div>
                                                 : btn.to == '/achievements' ?
                                                     <div style={{marginTop: '25%',}}>
                                                         <img
