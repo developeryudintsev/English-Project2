@@ -10,6 +10,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import cat from "./picture/cat.JPG";
 import cat2 from "./picture/cat2.jpg";
+import thems from "./picture/thems.jpg";
 import cubok from "./picture/klipartz.com.png";
 import {useLocation} from 'react-router-dom';
 
@@ -23,7 +24,8 @@ const cardStyle: React.CSSProperties = {
     flex: "0 0 auto",
     textAlign: "center",
     minWidth: "250px",
-    minHeight: "400px",
+    minHeight: "430px",
+    maxHeight: "430px",
     maxWidth: "250px",
     display: "flex",
     justifyContent: "center",
@@ -64,7 +66,7 @@ export const AppRoutes = () => {
     const [isHovered, setIsHovered] = useState(false);
 
     const containerStyle = {
-        filter: isHovered ? 'brightness(1.1)' : 'brightness(1)',
+        filter: isHovered ? 'brightness(1.2)' : 'brightness(1)',
         transition: 'filter 0.3s ease',
     };
     const [visibleCount, setVisibleCount] = useState<number>(4);
@@ -221,7 +223,7 @@ export const AppRoutes = () => {
                                                         style={{
                                                             borderRadius: "12px",
                                                             width: "250px" ,
-                                                            height: "400px",
+                                                            height: "430px",
                                                             marginTop:'-5px'
                                                         }}
                                                     />
@@ -249,9 +251,28 @@ export const AppRoutes = () => {
                                                             {btn.label}
                                                         </p>
                                                     </div>
-                                                    : <span style={{
-                                                        fontFamily: 'sans-serif',
-                                                    }}>
+                                                    : btn.to == '/themes' ?
+                                                        <div>
+                                                            <img
+                                                                src={thems}
+                                                                style={{
+                                                                    borderRadius: "12px",
+                                                                    width: "255px" ,
+                                                                    height: "434px",
+                                                                    marginTop:'15px'
+                                                                }}
+                                                            />
+                                                            <p style={{
+                                                                fontFamily: 'sans-serif',
+                                                                marginTop:'-50px',
+                                                                color:'black'
+                                                            }}>
+                                                                {btn.label}
+                                                            </p>
+                                                        </div>
+                                                        : <span style={{
+                                                            fontFamily: 'sans-serif',
+                                                        }}>
                                                         {btn.label}
                                                     </span>}</div>
                                         </Link>
