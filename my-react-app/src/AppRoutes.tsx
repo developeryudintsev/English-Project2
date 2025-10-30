@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import cat from "./picture/cat.JPG";
-import cat2 from "./picture/cat2.jpg";
+import cat3 from "./picture/cat3.jpg";
 import thems from "./picture/thems.jpg";
 import cubok from "./picture/klipartz.com.png";
 import {useLocation} from 'react-router-dom';
@@ -219,7 +219,7 @@ export const AppRoutes = () => {
                                                     onMouseLeave={() => setIsHovered(false)}
                                                 >
                                                     <img
-                                                        src={cat2}
+                                                        src={cat3}
                                                         style={{
                                                             borderRadius: "12px",
                                                             width: "250px" ,
