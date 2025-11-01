@@ -62,7 +62,7 @@ const Placeholder = ({title}: { title: string }) => (
 );
 export const AppRoutes = () => {
     const location = useLocation();
-    const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [hoveredIndex, setHoveredIndex] = useState<number|null>(null);
     const getCardStyle = (index: number): React.CSSProperties => {
         const isHovered = hoveredIndex === index;
         return {
