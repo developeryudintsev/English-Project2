@@ -1,4 +1,4 @@
-import {Link, Route, Routes} from "react-router-dom";
+import {Link, Route, Routes, useLocation} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {App} from "./App"
 import AppBar from '@mui/material/AppBar';
@@ -10,29 +10,28 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import cat from "./picture/cat.JPG";
 import cat3 from "./picture/cat3.jpg";
-import thems from "./picture/thems.jpg";
+import thems2 from "./picture/thems2.jpg";
 import cubok from "./picture/klipartz.com.png";
-import {useLocation} from 'react-router-dom';
 
-const cardStyle: React.CSSProperties = {
-    background: "#555",
-    color: "#FFF44F",
-    border: "2px solid black",
-    borderRadius: "12px",
-    cursor: "pointer",
-    fontSize: "18px",
-    flex: "0 0 auto",
-    textAlign: "center",
-    minWidth: "250px",
-    minHeight: "430px",
-    maxHeight: "430px",
-    maxWidth: "250px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    // padding: "15px",
-};
-
+// const cardStyle: React.CSSProperties = {
+//     background: "#555",
+//     color: "#FFF44F",
+//     border: "2px solid black",
+//     borderRadius: "12px",
+//     cursor: "pointer",
+//     fontSize: "18px",
+//     flex: "0 0 auto",
+//     textAlign: "center",
+//     minWidth: "250px",
+//     minHeight: "430px",
+//     maxHeight: "430px",
+//     maxWidth: "250px",
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     // padding: "15px",
+// };
+//  просмотри код и исправь где-то сдесь задана граница div которая урезает верх и низ карточек при наведении
 const Placeholder = ({title}: { title: string }) => (
     <div
         style={{
@@ -63,11 +62,26 @@ const Placeholder = ({title}: { title: string }) => (
 );
 export const AppRoutes = () => {
     const location = useLocation();
-    const [isHovered, setIsHovered] = useState(false);
-
-    const containerStyle = {
-        filter: isHovered ? 'brightness(1.2)' : 'brightness(1)',
-        transition: 'filter 0.3s ease',
+    const [hoveredIndex, setHoveredIndex] = useState(null);
+    const getCardStyle = (index: number): React.CSSProperties => {
+        const isHovered = hoveredIndex === index;
+        return {
+            background: "#555",
+            color: "#FFF44F",
+            border: "2px solid black",
+            borderRadius: "12px",
+            cursor: "pointer",
+            fontSize: "18px",
+            flex: "0 0 auto",
+            textAlign: "center",
+            minWidth: "250px",
+            minHeight: "430px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            transform: isHovered ? 'scale(1.15)' : 'scale(1)',
+            transition: 'transform 0.3s ease-in-out',
+        };
     };
     const [visibleCount, setVisibleCount] = useState<number>(4);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -206,80 +220,92 @@ export const AppRoutes = () => {
                             >
                                 {"<"}
                             </button>
-                            <div style={{display: "flex", gap: "20px", overflow: "hidden"}}>
+
+                            {/* ИСПРАВЛЕНИЕ: Удалено overflow: "hidden" */}
+                            <div style={{display: "flex", gap: "30px"}}>
                                 {buttons
                                     .slice(currentIndex, currentIndex + visibleCount)
                                     .map((btn, index) => (
                                         <Link key={index} to={btn.to} style={{textDecoration: "none"}}>
-
-                                            <div style={cardStyle}>{btn.to === '/app' ?
-                                                <div
-                                                    style={containerStyle}
-                                                    onMouseEnter={() => setIsHovered(true)}
-                                                    onMouseLeave={() => setIsHovered(false)}
-                                                >
-                                                    <img
-                                                        src={cat3}
-                                                        style={{
-                                                            borderRadius: "12px",
-                                                            width: "250px" ,
-                                                            height: "430px",
-                                                            marginTop:'-5px'
-                                                        }}
-                                                    />
-                                                    <p style={{
-                                                        fontFamily: 'sans-serif',
-                                                        marginTop:'-50px'
-                                                    }}>
-                                                        {btn.label}
-                                                    </p>
-                                                </div>
-                                                : btn.to == '/achievements' ?
-                                                    <div style={{marginTop: '25%',}}>
+                                            <div
+                                                style={getCardStyle(index)}
+                                                onMouseEnter={() => setHoveredIndex(index)}
+                                                onMouseLeave={() => setHoveredIndex(null)} // <-- Исправлена неполная строка
+                                            >
+                                                {btn.to === '/app' ?
+                                                    <div>
                                                         <img
-                                                            alt="achievements"
-                                                            src={cubok}
+                                                            src={cat3}
                                                             style={{
-                                                                marginTop: '-40%',
-                                                                width: 200,
-                                                                height: 240,
+                                                                borderRadius: "12px",
+                                                                width: "250px",
+                                                                height: "430px",
+                                                                marginTop: '-5px'
                                                             }}
                                                         />
                                                         <p style={{
                                                             fontFamily: 'sans-serif',
+                                                            fontWeight:900,
+                                                            width: "240px",
+                                                            marginTop: '-80px'
                                                         }}>
                                                             {btn.label}
                                                         </p>
                                                     </div>
-                                                    : btn.to == '/themes' ?
+                                                    : btn.to == '/achievements' ?
                                                         <div>
                                                             <img
-                                                                src={thems}
+                                                                alt="achievements"
+                                                                src={cubok}
                                                                 style={{
-                                                                    borderRadius: "12px",
-                                                                    width: "255px" ,
-                                                                    height: "434px",
-                                                                    marginTop:'15px'
+                                                                    marginTop: '-5%',
+                                                                    width: 200,
+                                                                    height: 240,
                                                                 }}
                                                             />
                                                             <p style={{
                                                                 fontFamily: 'sans-serif',
-                                                                marginTop:'-50px',
-                                                                color:'black'
+                                                                fontWeight:900,
+                                                                width: "240px",
                                                             }}>
                                                                 {btn.label}
                                                             </p>
                                                         </div>
-                                                        : <span style={{
-                                                            fontFamily: 'sans-serif',
-                                                        }}>
-                                                        {btn.label}
-                                                    </span>}</div>
+                                                        : btn.to == '/themes' ?
+                                                            <div >
+                                                                <img
+                                                                    src={thems2}
+                                                                    style={{
+                                                                        borderRadius: "12px",
+                                                                        border:'#FFF44F 1px solid',
+                                                                        width: "101%",
+                                                                        height: "433px",
+                                                                        marginTop: '-6px',
+                                                                        marginLeft: '-2px',
+                                                                    }}
+                                                                />
+                                                                <p style={{
+                                                                    fontFamily: 'sans-serif',
+                                                                    fontWeight:900,
+                                                                    width: "240px",
+                                                                    marginTop: '-80px',
+                                                                    marginLeft:'13px',
+                                                                    color: 'black'
+                                                                }}>
+                                                                    {btn.label}
+                                                                </p>
+                                                            </div>
+                                                            : <span style={{
+                                                                fontFamily: 'sans-serif',
+                                                                fontWeight:900,
+                                                                width: "240px",
+                                                            }}>{btn.label}</span>
+                                                }
+                                            </div>
                                         </Link>
                                     ))}
                             </div>
 
-                            {/* Правая стрелка */}
                             <button
                                 onClick={next}
                                 disabled={currentIndex >= buttons.length - visibleCount}
