@@ -12,26 +12,42 @@ import cat from "./picture/cat.JPG";
 import cat3 from "./picture/cat3.jpg";
 import thems2 from "./picture/thems2.jpg";
 import cubok from "./picture/klipartz.com.png";
+import {TopicsPage} from "./topics/TopicsPage";
+import {TopicDetailPage} from "./topics/TopicDetailPage";
 
-// const cardStyle: React.CSSProperties = {
-//     background: "#555",
-//     color: "#FFF44F",
-//     border: "2px solid black",
-//     borderRadius: "12px",
-//     cursor: "pointer",
-//     fontSize: "18px",
-//     flex: "0 0 auto",
-//     textAlign: "center",
-//     minWidth: "250px",
-//     minHeight: "430px",
-//     maxHeight: "430px",
-//     maxWidth: "250px",
-//     display: "flex",
-//     justifyContent: "center",
-//     alignItems: "center",
-//     // padding: "15px",
-// };
-//  просмотри код и исправь где-то сдесь задана граница div которая урезает верх и низ карточек при наведении
+export const topics = [
+    { label: "About myself", path: "about-myself" },
+    { label: "Morning routine", path: "morning-routine" },
+    { label: "Public transport", path: "public-transport" },
+    { label: "At a supermarket", path: "at-a-supermarket" },
+    { label: "Accidents at home", path: "accidents-at-home" },
+    { label: "At the department store", path: "at-the-department-store" },
+    { label: "Beauty Salon", path: "beauty-salon" },
+    { label: "Work", path: "work" },
+    { label: "At the university", path: "at-the-university" },
+    { label: "At a hotel", path: "at-a-hotel" },
+    { label: "Bad habits", path: "bad-habits" },
+    { label: "At a hospital", path: "at-a-hospital" },
+    { label: "At the airport", path: "at-the-airport" },
+    { label: "Friends", path: "friends" },
+    { label: "House Cleaning", path: "house-cleaning" },
+    { label: "Table manners", path: "table-manners" },
+    { label: "My room", path: "my-room" },
+    { label: "Why do you learn English?", path: "why-do-you-learn-english" },
+    { label: "My city", path: "my-city" },
+    { label: "Family problems", path: "family-problems" },
+    { label: "Weather", path: "weather" },
+    { label: "Sport", path: "sport" },
+    { label: "Animals are in danger", path: "animals-are-in-danger" },
+    { label: "Internet for and against", path: "internet-for-and-against" },
+    { label: "Hobby", path: "hobby" },
+    { label: "Fashion", path: "fashion" },
+    { label: "At the theatre/ cinema", path: "at-the-theatre-cinema" },
+    { label: "Generation gap", path: "generation-gap" },
+    { label: "Travelling", path: "travelling" },
+    { label: "In the army", path: "in-the-army" },
+];
+// export const topicsMap = Map(topics.map(topic => [topic.path, topic.label]));
 const Placeholder = ({title}: { title: string }) => (
     <div
         style={{
@@ -239,13 +255,14 @@ export const AppRoutes = () => {
                                                             style={{
                                                                 borderRadius: "12px",
                                                                 width: "250px",
-                                                                height: "430px",
-                                                                marginTop: '-5px'
+                                                                height: "434px",
+                                                                marginTop: '-1px'
                                                             }}
                                                         />
                                                         <p style={{
                                                             fontFamily: 'sans-serif',
                                                             fontWeight:900,
+                                                            fontSize:19,
                                                             width: "240px",
                                                             marginTop: '-80px'
                                                         }}>
@@ -266,6 +283,7 @@ export const AppRoutes = () => {
                                                             <p style={{
                                                                 fontFamily: 'sans-serif',
                                                                 fontWeight:900,
+                                                                fontSize:19,
                                                                 width: "240px",
                                                             }}>
                                                                 {btn.label}
@@ -287,6 +305,7 @@ export const AppRoutes = () => {
                                                                 <p style={{
                                                                     fontFamily: 'sans-serif',
                                                                     fontWeight:900,
+                                                                    fontSize:19,
                                                                     width: "240px",
                                                                     marginTop: '-80px',
                                                                     marginLeft:'13px',
@@ -298,7 +317,8 @@ export const AppRoutes = () => {
                                                             : <span style={{
                                                                 fontFamily: 'sans-serif',
                                                                 fontWeight:900,
-                                                                width: "240px",
+                                                                fontSize:19,
+                                                                width: "250px",
                                                             }}>{btn.label}</span>
                                                 }
                                             </div>
@@ -325,10 +345,8 @@ export const AppRoutes = () => {
                 />
 
                 <Route path="/app" element={<App/>}/>
-                <Route
-                    path="/themes"
-                    element={<Placeholder title="Тренажер по темам"/>}
-                />
+                <Route path="/themes" element={<TopicsPage/>} />
+                <Route path="/themes/:topicId" element={<TopicDetailPage/>} />
                 <Route path="/about" element={<Placeholder title="О нас "/>}/>
                 <Route
                     path="/achievements"
