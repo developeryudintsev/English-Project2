@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { topics } from '../AppRoutes';
-import thems2 from "../picture/thems2.jpg";
-
 
 export const TopicsPage = () => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -17,8 +15,8 @@ export const TopicsPage = () => {
             fontSize: "18px",
             flex: "0 0 auto",
             textAlign: "center",
-            minWidth: "250px",
-            minHeight: "430px",
+            minWidth: "160px",
+            minHeight: "50px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -37,25 +35,14 @@ export const TopicsPage = () => {
                         onMouseLeave={() => setHoveredIndex(null)}
                     >
                         <div>
-                            <img
-                                src={thems2}
-                                style={{
-                                    borderRadius: "12px",
-                                    border:'#FFF44F 1px solid',
-                                    width: "101%",
-                                    height: "433px",
-                                    marginTop: '-30px',
-                                    marginLeft: '-2px',
-                                }}
-                            />
                             <p style={{
                                 fontFamily: 'sans-serif',
                                 fontWeight:900,
-                                fontSize:19,
-                                width: "240px",
-                                marginTop: '-80px',
-                                marginLeft:'13px',
-                                color: 'black'
+                                fontSize:16,
+                                width: "160px",
+                                marginTop: '10px',
+                                marginLeft:'center',
+                                color: '#FFF44F',
                             }}>
                                 {topic.label}
                             </p>
