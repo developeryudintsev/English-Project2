@@ -275,7 +275,7 @@ export const AppRoutes = () => {
                                                                 alt="achievements"
                                                                 src={cubok}
                                                                 style={{
-                                                                    marginTop: '-5%',
+                                                                    marginTop: '15%',
                                                                     width: 200,
                                                                     height: 240,
                                                                 }}
@@ -285,6 +285,7 @@ export const AppRoutes = () => {
                                                                 fontWeight:900,
                                                                 fontSize:19,
                                                                 width: "240px",
+                                                                marginTop: '40px',
                                                             }}>
                                                                 {btn.label}
                                                             </p>
@@ -318,6 +319,7 @@ export const AppRoutes = () => {
                                                                 fontFamily: 'sans-serif',
                                                                 fontWeight:900,
                                                                 fontSize:19,
+                                                                marginTop: '330px',
                                                                 width: "250px",
                                                             }}>{btn.label}</span>
                                                 }

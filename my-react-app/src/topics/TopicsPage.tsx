@@ -16,7 +16,8 @@ export const TopicsPage = () => {
             flex: "0 0 auto",
             textAlign: "center",
             minWidth: "160px",
-            minHeight: "50px",
+            minHeight: "150px",
+            maxHeight: "150px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -26,7 +27,7 @@ export const TopicsPage = () => {
     };
 
     return (
-        <div style={{ display: "flex", flexWrap: 'wrap', gap: "30px", justifyContent: 'center', padding: '30px' }}>
+        <div style={{ display: "flex", flexWrap: 'wrap', gap: "10px", justifyContent: 'center', padding: '30px' }}>
             {topics.map((topic, index) => (
                 <Link key={index} to={`/themes/${topic.path}`} style={{ textDecoration: "none" }}>
                     <div
