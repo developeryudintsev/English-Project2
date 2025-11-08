@@ -12,6 +12,7 @@ import cat from "./picture/cat.JPG";
 import cat3 from "./picture/cat3.jpg";
 import thems2 from "./picture/thems2.jpg";
 import cubok from "./picture/klipartz.com.png";
+import about from "./picture/about.jpg";
 import {TopicsPage} from "./topics/TopicsPage";
 import {TopicDetailPage} from "./topics/TopicDetailPage";
 
@@ -315,13 +316,25 @@ export const AppRoutes = () => {
                                                                     {btn.label}
                                                                 </p>
                                                             </div>
-                                                            : <span style={{
-                                                                fontFamily: 'sans-serif',
-                                                                fontWeight:900,
-                                                                fontSize:19,
-                                                                marginTop: '330px',
-                                                                width: "250px",
-                                                            }}>{btn.label}</span>
+                                                            :
+                                                            <div>
+                                                                <img
+                                                                    src={about}
+                                                                    style={{
+                                                                        borderRadius: "12px",
+                                                                        width: "250px",
+                                                                        height: "250px",
+                                                                        marginTop: '40px'
+                                                                    }}
+                                                                />
+                                                                <p style={{
+                                                                    fontFamily: 'sans-serif',
+                                                                    fontWeight:900,
+                                                                    fontSize:19,
+                                                                    marginTop: '55px',
+                                                                    width: "250px",
+                                                                }}>{btn.label}</p>
+                                                            </div>
                                                 }
                                             </div>
                                         </Link>

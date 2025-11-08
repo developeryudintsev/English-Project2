@@ -8,6 +8,7 @@ export const TopicsPage = () => {
         const isHovered = hoveredIndex === index;
         return {
             background: "#555",
+            backgroundColor: '#444447',
             color: "#FFF44F",
             border: "2px solid black",
             borderRadius: "12px",
