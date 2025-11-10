@@ -22,7 +22,7 @@ export const TopicsPage = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+            transform: isHovered ? 'scale(1.11)' : 'scale(1)',
             transition: 'transform 0.3s ease-in-out',
         };
     };
