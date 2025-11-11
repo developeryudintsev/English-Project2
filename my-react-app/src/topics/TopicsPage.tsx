@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { topics } from '../AppRoutes';
+import Stack from "@mui/material/Stack";
+import {HomeIcon} from "../App";
 
 export const TopicsPage = () => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -52,6 +54,17 @@ export const TopicsPage = () => {
                     </div>
                 </Link>
             ))}
+            <Stack direction="row" spacing={3} sx={{
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                paddingBottom: '10px',
+            }}>
+                <HomeIcon sx={{fontSize: 50, color: '#2fd300'}}/>
+            </Stack>
         </div>
     );
 };

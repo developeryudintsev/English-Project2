@@ -1,12 +1,26 @@
-import { useState, useEffect } from "react";
-import { Header } from "./Header/Header";
-import { PresentSimple } from "./Present/PresentSimple";
-import { PastSimple } from "./Present/PasteSimple";
-import { FutureSimple } from "./Present/FutureSimple";
-import { Body } from "./body/Body";
-import { PracticeComponent } from "./body/smallCamponents/PracticeCamponent";
-import { Box } from "@mui/material";
-import { getQuestions } from "./Data/Data";
+import {useState, useEffect} from "react";
+import {Header} from "./Header/Header";
+import {PresentSimple} from "./Present/PresentSimple";
+import {PastSimple} from "./Present/PasteSimple";
+import {FutureSimple} from "./Present/FutureSimple";
+import {Body} from "./body/Body";
+import {PracticeComponent} from "./body/smallCamponents/PracticeCamponent";
+import {Box} from "@mui/material";
+import {getQuestions} from "./Data/Data";
+import Stack from '@mui/material/Stack';
+import SvgIcon, {SvgIconProps} from '@mui/material/SvgIcon';
+import {Link} from "react-router-dom";
+
+export function HomeIcon(props: SvgIconProps) {
+    return (
+        <Link to="/" style={{textDecoration: "none"}}>
+        <SvgIcon {...props}>
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </SvgIcon>
+        </Link>
+    );
+}
+
 export type timeType = 'Present' | 'Past' | 'Future';
 export const App = () => {
     const [time, setTime] = useState<timeType>("Present");
@@ -28,11 +42,11 @@ export const App = () => {
     const getTheoryComponent = (toggleTheory: (theory: boolean) => void) => {
         switch (time) {
             case "Present":
-                return <PresentSimple thorium={thorium} toggleTheory={toggleTheory} />;
+                return <PresentSimple thorium={thorium} toggleTheory={toggleTheory}/>;
             case "Past":
-                return <PastSimple thorium={thorium} toggleTheory={toggleTheory} />;
+                return <PastSimple thorium={thorium} toggleTheory={toggleTheory}/>;
             case "Future":
-                return <FutureSimple thorium={thorium} toggleTheory={toggleTheory} />;
+                return <FutureSimple thorium={thorium} toggleTheory={toggleTheory}/>;
             default:
                 return null;
         }
@@ -63,14 +77,14 @@ export const App = () => {
 
     useEffect(() => {
         if (showPractice) {
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({top: 0, behavior: "smooth"});
         }
     }, [showPractice]);
 
     return (
         <>
             {!showPractice && (
-                <Header time={time} setTime={setTime} handleChange={handleChange} star={star} />
+                <Header time={time} setTime={setTime} handleChange={handleChange} star={star}/>
             )}
             {showPractice && (
                 <Box
@@ -101,7 +115,6 @@ export const App = () => {
                     />
                 </Box>
             )}
-
             <Body
                 time={time}
                 thorium={thorium}
@@ -119,6 +132,17 @@ export const App = () => {
                 setStar={setStar}
                 star={star}
             />
+            <Stack direction="row" spacing={3} sx={{
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                paddingBottom: '10px',
+            }}>
+                <HomeIcon sx={{fontSize: 50, color: '#2fd300'}}/>
+            </Stack>
         </>
     );
 };
