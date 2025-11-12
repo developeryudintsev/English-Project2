@@ -8,7 +8,8 @@ import {PracticeComponent} from "./body/smallCamponents/PracticeCamponent";
 import {Box} from "@mui/material";
 import {getQuestions} from "./Data/Data";
 import Stack from '@mui/material/Stack';
-import SvgIcon, {SvgIconProps} from '@mui/material/SvgIcon';
+import SvgIcon from '@mui/material/SvgIcon';
+import type { SvgIconProps } from '@mui/material/SvgIcon';
 import {Link} from "react-router-dom";
 
 export function HomeIcon(props: SvgIconProps) {
