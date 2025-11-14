@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { topics } from '../AppRoutes';
-import Stack from "@mui/material/Stack";
-import {HomeIcon} from "../App";
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
+import {topics} from '../AppRoutes';
 
 export const TopicsPage = () => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);

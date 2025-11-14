@@ -1,4 +1,4 @@
-import {Link, Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import {Link, Route, Routes, useLocation} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {App, HomeIcon} from "./App"
 import AppBar from '@mui/material/AppBar';
@@ -16,7 +16,6 @@ import about from "./picture/about3.png";
 import {TopicsPage} from "./topics/TopicsPage";
 import {TopicDetailPage} from "./topics/TopicDetailPage";
 import {AboutMyself} from "./TopicsObj/TopicsObj";
-import Stack from "@mui/material/Stack";
 
 interface VocabularyWord {
     en: string;
