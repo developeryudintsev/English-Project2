@@ -17,6 +17,8 @@ import {IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableRow
 import CloseIcon from "@mui/icons-material/Close";
 import type {DataType, RatingMap} from "../Data/Data";
 import {computeRatingMapFromData, getQuestions, getRatingMap, setRatingMap} from "../Data/Data";
+import Stack from "@mui/material/Stack";
+import {HomeIcon} from "../App";
 
 type HeaderType = {
     time: timeType;
@@ -34,8 +36,8 @@ export const Header = (props: HeaderType) => {
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 684);
-            setIsSuperSmall(window.innerWidth < 430);
+            setIsMobile(window.innerWidth < 750);
+            setIsSuperSmall(window.innerWidth < 490);
         };
         handleResize();
         window.addEventListener("resize", handleResize);
@@ -177,8 +179,15 @@ export const Header = (props: HeaderType) => {
                                             fontSize: isSuperSmall ? '0.8rem' : '1.7rem',
                                             textShadow: '2px 2px 0px #000, -1px -1px 0px #000',
                                             whiteSpace: 'nowrap',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '10px',
+                                            paddingY: { xs: 1, md: 0 },
                                         }}
                                     >
+                                        <Stack direction="row" spacing={3} >
+                                            <HomeIcon sx={{fontSize: 50, color: '#2fd300'}}/>
+                                        </Stack>
                                         English cat
                                     </Typography>
                                     <Typography
@@ -329,9 +338,19 @@ export const Header = (props: HeaderType) => {
 
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                 <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 0.5 }}>
-                                    <Typography sx={{ color: '#FFF44F', fontWeight: 700, fontFamily: '"South Park Ext", sans-serif', fontSize: '2.3rem', textShadow: '2px 2px 0px #000, -1px -1px 0px #000', whiteSpace: 'nowrap' }}>
+                                    <Typography sx={{ color: '#FFF44F', fontWeight: 700,
+                                        fontFamily: '"South Park Ext", sans-serif', fontSize: '2.3rem',
+                                        textShadow: '2px 2px 0px #000, -1px -1px 0px #000', whiteSpace: 'nowrap',display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '10px',
+                                        paddingY: { xs: 1, md: 0 }, }}>
+                                        <Stack direction="row" spacing={3} sx={{
+                                        }}>
+                                            <HomeIcon sx={{fontSize: 50, color: '#2fd300'}}/>
+                                        </Stack>
                                         English cat
                                     </Typography>
+
                                     <Typography sx={{ color: '#FFF44F', fontWeight: 400, fontSize: '1rem', whiteSpace: 'nowrap' }}>(v0.7)</Typography>
 
                                     <Box sx={{ position: "relative", display: "inline-flex", alignItems: "center", ml: 1 }}>

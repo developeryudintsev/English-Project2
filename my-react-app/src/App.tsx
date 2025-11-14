@@ -133,17 +133,7 @@ export const App = () => {
                 setStar={setStar}
                 star={star}
             />
-            <Stack direction="row" spacing={3} sx={{
-                position: 'fixed',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                display: 'flex',
-                justifyContent: 'center',
-                paddingBottom: '10px',
-            }}>
-                <HomeIcon sx={{fontSize: 50, color: '#2fd300'}}/>
-            </Stack>
+
         </>
     );
 };

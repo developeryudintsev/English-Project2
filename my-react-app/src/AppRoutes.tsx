@@ -1,6 +1,6 @@
-import {Link, Route, Routes, useLocation} from "react-router-dom";
+import {Link, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {App} from "./App"
+import {App, HomeIcon} from "./App"
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,6 +16,7 @@ import about from "./picture/about3.png";
 import {TopicsPage} from "./topics/TopicsPage";
 import {TopicDetailPage} from "./topics/TopicDetailPage";
 import {AboutMyself} from "./TopicsObj/TopicsObj";
+import Stack from "@mui/material/Stack";
 
 interface VocabularyWord {
     en: string;
@@ -63,7 +64,6 @@ export const topics: TopicType[] = [
     { label: "Travelling", path: "travelling",vocabulary:[]},
     { label: "In the army", path: "in-the-army",vocabulary:[]},
 ];
-// export const topicsMap = Map(topics.map(topic => [topic.path, topic.label]));
 const Placeholder = ({title}: { title: string }) => (
     <div
         style={{
@@ -94,6 +94,12 @@ const Placeholder = ({title}: { title: string }) => (
 );
 export const AppRoutes = () => {
     const location = useLocation();
+    // const navigate = useNavigate();
+    // useEffect(() => {
+    //     if (location.pathname !== '/') {
+    //         navigate('/', { replace: true });
+    //     }
+    // }, [navigate, location.pathname]);
     const [hoveredIndex, setHoveredIndex] = useState<number|null>(null);
     const getCardStyle = (index: number): React.CSSProperties => {
         const isHovered = hoveredIndex === index;
@@ -128,9 +134,9 @@ export const AppRoutes = () => {
     useEffect(() => {
         const handleResize = () => {
             const width = window.innerWidth;
-            if (width < 620) setVisibleCount(MIN_VISIBLE);
-            else if (width < 820) setVisibleCount(2);
-            else if (width < 1050) setVisibleCount(3);
+            if (width < 720) setVisibleCount(MIN_VISIBLE);
+            else if (width < 890) setVisibleCount(2);
+            else if (width < 1180) setVisibleCount(3);
             else setVisibleCount(MAX_VISIBLE);
         };
         handleResize();
@@ -160,42 +166,71 @@ export const AppRoutes = () => {
     return (
         <>
             {location.pathname !== '/app' &&
-                <AppBar position="static" sx={{backgroundColor: '#444447'}}>
+                <AppBar position="static" sx={{ backgroundColor: '#444447' }}>
                     <Container maxWidth="xl">
                         <Toolbar
                             disableGutters
                             sx={{
                                 display: 'flex',
-                                justifyContent: 'space-between',
+                                // На экранах меньше 600px (xs), элементы будут переноситься и
+                                // центрироваться с помощью flexWrap: 'wrap' и justify-content: center в Box ниже
+                                flexWrap: 'wrap',
+                                gap: { xs: 2, md: 0 }, // Увеличим отступ между строками на мобильных
+                                justifyContent: 'space-between', // По умолчанию разносим по краям
                                 alignItems: 'center',
                                 width: '100%',
                                 py: 1,
                             }}
                         >
+                            {/* Левая часть: Логотип и версия */}
                             <Box
                                 sx={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: 0.5,
+                                    flexWrap: 'wrap',
+                                    // На экранах < 600px (xs), этот блок займет 100% ширины и центрируется
+                                    width: { xs: '100%', sm: 'auto' },
+                                    justifyContent: 'center',
                                 }}
                             >
-                                <Typography
+                                <Box
                                     sx={{
-                                        color: '#FFF44F',
-                                        fontWeight: 700,
-                                        fontFamily: '"South Park Ext", sans-serif',
-                                        fontSize: '2.7rem',
-                                        textShadow: '2px 2px 0px #000, -1px -1px 0px #000',
-                                        whiteSpace: 'nowrap',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '10px',
+                                        paddingY: { xs: 1, md: 0 },
                                     }}
                                 >
-                                    English cat
-                                </Typography>
+                                    {/* Иконка HomeIcon с адаптивным размером */}
+                                    <HomeIcon
+                                        sx={{
+                                            color: '#2fd300',
+                                            fontSize: { xs: 35, sm: 40, md: 50 },
+                                        }}
+                                    />
+
+                                    {/* Текст English Cat с адаптивным размером */}
+                                    <Typography
+                                        sx={{
+                                            color: '#FFF44F',
+                                            fontWeight: 700,
+                                            fontFamily: '"South Park Ext", sans-serif',
+                                            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.7rem' },
+                                            textShadow: '2px 2px 0px #000, -1px -1px 0px #000',
+                                            whiteSpace: 'nowrap',
+                                        }}
+                                    >
+                                        English cat
+                                    </Typography>
+                                </Box>
+
+                                {/* Текст версии (v0.7) с адаптивным размером */}
                                 <Typography
                                     sx={{
                                         color: '#FFF44F',
                                         fontWeight: 400,
-                                        fontSize: '2rem',
+                                        fontSize: { xs: '1rem', sm: '1.5rem', md: '2rem' },
                                         whiteSpace: 'nowrap',
                                         ml: 1,
                                     }}
@@ -205,24 +240,34 @@ export const AppRoutes = () => {
                             </Box>
 
                             {/* Правая часть — аватарка */}
-                            <Tooltip title="Ссылка на наш сайт">
-                                <a
-                                    href="https://www.kiber-rus.ru/"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    style={{textDecoration: 'none'}}
-                                >
-                                    <Avatar
-                                        alt="User Avatar"
-                                        src={cat}
-                                        sx={{
-                                            border: '2px solid white',
-                                            width: 55,
-                                            height: 55,
-                                        }}
-                                    />
-                                </a>
-                            </Tooltip>
+                            <Box
+                                sx={{
+                                    // На экранах < 600px (xs), этот блок займет 100% ширины и центрируется
+                                    width: { xs: '100%', sm: 'auto' },
+                                    display: 'flex',
+                                    justifyContent: 'center', // <-- Центрирование аватарки
+                                    marginTop: { xs: '10px', sm: '0px' }, // Отступ сверху на мобильных
+                                }}
+                            >
+                                <Tooltip title="Ссылка на наш сайт">
+                                    <a
+                                        href="https://www.kiber-rus.ru/"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        style={{ textDecoration: 'none' }}
+                                    >
+                                        <Avatar
+                                            alt="User Avatar"
+                                            src={cat}
+                                            sx={{
+                                                border: '2px solid white',
+                                                width: { xs: 45, md: 55 },
+                                                height: { xs: 45, md: 55 },
+                                            }}
+                                        />
+                                    </a>
+                                </Tooltip>
+                            </Box>
                         </Toolbar>
                     </Container>
                 </AppBar>
