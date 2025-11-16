@@ -185,9 +185,6 @@ export const Header = (props: HeaderType) => {
                                             paddingY: { xs: 1, md: 0 },
                                         }}
                                     >
-                                        <Stack direction="row" spacing={3} >
-                                            <HomeIcon sx={{fontSize: 50, color: '#2fd300'}}/>
-                                        </Stack>
                                         English cat
                                     </Typography>
                                     <Typography
@@ -298,10 +295,13 @@ export const Header = (props: HeaderType) => {
                                     </Tooltip>
                                 </Box>
                             </Box>
-
                             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', px: 1, gap: 1 }}>
-                                <Typography sx={{ color: '#FFF44F', fontWeight: 500, flexShrink: 0 }}>Simple</Typography>
-
+                                <Box sx={{display: 'flex', alignItems: 'baseline', gap: 0.5}}>
+                                    <Stack direction="row" spacing={3} >
+                                        <HomeIcon sx={{fontSize: 50, color: '#2fd300'}}/>
+                                    </Stack>
+                                    <Typography sx={{ color: '#FFF44F', fontWeight: 500, flexShrink: 0 }}>Simple</Typography>
+                                </Box>
                                 <FormControl sx={{ flexGrow: 1, minWidth: isSuperSmall ? 120 : 160, marginLeft: '20px' }} size="small">
                                     <Select
                                         value={props.time}
@@ -320,7 +320,12 @@ export const Header = (props: HeaderType) => {
                     ) : (
                         <>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexGrow: 1,marginTop:'15px' }}>
-                                <Typography sx={{ color: '#FFF44F', fontWeight: 500, flexShrink: 0 }}>Simple</Typography>
+                                <Box sx={{display: 'flex', alignItems: 'baseline', gap: 0}}>
+                                    <Stack direction="row" spacing={3} >
+                                        <HomeIcon sx={{fontSize: 50, color: '#2fd300'}}/>
+                                    </Stack>
+                                    <Typography sx={{ color: '#FFF44F', fontWeight: 500, flexShrink: 0,marginTop:'-2px' }}>Simple</Typography>
+                                </Box>
                                 <FormControl size="small" sx={{ flexGrow: 1, minWidth: 160, maxWidth: 250 }}>
                                     <Select
                                         value={props.time}
@@ -344,10 +349,7 @@ export const Header = (props: HeaderType) => {
                                         alignItems: 'center',
                                         gap: '10px',
                                         paddingY: { xs: 1, md: 0 }, }}>
-                                        <Stack direction="row" spacing={3} sx={{
-                                        }}>
-                                            <HomeIcon sx={{fontSize: 50, color: '#2fd300'}}/>
-                                        </Stack>
+
                                         English cat
                                     </Typography>
 

@@ -93,12 +93,6 @@ const Placeholder = ({title}: { title: string }) => (
 );
 export const AppRoutes = () => {
     const location = useLocation();
-    // const navigate = useNavigate();
-    // useEffect(() => {
-    //     if (location.pathname !== '/') {
-    //         navigate('/', { replace: true });
-    //     }
-    // }, [navigate, location.pathname]);
     const [hoveredIndex, setHoveredIndex] = useState<number|null>(null);
     const getCardStyle = (index: number): React.CSSProperties => {
         const isHovered = hoveredIndex === index;
@@ -188,7 +182,6 @@ export const AppRoutes = () => {
                                     alignItems: 'center',
                                     gap: 0.5,
                                     flexWrap: 'wrap',
-                                    // На экранах < 600px (xs), этот блок займет 100% ширины и центрируется
                                     width: { xs: '100%', sm: 'auto' },
                                     justifyContent: 'center',
                                 }}
@@ -202,12 +195,14 @@ export const AppRoutes = () => {
                                     }}
                                 >
                                     {/* Иконка HomeIcon с адаптивным размером */}
+                                    {location.pathname !== '/'&&
                                     <HomeIcon
                                         sx={{
                                             color: '#2fd300',
                                             fontSize: { xs: 35, sm: 40, md: 50 },
                                         }}
                                     />
+                                    }
 
                                     {/* Текст English Cat с адаптивным размером */}
                                     <Typography
