@@ -38,7 +38,7 @@ export const TopicDetailPage = () => {
                     animation: "blinkGreen 1s infinite",
                 }}
             >
-                <h3 style={{color: '#FFF44F',marginTop:'0px',height:'7px'}}>Тема: {topic.label}</h3>
+                <h3 onClick={()=>setToggleIcon(!toggleIcon)} style={{color: '#FFF44F',marginTop:'0px',height:'7px'}}>Тема: {topic.label}</h3>
                 <IconButton
                     onClick={()=>setToggleIcon(!toggleIcon)}
                     sx={{ color: '#FFF44F', position: 'absolute', top: 10, right: 8 }}
