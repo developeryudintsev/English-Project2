@@ -36,8 +36,8 @@ export const Header = (props: HeaderType) => {
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 750);
-            setIsSuperSmall(window.innerWidth < 490);
+            setIsMobile(window.innerWidth < 760);
+            setIsSuperSmall(window.innerWidth < 500);
         };
         handleResize();
         window.addEventListener("resize", handleResize);
@@ -296,12 +296,10 @@ export const Header = (props: HeaderType) => {
                                 </Box>
                             </Box>
                             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', px: 1, gap: 1 }}>
-                                <Box sx={{display: 'flex', alignItems: 'baseline', gap: 0.5}}>
                                     <Stack direction="row" spacing={3} >
-                                        <HomeIcon sx={{fontSize: 50, color: '#2fd300'}}/>
+                                        <HomeIcon sx={{fontSize: 50, color: '#2fd300',marginTop:'10px'}}/>
                                     </Stack>
-                                    <Typography sx={{ color: '#FFF44F', fontWeight: 500, flexShrink: 0 }}>Simple</Typography>
-                                </Box>
+                                    <Typography sx={{ color: '#FFF44F', fontWeight: 500, flexShrink: 0,marginTop:'25px' }}>Simple</Typography>
                                 <FormControl sx={{ flexGrow: 1, minWidth: isSuperSmall ? 120 : 160, marginLeft: '20px' }} size="small">
                                     <Select
                                         value={props.time}
@@ -319,13 +317,20 @@ export const Header = (props: HeaderType) => {
                         </>
                     ) : (
                         <>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexGrow: 1,marginTop:'15px' }}>
-                                <Box sx={{display: 'flex', alignItems: 'baseline', gap: 0}}>
-                                    <Stack direction="row" spacing={3} >
-                                        <HomeIcon sx={{fontSize: 50, color: '#2fd300'}}/>
-                                    </Stack>
-                                    <Typography sx={{ color: '#FFF44F', fontWeight: 500, flexShrink: 0,marginTop:'-2px' }}>Simple</Typography>
-                                </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexGrow: 1, }}>
+                                <HomeIcon sx={{
+                                        fontSize: 50,
+                                        color: '#2fd300',
+                                       marginTop:'10px'
+                                    }}/>
+                                    <Typography sx={{
+                                        color: '#FFF44F',
+                                        fontWeight: 500,
+                                        flexShrink: 0,
+                                        marginTop:'25px'
+                                    }}>
+                                        Simple
+                                    </Typography>
                                 <FormControl size="small" sx={{ flexGrow: 1, minWidth: 160, maxWidth: 250 }}>
                                     <Select
                                         value={props.time}

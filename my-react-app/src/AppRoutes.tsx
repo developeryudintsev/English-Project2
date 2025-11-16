@@ -165,17 +165,14 @@ export const AppRoutes = () => {
                             disableGutters
                             sx={{
                                 display: 'flex',
-                                // На экранах меньше 600px (xs), элементы будут переноситься и
-                                // центрироваться с помощью flexWrap: 'wrap' и justify-content: center в Box ниже
                                 flexWrap: 'wrap',
-                                gap: { xs: 2, md: 0 }, // Увеличим отступ между строками на мобильных
-                                justifyContent: 'space-between', // По умолчанию разносим по краям
+                                gap: { xs: 2, md: 0 },
+                                justifyContent: 'space-between',
                                 alignItems: 'center',
                                 width: '100%',
                                 py: 1,
                             }}
                         >
-                            {/* Левая часть: Логотип и версия */}
                             <Box
                                 sx={{
                                     display: 'flex',
@@ -194,17 +191,15 @@ export const AppRoutes = () => {
                                         paddingY: { xs: 1, md: 0 },
                                     }}
                                 >
-                                    {/* Иконка HomeIcon с адаптивным размером */}
                                     {location.pathname !== '/'&&
                                     <HomeIcon
                                         sx={{
                                             color: '#2fd300',
                                             fontSize: { xs: 35, sm: 40, md: 50 },
+                                            marginTop:'-10px'
                                         }}
                                     />
                                     }
-
-                                    {/* Текст English Cat с адаптивным размером */}
                                     <Typography
                                         sx={{
                                             color: '#FFF44F',
@@ -218,8 +213,6 @@ export const AppRoutes = () => {
                                         English cat
                                     </Typography>
                                 </Box>
-
-                                {/* Текст версии (v0.7) с адаптивным размером */}
                                 <Typography
                                     sx={{
                                         color: '#FFF44F',
@@ -232,15 +225,12 @@ export const AppRoutes = () => {
                                     (v0.7)
                                 </Typography>
                             </Box>
-
-                            {/* Правая часть — аватарка */}
                             <Box
                                 sx={{
-                                    // На экранах < 600px (xs), этот блок займет 100% ширины и центрируется
                                     width: { xs: '100%', sm: 'auto' },
                                     display: 'flex',
-                                    justifyContent: 'center', // <-- Центрирование аватарки
-                                    marginTop: { xs: '10px', sm: '0px' }, // Отступ сверху на мобильных
+                                    justifyContent: 'center',
+                                    marginTop: { xs: '10px', sm: '0px' },
                                 }}
                             >
                                 <Tooltip title="Ссылка на наш сайт">
@@ -292,7 +282,6 @@ export const AppRoutes = () => {
                                 {"<"}
                             </button>
 
-                            {/* ИСПРАВЛЕНИЕ: Удалено overflow: "hidden" */}
                             <div style={{display: "flex", gap: "30px"}}>
                                 {buttons
                                     .slice(currentIndex, currentIndex + visibleCount)
@@ -301,7 +290,7 @@ export const AppRoutes = () => {
                                             <div
                                                 style={getCardStyle(index)}
                                                 onMouseEnter={() => setHoveredIndex(index)}
-                                                onMouseLeave={() => setHoveredIndex(null)} // <-- Исправлена неполная строка
+                                                onMouseLeave={() => setHoveredIndex(null)}
                                             >
                                                 {btn.to === '/app' ?
                                                     <div>
