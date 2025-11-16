@@ -1,7 +1,7 @@
 import {Link, useParams} from 'react-router-dom';
 import {topics} from "../AppRoutes";
 import {IconButton, Paper} from "@mui/material";
-import React, {useState} from "react";
+import {useState} from "react";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 export const TopicDetailPage = () => {
