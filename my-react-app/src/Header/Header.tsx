@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import type {timeType} from '../App';
+import {HomeIcon} from "../App";
 import cat from '../picture/cat.JPG';
 import {useEffect, useState} from "react";
 import Rating from "@mui/material/Rating";
@@ -17,8 +18,6 @@ import {IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableRow
 import CloseIcon from "@mui/icons-material/Close";
 import type {DataType, RatingMap} from "../Data/Data";
 import {computeRatingMapFromData, getQuestions, getRatingMap, setRatingMap} from "../Data/Data";
-import Stack from "@mui/material/Stack";
-import {HomeIcon} from "../App";
 
 type HeaderType = {
     time: timeType;
