@@ -295,11 +295,34 @@ export const Header = (props: HeaderType) => {
                                     </Tooltip>
                                 </Box>
                             </Box>
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', px: 1, gap: 1 }}>
-                                    <Stack direction="row" spacing={3} >
-                                        <HomeIcon sx={{fontSize: 50, color: '#2fd300',marginTop:'10px'}}/>
-                                    </Stack>
-                                    <Typography sx={{ color: '#FFF44F', fontWeight: 500, flexShrink: 0,marginTop:'25px' }}>Simple</Typography>
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                width: '100%',
+                                px: 1,
+                                gap: 0
+                            }}>
+                                <Box sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px'
+                                }}>
+                                    <HomeIcon sx={{
+                                        fontSize: 50,
+                                        color: '#2fd300',
+                                        marginTop:'10px'
+                                    }}/>
+
+                                    <Typography sx={{
+                                        color: '#FFF44F',
+                                        fontWeight: 500,
+                                        flexShrink: 0,
+                                        marginTop:'25px'
+                                    }}>
+                                        Simple
+                                    </Typography>
+                                </Box>
                                 <FormControl sx={{ flexGrow: 1, minWidth: isSuperSmall ? 120 : 160, marginLeft: '20px' }} size="small">
                                     <Select
                                         value={props.time}
@@ -313,16 +336,28 @@ export const Header = (props: HeaderType) => {
                                         <MenuItem value="Future">Future</MenuItem>
                                     </Select>
                                 </FormControl>
-                            </Box>
-                        </>
+                            </Box></>
                     ) : (
                         <>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexGrow: 1, }}>
-                                <HomeIcon sx={{
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                width: '100%',
+                                px: 1,
+                                gap: 0
+                            }}>
+                                <Box sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px'
+                                }}>
+                                    <HomeIcon sx={{
                                         fontSize: 50,
                                         color: '#2fd300',
-                                       marginTop:'10px'
+                                        marginTop:'10px'
                                     }}/>
+
                                     <Typography sx={{
                                         color: '#FFF44F',
                                         fontWeight: 500,
@@ -331,7 +366,8 @@ export const Header = (props: HeaderType) => {
                                     }}>
                                         Simple
                                     </Typography>
-                                <FormControl size="small" sx={{ flexGrow: 1, minWidth: 160, maxWidth: 250 }}>
+                                </Box>
+                                <FormControl sx={{ flexGrow: 1, minWidth: isSuperSmall ? 120 : 160, marginLeft: '20px' }} size="small">
                                     <Select
                                         value={props.time}
                                         onChange={(e) => props.handleChange(e.target.value as timeType)}
