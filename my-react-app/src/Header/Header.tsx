@@ -78,26 +78,26 @@ export const Header = (props: HeaderType) => {
         const lesson = lessons?.[lessonKey] ?? [];
         const total = Array.isArray(lesson) ? lesson.length : 0;
         const doneCount = Array.isArray(lesson) ? lesson.filter((q) => q.isDone).length : 0;
-        return { lesson, total, doneCount };
+        return {lesson, total, doneCount};
     };
     const renderModalBody = () => {
         if (!rating || !questions) {
             return (
-                <Box sx={{ p: 2 }}>
-                    <Typography sx={{ color: "#FFF44F" }}>Загрузка...</Typography>
+                <Box sx={{p: 2}}>
+                    <Typography sx={{color: "#FFF44F"}}>Загрузка...</Typography>
                 </Box>
             );
         }
 
         return (
-            <Box sx={{ p: 2 }}>
+            <Box sx={{p: 2}}>
                 {(["Present", "Past", "Future"] as const).map((tense) => (
-                    <Box key={tense} sx={{ mb: 2 }}>
-                        <Typography variant="subtitle1" sx={{ fontWeight: "bold", color: "#FFF44F", mb: 1 }}>
+                    <Box key={tense} sx={{mb: 2}}>
+                        <Typography variant="subtitle1" sx={{fontWeight: "bold", color: "#FFF44F", mb: 1}}>
                             {tense} Simple
                         </Typography>
 
-                        <TableContainer component={Paper} sx={{ my: 2 }}>
+                        <TableContainer component={Paper} sx={{my: 2}}>
                             <Table size="small">
                                 <TableBody>
 
@@ -111,12 +111,12 @@ export const Header = (props: HeaderType) => {
                                                     ? "вопросительное"
                                                     : "отрицательное";
 
-                                        const { total, doneCount } = getLessonInfo(tense, lessonKey);
+                                        const {total, doneCount} = getLessonInfo(tense, lessonKey);
 
                                         return (
                                             <TableRow key={lessonKey}>
                                                 <TableCell>
-                                                    <Typography sx={{ color: "black" }}>
+                                                    <Typography sx={{color: "black"}}>
                                                         {typeSentence} ({doneCount}/{total})
                                                     </Typography>
                                                 </TableCell>
@@ -126,7 +126,7 @@ export const Header = (props: HeaderType) => {
                                                         value={starValue}
                                                         max={1}
                                                         readOnly
-                                                        sx={{ fontSize: "30px", color: "#FFF44F" }}
+                                                        sx={{fontSize: "30px", color: "#FFF44F"}}
                                                     />
                                                 </TableCell>
                                             </TableRow>
@@ -181,7 +181,7 @@ export const Header = (props: HeaderType) => {
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: '10px',
-                                            paddingY: { xs: 1, md: 0 },
+                                            paddingY: {xs: 1, md: 0},
                                         }}
                                     >
                                         English cat
@@ -227,12 +227,18 @@ export const Header = (props: HeaderType) => {
                                                         top: "6px",
                                                         color: "#fff",
                                                         backgroundColor: "red",
-                                                        "&:hover": { backgroundColor: "#cc0000" },
+                                                        "&:hover": {backgroundColor: "#cc0000"},
                                                     }}
                                                 >
                                                     <CloseIcon/>
                                                 </IconButton>
-                                                <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "center", color: "#FFF44F", width: "100%", px: 6 }}>
+                                                <Typography variant="h6" sx={{
+                                                    fontWeight: "bold",
+                                                    textAlign: "center",
+                                                    color: "#FFF44F",
+                                                    width: "100%",
+                                                    px: 6
+                                                }}>
                                                     Выполненные времена:
                                                 </Typography>
                                             </Box>
@@ -244,7 +250,7 @@ export const Header = (props: HeaderType) => {
                                 <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
                                     {/* Звезда слева */}
                                     <Box sx={{position: "relative", display: "inline-flex", alignItems: "center"}}>
-                                        <Box onClick={() =>{
+                                        <Box onClick={() => {
                                             setModalToggle(true)
                                         }} sx={{cursor: 'pointer'}}>
                                             <Rating
@@ -298,7 +304,7 @@ export const Header = (props: HeaderType) => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
-                                width: '100%',
+                                width: '95%',
                                 px: 1,
                                 gap: 0
                             }}>
@@ -310,32 +316,39 @@ export const Header = (props: HeaderType) => {
                                     <HomeIcon sx={{
                                         fontSize: 50,
                                         color: '#2fd300',
-                                        marginTop:'10px'
                                     }}/>
 
                                     <Typography sx={{
                                         color: '#FFF44F',
                                         fontWeight: 500,
                                         flexShrink: 0,
-                                        marginTop:'25px'
                                     }}>
                                         Simple
                                     </Typography>
                                 </Box>
-                                <FormControl sx={{ flexGrow: 1, minWidth: isSuperSmall ? 120 : 160, marginLeft: '20px' }} size="small">
+
+                                <FormControl sx={{
+                                    minWidth: isSuperSmall ? 120 : 160,
+                                }} size="small">
                                     <Select
                                         value={props.time}
                                         onChange={(e) => props.handleChange(e.target.value as timeType)}
                                         displayEmpty
                                         inputProps={{'aria-label': 'Select tense'}}
-                                        sx={{ backgroundColor: 'white', borderRadius: 1, width: '100%' }}
+                                        sx={{
+                                            backgroundColor: 'white',
+                                            borderRadius: 1,
+                                            width: '110%',
+                                            minWidth:'150px'
+                                        }}
                                     >
                                         <MenuItem value="Present">Present</MenuItem>
                                         <MenuItem value="Past">Past</MenuItem>
                                         <MenuItem value="Future">Future</MenuItem>
                                     </Select>
                                 </FormControl>
-                            </Box></>
+                            </Box>
+                        </>
                     ) : (
                         <>
                             <Box sx={{
@@ -372,7 +385,7 @@ export const Header = (props: HeaderType) => {
                                         onChange={(e) => props.handleChange(e.target.value as timeType)}
                                         displayEmpty
                                         inputProps={{'aria-label': 'Select tense'}}
-                                        sx={{ backgroundColor: 'white', borderRadius: 1, width: '100%' }}
+                                        sx={{ backgroundColor: 'white', borderRadius: 1, width: '40%',minWidth:'150px' }}
                                     >
                                         <MenuItem value="Present">Present</MenuItem>
                                         <MenuItem value="Past">Past</MenuItem>
@@ -381,27 +394,53 @@ export const Header = (props: HeaderType) => {
                                 </FormControl>
                             </Box>
 
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 0.5 }}>
-                                    <Typography sx={{ color: '#FFF44F', fontWeight: 700,
-                                        fontFamily: '"South Park Ext", sans-serif', fontSize: '2.3rem',
-                                        textShadow: '2px 2px 0px #000, -1px -1px 0px #000', whiteSpace: 'nowrap',display: 'flex',
+                            <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
+                                <Box sx={{display: 'flex', alignItems: 'baseline', gap: 0.5}}>
+                                    <Typography sx={{
+                                        color: '#FFF44F',
+                                        fontWeight: 700,
+                                        fontFamily: '"South Park Ext", sans-serif',
+                                        fontSize: '2.3rem',
+                                        textShadow: '2px 2px 0px #000, -1px -1px 0px #000',
+                                        whiteSpace: 'nowrap',
+                                        display: 'flex',
                                         alignItems: 'center',
                                         gap: '10px',
-                                        paddingY: { xs: 1, md: 0 }, }}>
+                                        paddingY: {xs: 1, md: 0},
+                                    }}>
 
                                         English cat
                                     </Typography>
 
-                                    <Typography sx={{ color: '#FFF44F', fontWeight: 400, fontSize: '1rem', whiteSpace: 'nowrap' }}>(v0.7)</Typography>
+                                    <Typography sx={{
+                                        color: '#FFF44F',
+                                        fontWeight: 400,
+                                        fontSize: '1rem',
+                                        whiteSpace: 'nowrap'
+                                    }}>(v0.7)</Typography>
 
-                                    <Box sx={{ position: "relative", display: "inline-flex", alignItems: "center", ml: 1 }}>
-                                        <Box onClick={() =>{
+                                    <Box sx={{
+                                        position: "relative",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        ml: 1
+                                    }}>
+                                        <Box onClick={() => {
                                             setModalToggle(true)
-                                        }} sx={{ cursor: 'pointer' }}>
-                                            <Rating name="progress-star" value={props.star > 0 ? 1 : 0} max={1} readOnly sx={{ fontSize: "60px", color: "#FFF44F", top: '10px' }} />
+                                        }} sx={{cursor: 'pointer'}}>
+                                            <Rating name="progress-star" value={props.star > 0 ? 1 : 0} max={1} readOnly
+                                                    sx={{fontSize: "60px", color: "#FFF44F", top: '10px'}}/>
                                             {props.star > 0 && (
-                                                <Typography sx={{ position: "absolute", left: "50%", top: "58%", transform: "translate(-50%, calc(-50% + 5px))", color: "black", fontWeight: "bold", fontSize: "1.2rem", pointerEvents: "none" }}>
+                                                <Typography sx={{
+                                                    position: "absolute",
+                                                    left: "50%",
+                                                    top: "58%",
+                                                    transform: "translate(-50%, calc(-50% + 5px))",
+                                                    color: "black",
+                                                    fontWeight: "bold",
+                                                    fontSize: "1.2rem",
+                                                    pointerEvents: "none"
+                                                }}>
                                                     {props.star}
                                                 </Typography>
                                             )}
@@ -409,12 +448,41 @@ export const Header = (props: HeaderType) => {
                                     </Box>
 
                                     <Modal open={modalToggle} onClose={() => setModalToggle(false)}>
-                                        <Box sx={{ width: 400, bgcolor: "#2c2c2c", borderRadius: 2, boxShadow: 24, mx: "auto", mt: "2%", overflow: "hidden" }}>
-                                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#444447", color: "#fff", py: 1, position: "relative" }}>
-                                                <IconButton onClick={() => setModalToggle(false)} sx={{ position: "absolute", right: "10px", top: "6px", color: "#fff", backgroundColor: "red", "&:hover": { backgroundColor: "#cc0000" } }}>
+                                        <Box sx={{
+                                            width: 400,
+                                            bgcolor: "#2c2c2c",
+                                            borderRadius: 2,
+                                            boxShadow: 24,
+                                            mx: "auto",
+                                            mt: "2%",
+                                            overflow: "hidden"
+                                        }}>
+                                            <Box sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                backgroundColor: "#444447",
+                                                color: "#fff",
+                                                py: 1,
+                                                position: "relative"
+                                            }}>
+                                                <IconButton onClick={() => setModalToggle(false)} sx={{
+                                                    position: "absolute",
+                                                    right: "10px",
+                                                    top: "6px",
+                                                    color: "#fff",
+                                                    backgroundColor: "red",
+                                                    "&:hover": {backgroundColor: "#cc0000"}
+                                                }}>
                                                     <CloseIcon/>
                                                 </IconButton>
-                                                <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "center", color: "#FFF44F", width: "100%", px: 6 }}>
+                                                <Typography variant="h6" sx={{
+                                                    fontWeight: "bold",
+                                                    textAlign: "center",
+                                                    color: "#FFF44F",
+                                                    width: "100%",
+                                                    px: 6
+                                                }}>
                                                     Выполненные времена:
                                                 </Typography>
                                             </Box>
@@ -425,8 +493,10 @@ export const Header = (props: HeaderType) => {
                                 </Box>
 
                                 <Tooltip title="Ссылка на наш сайт">
-                                    <a href="https://www.kiber-rus.ru/" target="_blank" rel="noreferrer" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-                                        <Avatar alt="User Avatar" src={cat} sx={{ border: '2px solid white', width: 60, height: 60 }} />
+                                    <a href="https://www.kiber-rus.ru/" target="_blank" rel="noreferrer"
+                                       style={{textDecoration: 'none', display: 'flex', alignItems: 'center'}}>
+                                        <Avatar alt="User Avatar" src={cat}
+                                                sx={{border: '2px solid white', width: 60, height: 60}}/>
                                     </a>
                                 </Tooltip>
                             </Box>

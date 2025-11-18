@@ -15,7 +15,7 @@ import cubok from "./picture/klipartz.com.png";
 import about from "./picture/about3.png";
 import {TopicsPage} from "./topics/TopicsPage";
 import {TopicDetailPage} from "./topics/TopicDetailPage";
-import {AboutMyself} from "./TopicsObj/TopicsObj";
+import {AboutMyself, Text, TextAbout} from "./TopicsObj/TopicsObj";
 
 interface VocabularyWord {
     en: string;
@@ -25,43 +25,47 @@ export interface TopicType {
     label: string;
     path: string;
     vocabulary: VocabularyWord[];
+    text:any
+    id:number
 }
 
 export const topics: TopicType[] = [
     {
         label: "About myself",
         path: "about-myself",
-        vocabulary: AboutMyself
+        vocabulary: AboutMyself,
+        text:TextAbout,
+        id:1
     },
-    { label: "Morning routine", path: "morning-routine",vocabulary:[] },
-    { label: "Public transport", path: "public-transport",vocabulary:[] },
-    { label: "At a supermarket", path: "at-a-supermarket",vocabulary:[]},
-    { label: "Accidents at home", path: "accidents-at-home",vocabulary:[]},
-    { label: "At the department store", path: "at-the-department-store",vocabulary:[]},
-    { label: "Beauty Salon", path: "beauty-salon",vocabulary:[]},
-    { label: "Work", path: "work",vocabulary:[]},
-    { label: "At the university", path: "at-the-university",vocabulary:[]},
-    { label: "At a hotel", path: "at-a-hotel",vocabulary:[]},
-    { label: "Bad habits", path: "bad-habits",vocabulary:[]},
-    { label: "At a hospital", path: "at-a-hospital",vocabulary:[]},
-    { label: "At the airport", path: "at-the-airport",vocabulary:[]},
-    { label: "Friends", path: "friends",vocabulary:[]},
-    { label: "House Cleaning", path: "house-cleaning",vocabulary:[]},
-    { label: "Table manners", path: "table-manners",vocabulary:[]},
-    { label: "My room", path: "my-room",vocabulary:[]},
-    { label: "Why do you learn English?", path: "why-do-you-learn-english",vocabulary:[]},
-    { label: "My city", path: "my-city",vocabulary:[]},
-    { label: "Family problems", path: "family-problems",vocabulary:[]},
-    { label: "Weather", path: "weather",vocabulary:[]},
-    { label: "Sport", path: "sport",vocabulary:[]},
-    { label: "Animals are in danger", path: "animals-are-in-danger",vocabulary:[]},
-    { label: "Internet for and against", path: "internet-for-and-against",vocabulary:[]},
-    { label: "Hobby", path: "hobby",vocabulary:[]},
-    { label: "Fashion", path: "fashion",vocabulary:[]},
-    { label: "At the theatre/ cinema", path: "at-the-theatre-cinema",vocabulary:[]},
-    { label: "Generation gap", path: "generation-gap",vocabulary:[]},
-    { label: "Travelling", path: "travelling",vocabulary:[]},
-    { label: "In the army", path: "in-the-army",vocabulary:[]},
+    { label: "Morning routine", path: "morning-routine",vocabulary:[],text:Text,id:2 },
+    { label: "Public transport", path: "public-transport",vocabulary:[],text:Text,id:3 },
+    { label: "At a supermarket", path: "at-a-supermarket",vocabulary:[],text:Text,id:4},
+    { label: "Accidents at home", path: "accidents-at-home",vocabulary:[],text:Text,id:5},
+    { label: "At the department store", path: "at-the-department-store",vocabulary:[],text:Text,id:6},
+    { label: "Beauty Salon", path: "beauty-salon",vocabulary:[],text:Text,id:7},
+    { label: "Work", path: "work",vocabulary:[],text:Text,id:8},
+    { label: "At the university", path: "at-the-university",vocabulary:[],text:Text,id:9},
+    { label: "At a hotel", path: "at-a-hotel",vocabulary:[],text:Text,id:10},
+    { label: "Bad habits", path: "bad-habits",vocabulary:[],text:Text,id:11},
+    { label: "At a hospital", path: "at-a-hospital",vocabulary:[],text:Text,id:12},
+    { label: "At the airport", path: "at-the-airport",vocabulary:[],text:Text,id:13},
+    { label: "Friends", path: "friends",vocabulary:[],text:Text,id:14},
+    { label: "House Cleaning", path: "house-cleaning",vocabulary:[],text:Text,id:14},
+    { label: "Table manners", path: "table-manners",vocabulary:[],text:Text,id:15},
+    { label: "My room", path: "my-room",vocabulary:[],text:Text,id:16},
+    { label: "Why do you learn English?", path: "why-do-you-learn-english",vocabulary:[],text:Text,id:17},
+    { label: "My city", path: "my-city",vocabulary:[],text:Text,id:18},
+    { label: "Family problems", path: "family-problems",vocabulary:[],text:Text,id:19},
+    { label: "Weather", path: "weather",vocabulary:[],text:Text,id:20},
+    { label: "Sport", path: "sport",vocabulary:[],text:Text,id:21},
+    { label: "Animals are in danger", path: "animals-are-in-danger",vocabulary:[],text:Text,id:22},
+    { label: "Internet for and against", path: "internet-for-and-against",vocabulary:[],text:Text,id:23},
+    { label: "Hobby", path: "hobby",vocabulary:[],text:Text,id:24},
+    { label: "Fashion", path: "fashion",vocabulary:[],text:Text,id:25},
+    { label: "At the theatre/ cinema", path: "at-the-theatre-cinema",vocabulary:[],text:Text,id:26},
+    { label: "Generation gap", path: "generation-gap",vocabulary:[],text:Text,id:27},
+    { label: "Travelling", path: "travelling",vocabulary:[],text:Text,id:28},
+    { label: "In the army", path: "in-the-army",vocabulary:[],text:Text,id:29},
 ];
 const Placeholder = ({title}: { title: string }) => (
     <div
