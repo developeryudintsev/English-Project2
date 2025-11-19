@@ -28,12 +28,11 @@ import {TypeAnimation} from 'react-type-animation';
 import Rating from '@mui/material/Rating';
 import Modal from '@mui/material/Modal';
 import AutorenewIcon from "@mui/icons-material/Autorenew";
-import {timeType} from "../../App";
 
 export type changeType = "." | "?" | "!";
 
 type PracticeComponentProps = {
-    time: timeType;
+    time: 'Simple Present' | 'Simple Past' | 'Simple Future';
     toggle: boolean;
     openTheory: (theory: boolean) => void;
     toggleTheory: (togglePractice: boolean) => void;
@@ -81,29 +80,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
     const startIndex = page * itemsPerPage;
     const visibleQuestions = questions.slice(startIndex, startIndex + itemsPerPage);
     const [progress, setProgress] = useState<{ done: number, total: number }>({done: 0, total: 0});
-    useEffect(() => {
-        const loadProgress = async () => {
-            const stored = await getQuestions();
-            if (!stored) return;
 
-            const timeData = stored.simple[time];
-            let done = 0;
-            let total = 0;
-
-            Object.values(timeData).forEach((questionsArr) => {
-                total += questionsArr.length;
-                done += questionsArr.filter((q) => q.isDone).length;
-            });
-
-            setProgress({done, total});
-        };
-
-        loadProgress();
-    }, [time]);
-    useEffect(() => {
-        const allDone = questions.every((q) => q.isDone);
-        setCongratulation(allDone);
-    }, [questions, type]);
     useEffect(() => {
         // Симулируем загрузку видео при монтировании компонента
         const timer = setTimeout(() => {
@@ -134,6 +111,101 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         window.speechSynthesis.onvoiceschanged = loadVoices;
         loadVoices();
     }, []);
+    useEffect(() => {
+        const loadProgress = async () => {
+            const stored = await getQuestions();
+            if (!stored) return;
+
+            // Теперь time имеет тип TimeKey ('Simple Present'...),
+            // и ключи в stored.simple совпадают. Ошибка исчезнет.
+            const timeData = stored.simple[time];
+            let done = 0;
+            let total = 0;
+
+            Object.values(timeData).forEach((questionsArr) => {
+                total += questionsArr.length;
+                done += questionsArr.filter((q) => q.isDone).length;
+            });
+
+            setProgress({done, total});
+        };
+
+        loadProgress();
+    }, [time]);
+
+    // ... (остальные useEffects) ...
+
+    useEffect(() => {
+        const init = async () => {
+            const stored = await getQuestions();
+            if (!stored || !stored.simple) {
+                // ... (логика добавления вопросов) ...
+                if (fresh) {
+                    // time используется как ключ, все ОК
+                    const loaded = fresh.simple[time][type];
+                    // ... (остальная логика) ...
+                }
+            } else {
+                // time используется как ключ, все ОК
+                const loaded = stored.simple[time][type];
+                // ... (остальная логика) ...
+            }
+            setAnswerStatus("none");
+            setSelectedAnswer(null);
+        };
+
+        init();
+    }, [time, type]);
+    const handleAnswer = async (answerText: string, id: string) => {
+        // ... (логика обработки ответа) ...
+
+        if (currentQuestion && fullData) {
+            // ...
+            const updatedData: DataType = {
+                ...fullData,
+                simple: {
+                    ...fullData.simple,
+                    [time]: { // time используется как ключ, все ОК
+                        ...fullData.simple[time],
+                        [type]: questions.map((q) => (q.id === id ? updatedQuestion : q)),
+                    },
+                },
+            };
+            const exest = updatedData['simple'][time][type].find((q) => !q.isDone); // time используется как ключ, все ОК
+            // ...
+            setFullData(updatedData);
+            await updateQuestion(updatedData);
+        }
+    };
+    useEffect(() => {
+        const allDone = questions.every((q) => q.isDone);
+        if (allDone) {
+            (async () => {
+                // time передается в updateRatingFor, все ОК
+                await updateRatingFor(time, type);
+                // ...
+            })();
+        }
+    }, [questions, type, time]);
+    useEffect(() => {
+        const loadProgress = async () => {
+            const stored = await getQuestions();
+            if (!stored) return;
+
+            const timeData = stored.simple[time];
+            let done = 0;
+            let total = 0;
+
+            Object.values(timeData).forEach((questionsArr) => {
+                total += questionsArr.length;
+                done += questionsArr.filter((q) => q.isDone).length;
+            });
+
+            setProgress({done, total});
+        };
+
+        loadProgress();
+    }, [time]);
     useEffect(() => {
         const init = async () => {
             const stored = await getQuestions();
@@ -176,83 +248,21 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
 
         init();
     }, [time, type]);
-    const handleAnswer = async (answerText: string, id: string) => {
 
-        if (answerStatus !== "none") return;
-        setSelectedAnswer(answerText);
-        setToggelModal(1);
-
-        if (currentQuestion && fullData) {
-            const correctAnswer = currentQuestion.answers.find((ans) => ans.isCorrect);
-            if (correctAnswer && correctAnswer.text === answerText) {
-
-                setAnswerStatus("correct");
-                setToggelVideoCat(2)
-                const updatedQuestion = {...currentQuestion, isDone: true};
-                setQuestions((prev) => prev.map((q) => (q.id === id ? updatedQuestion : q)));
-                setCurrentQuestion(updatedQuestion);
-                const updatedData: DataType = {
-                    ...fullData,
-                    simple: {
-                        ...fullData.simple,
-                        [time]: {
-                            ...fullData.simple[time],
-                            [type]: questions.map((q) => (q.id === id ? updatedQuestion : q)),
-                        },
-                    },
-                };
-                const exest = updatedData['simple'][time][type].find((q) => !q.isDone);
-                if (!exest) {
-                    setToggelVideoCat(3)
-                }
-                if (!exest) {
-                    setToggelVideoCat(3); // 👈 победа
-                }
-                setFullData(updatedData);
-                await updateQuestion(updatedData);
-            } else {
-                setAnswerStatus("wrong");
-                setToggelVideoCat(1)
-            }
+    const newData = () => {
+        const init = async () => {
+            await addQuestions(data, 'reload');
         }
-    };
-    useEffect(() => {
-        const allDone = questions.every((q) => q.isDone);
-        if (allDone) {
-            (async () => {
-                await updateRatingFor(time, type);
-                const map = await getRatingMap();
-                if (map) {
-                    let completed = 0;
-                    Object.values(map.simple).forEach(timeData => {
-                        Object.values(timeData).forEach(v => {
-                            if (v === 1) completed++;
-                        });
-                    });
-                    setStar(completed);
-                }
-            })();
-        }
-    }, [questions, type, time]);
-    const speakText = (text: string, lang: "ru" | "en") => {
-        if (!text) return;
-        if (window.speechSynthesis.speaking) {
-            window.speechSynthesis.cancel();
-        }
-        const utterance = new SpeechSynthesisUtterance(text);
-        if (lang === "ru" && russianVoice) {
-            utterance.voice = russianVoice;
-            utterance.lang = russianVoice.lang;
-        } else if (lang === "en" && englishVoice) {
-            utterance.voice = englishVoice;
-            utterance.lang = englishVoice.lang;
-        } else {
-            utterance.lang = lang === "ru" ? "ru-RU" : "en-US";
-        }
-        utterance.rate = 1;
-        utterance.pitch = 1;
-        window.speechSynthesis.speak(utterance);
-    };
+        init()
+        setToggelModal(0)
+        const newQuestion = data.simple[time][type];
+        setFullData(data);
+        setQuestions(newQuestion);
+        setCurrentQuestion(newQuestion[0])
+        setPage(0);
+        wordFoo(newQuestion[0].id)
+        console.log(newQuestion[0])
+    }
     const handleNextQuestion = () => {
         const next = questions.find((q) => !q.isDone);
         if (next) {
@@ -272,6 +282,25 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         }
         setAnswerStatus("none");
         setSelectedAnswer(null);
+    };
+    const speakText = (text: string, lang: "ru" | "en") => {
+        if (!text) return;
+        if (window.speechSynthesis.speaking) {
+            window.speechSynthesis.cancel();
+        }
+        const utterance = new SpeechSynthesisUtterance(text);
+        if (lang === "ru" && russianVoice) {
+            utterance.voice = russianVoice;
+            utterance.lang = russianVoice.lang;
+        } else if (lang === "en" && englishVoice) {
+            utterance.voice = englishVoice;
+            utterance.lang = englishVoice.lang;
+        } else {
+            utterance.lang = lang === "ru" ? "ru-RU" : "en-US";
+        }
+        utterance.rate = 1;
+        utterance.pitch = 1;
+        window.speechSynthesis.speak(utterance);
     };
     const tryAgain = () => {
         setAnswerStatus("none");
@@ -310,20 +339,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
 
         return () => clearTimeout(timer);
     }, []);
-    const newData = () => {
-        const init = async () => {
-            await addQuestions(data, 'reload');
-        }
-        init()
-        setToggelModal(0)
-        const newQuestion = data.simple[time][type];
-        setFullData(data);
-        setQuestions(newQuestion);
-        setCurrentQuestion(newQuestion[0])
-        setPage(0);
-        wordFoo(newQuestion[0].id)
-        console.log(newQuestion[0])
-    }
     const CloseButton = () => {
         setToggelModal(0)
         setAnswerStatus("none")
@@ -463,49 +478,52 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                 </TableHead>
                                                 <TableBody>
                                                     <TableRow>
-                                                        <TableCell align="center">Я {time === 'Present' ? 'люблю' :
-                                                            time === 'Past' ? 'любил' : 'буду любить'}</TableCell>
-                                                        <TableCell align="center">I {time === 'Present' ? 'love' :
-                                                            time === 'Past' ? 'loved' : 'will love'}</TableCell>
                                                         <TableCell
-                                                            align="center">I {time === 'Present' ? 'don\'t love' :
-                                                            time === 'Past' ? 'didn\'t love' : 'won\'t love'}</TableCell>
-                                                        <TableCell align="center">{time === 'Present' ? 'Do I love?' :
-                                                            time === 'Past' ? 'Did I love?' : 'Will I love?'}</TableCell>
+                                                            align="center">Я {time === 'Simple Present' ? 'люблю' :
+                                                            time === 'Simple Past' ? 'любил' : 'буду любить'}</TableCell>
+                                                        <TableCell
+                                                            align="center">I {time === 'Simple Present' ? 'love' :
+                                                            time === 'Simple Past' ? 'loved' : 'will love'}</TableCell>
+                                                        <TableCell
+                                                            align="center">I {time === 'Simple Present' ? 'don\'t love' :
+                                                            time === 'Simple Past' ? 'didn\'t love' : 'won\'t love'}</TableCell>
+                                                        <TableCell
+                                                            align="center">{time === 'Simple Present' ? 'Do I love?' :
+                                                            time === 'Simple Past' ? 'Did I love?' : 'Will I love?'}</TableCell>
                                                     </TableRow>
                                                     <TableRow>
                                                         <TableCell sx={{backgroundColor: "#FFF44F", color: "#000"}}>
-                                                            Он/Она/Оно {time === 'Present' ? 'любит' :
-                                                            time === 'Past' ? 'любил' : 'будет любить'}
+                                                            Он/Она/Оно {time === 'Simple Present' ? 'любит' :
+                                                            time === 'Simple Past' ? 'любил' : 'будет любить'}
                                                         </TableCell>
                                                         <TableCell
                                                             sx={{backgroundColor: "#FFF44F", color: "#000", px: '10%'}}
                                                         >
-                                                            He/She/It {time === 'Present' ? 'loves' :
-                                                            time === 'Past' ? 'loved' : 'will love'}
+                                                            He/She/It {time === 'Simple Present' ? 'loves' :
+                                                            time === 'Simple Past' ? 'loved' : 'will love'}
                                                         </TableCell>
                                                         <TableCell
                                                             sx={{backgroundColor: "#FFF44F", color: "#000", px: 1}}
                                                         >
-                                                            He/She/It {time === 'Present' ? 'does not (doesn\'t) love' :
-                                                            time === 'Past' ? 'did not (didn\'t) love' : 'will not (won\'t) love'}
+                                                            He/She/It {time === 'Simple Present' ? 'does not (doesn\'t) love' :
+                                                            time === 'Simple Past' ? 'did not (didn\'t) love' : 'will not (won\'t) love'}
                                                         </TableCell>
                                                         <TableCell sx={{backgroundColor: "#FFF44F", color: "#000"}}>
-                                                            {time === 'Present' ? 'Does he/she/it love?' :
-                                                                time === 'Past' ? 'Did he/she/it love?' : 'Will he/she/it love?'}
+                                                            {time === 'Simple Present' ? 'Does he/she/it love?' :
+                                                                time === 'Simple Past' ? 'Did he/she/it love?' : 'Will he/she/it love?'}
                                                         </TableCell>
                                                     </TableRow>
                                                     <TableRow>
-                                                        <TableCell>Мы/Ты/Они {time === 'Present' ? 'любим' :
-                                                            time === 'Past' ? 'любили' : 'будут любить'}</TableCell>
+                                                        <TableCell>Мы/Ты/Они {time === 'Simple Present' ? 'любим' :
+                                                            time === 'Simple Past' ? 'любили' : 'будут любить'}</TableCell>
                                                         <TableCell
-                                                            sx={{px: '10%'}}>We/You/They {time === 'Present' ? 'love' :
-                                                            time === 'Past' ? 'loved' : 'will love'}</TableCell>
+                                                            sx={{px: '10%'}}>We/You/They {time === 'Simple Present' ? 'love' :
+                                                            time === 'Simple Past' ? 'loved' : 'will love'}</TableCell>
                                                         <TableCell
-                                                            sx={{px: 1}}>We/You/They {time === 'Present' ? 'don\'t love' :
-                                                            time === 'Past' ? 'didn\'t love' : 'won\'t love'}</TableCell>
-                                                        <TableCell>{time === 'Present' ? 'Do we/you/they love?' :
-                                                            time === 'Past' ? 'Did we/you/they love?' : 'Will we/you/they love?'}</TableCell>
+                                                            sx={{px: 1}}>We/You/They {time === 'Simple Present' ? 'don\'t love' :
+                                                            time === 'Simple Past' ? 'didn\'t love' : 'won\'t love'}</TableCell>
+                                                        <TableCell>{time === 'Simple Present' ? 'Do we/you/they love?' :
+                                                            time === 'Simple Past' ? 'Did we/you/they love?' : 'Will we/you/they love?'}</TableCell>
                                                     </TableRow>
                                                 </TableBody>
                                             </Table>
@@ -606,10 +624,10 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                 gap: "10px"
                             }}>
                             <span onClick={() => ButtonFoo(toggle)}>
-                                Практика – {time} Simple ({progress.done}/{progress.total})
+                                Практика – {time} ({progress.done}/{progress.total})
                             </span>
                             </div>
-                        ) :  (
+                        ) : (
                             <div>
                                 <Box
                                     sx={{
@@ -623,8 +641,9 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                     }}
                                 >
                                     {isFinished && (
-                                        <Box sx={{ position: 'relative', width: 56, height: 56 }}>
-                                            <Rating name="done-star" value={1} max={1} readOnly sx={{ fontSize: 56, color: "#FFF44F" }} />
+                                        <Box sx={{position: 'relative', width: 56, height: 56}}>
+                                            <Rating name="done-star" value={1} max={1} readOnly
+                                                    sx={{fontSize: 56, color: "#FFF44F"}}/>
                                         </Box>
                                     )}
                                     <FormControl sx={{minWidth: 160}} size="small">
@@ -768,7 +787,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                 bgcolor: "#444447",
                                                 border: "2px solid #FFF44F",
                                                 boxShadow: 24,
-                                                p: { xs: 2, sm: 4 },
+                                                p: {xs: 2, sm: 4},
                                                 borderRadius: "12px",
                                                 textAlign: "center",
                                             }}
@@ -791,12 +810,12 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                         right: 28, // 👈 немного левее крестика
                                                         backgroundColor: "green",
                                                         color: "white",
-                                                        "&:hover": { backgroundColor: "darkgreen" },
-                                                        width: { xs: 32, sm: 40 },
-                                                        height: { xs: 32, sm: 40 },
+                                                        "&:hover": {backgroundColor: "darkgreen"},
+                                                        width: {xs: 32, sm: 40},
+                                                        height: {xs: 32, sm: 40},
                                                     }}
                                                 >
-                                                    <AutorenewIcon fontSize="small" />
+                                                    <AutorenewIcon fontSize="small"/>
                                                 </IconButton>
                                                 <IconButton
                                                     onClick={() => setToggelVideoCat(0)}
@@ -806,22 +825,22 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                         right: -16,
                                                         backgroundColor: "red",
                                                         color: "white",
-                                                        "&:hover": { backgroundColor: "darkred" },
-                                                        width: { xs: 32, sm: 40 },
-                                                        height: { xs: 32, sm: 40 },
+                                                        "&:hover": {backgroundColor: "darkred"},
+                                                        width: {xs: 32, sm: 40},
+                                                        height: {xs: 32, sm: 40},
                                                     }}
                                                 >
-                                                    <CloseIcon fontSize="small" />
+                                                    <CloseIcon fontSize="small"/>
                                                 </IconButton>
 
                                                 <Typography
                                                     sx={{
                                                         color: "#FFF44F",
                                                         mb: 2,
-                                                        fontSize: { xs: "0.9rem", sm: "1.2rem" },
+                                                        fontSize: {xs: "0.9rem", sm: "1.2rem"},
                                                         textAlign: "center",
                                                         wordBreak: "break-word",
-                                                        marginTop:'40px'
+                                                        marginTop: '40px'
                                                     }}
                                                 >
                                                     <TypeAnimation
@@ -839,8 +858,8 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                     sx={{
                                                         position: "relative",
                                                         width: "100%",
-                                                        maxWidth: { xs: "280px", sm: "400px" },
-                                                        height: { xs: "200px", sm: "280px" },
+                                                        maxWidth: {xs: "280px", sm: "400px"},
+                                                        height: {xs: "200px", sm: "280px"},
                                                         mx: "auto",
                                                     }}
                                                 >
@@ -858,7 +877,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                             defaultValue={1}
                                                             max={1}
                                                             sx={{
-                                                                fontSize: { xs: "180px", sm: "280px", md: "350px" },
+                                                                fontSize: {xs: "180px", sm: "280px", md: "350px"},
                                                                 color: "#FFF44F",
                                                             }}
                                                         />

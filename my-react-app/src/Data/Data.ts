@@ -1,6 +1,10 @@
 import {v1} from "uuid";
 import {openDB} from "idb";
 
+
+export type TenseKey = 'Simple Present' | 'Simple Past' | 'Simple Future';
+
+
 export type AnswerType = {
     text: string;
     isCorrect: boolean;
@@ -17,17 +21,17 @@ export type TimeData = {
 };
 export type DataType = {
     simple: {
-        Past: TimeData;
-        Present: TimeData;
-        Future: TimeData;
+        'Simple Past': TimeData;
+        'Simple Present': TimeData;
+        'Simple Future': TimeData;
     };
 };
 
 export type RatingMap = {
     simple: {
-        Past: { [lessonKey: string]: 0|1 };
-        Present: { [lessonKey: string]: 0|1 };
-        Future: { [lessonKey: string]: 0|1 };
+        'Simple Past': { [lessonKey: string]: 0|1 };
+        'Simple Present': { [lessonKey: string]: 0|1 };
+        'Simple Future': { [lessonKey: string]: 0|1 };
     };
 };
 const DB_NAME = "englishApp";
@@ -48,16 +52,18 @@ export const initDB = async () => {
         },
     });
 };
+
 export const computeRatingMapFromData = (data: DataType): RatingMap => {
     const result: RatingMap = {
         simple: {
-            Past: {},
-            Present: {},
-            Future: {},
+            'Simple Past': {},
+            'Simple Present': {},
+            'Simple Future': {},
         },
     };
 
-    (["Past", "Present", "Future"] as const).forEach((tense) => {
+    // --- ИСПРАВЛЕНИЕ ЛОГИКИ: ИСПОЛЬЗУЕМ ДЛИННЫЕ КЛЮЧИ В ЦИКЛЕ ---
+    (['Simple Past', 'Simple Present', 'Simple Future'] as const).forEach((tense) => {
         const lessons = data.simple[tense];
         Object.keys(lessons).forEach((lessonKey) => {
             const questions = lessons[lessonKey];
@@ -66,16 +72,17 @@ export const computeRatingMapFromData = (data: DataType): RatingMap => {
             result.simple[tense][lessonKey] = total > 0 && done === total ? 1 : 0;
         });
     });
+    // --- КОНЕЦ ИСПРАВЛЕНИЯ ЛОГИКИ ---
 
     return result;
 };
+
 export const getRatingMap = async (): Promise<RatingMap | null> => {
     const db = await initDB();
     const rec = (await db.get(RATING_STORE, RATING_ID)) as { id: string; payload: RatingMap } | undefined;
 
     if (rec) return rec.payload;
 
-    // если нет записи — вычисляем из вопросов
     const data = await getQuestions();
     if (!data) return null;
 
@@ -86,14 +93,15 @@ export const setRatingMap = async (map: RatingMap) => {
     const db = await initDB();
     await db.put(RATING_STORE, { id: RATING_ID, payload: map });
 };
-export const updateRatingFor = async (tense: "Past" | "Present" | "Future", lessonKey: string) => {
+
+// --- ИСПРАВЛЕНИЕ: Функция updateRatingFor теперь ожидает длинный ключ ---
+export const updateRatingFor = async (tense: TenseKey, lessonKey: string) => {
     const map = await getRatingMap();
 
     const updated: RatingMap = map ?? {
-        simple: { Past: {}, Present: {}, Future: {} },
+        simple: { 'Simple Past': {}, 'Simple Present': {}, 'Simple Future': {} },
     };
 
-    // обновляем только конкретный урок
     const data = await getQuestions();
     if (!data) return;
 
@@ -103,27 +111,30 @@ export const updateRatingFor = async (tense: "Past" | "Present" | "Future", less
 
     updated.simple[tense][lessonKey] = total > 0 && done === total ? 1 : 0;
 
-    // сохраняем в RATING_STORE
     const db = await initDB();
     await db.put(RATING_STORE, { id: RATING_ID, payload: updated });
 };
+// --- КОНЕЦ ИСПРАВЛЕНИЯ ---
+
 
 export const saveRatingMap = async (rating: RatingMap) => {
     const db = await initDB();
     await db.put(RATING_STORE, { id: ROOT_ID, payload: rating });
 };
+
 export const updateQuestion = async (updatedData: DataType) => {
     const db = await initDB();
     const rec: DBRecord = { id: ROOT_ID, payload: updatedData };
     await db.put(STORE_NAME, rec);
 
-    // сразу обновляем рейтинг
     const newRating = calculateRating(updatedData);
     await saveRatingMap(newRating);
 };
+
+// --- ИСПРАВЛЕНИЕ: Функция calculateRating теперь использует длинные ключи ---
 const calculateRating = (data: DataType): RatingMap => {
-    const result: RatingMap = { simple: { Past: {}, Present: {}, Future: {} } };
-    (["Past", "Present", "Future"] as const).forEach((tense) => {
+    const result: RatingMap = { simple: { 'Simple Past': {}, 'Simple Present': {}, 'Simple Future': {} } };
+    (['Simple Present', 'Simple Past', 'Simple Future'] as const).forEach((tense) => {
         const lessons = data.simple[tense];
         Object.keys(lessons).forEach((lessonKey) => {
             const questions = lessons[lessonKey];
@@ -134,10 +145,14 @@ const calculateRating = (data: DataType): RatingMap => {
     });
     return result;
 };
+// --- КОНЕЦ ИСПРАВЛЕНИЯ ---
+
+
 type DBRecord = {
     id: string;
     payload: DataType;
 };
+
 export const addQuestions = async (data: DataType,refresh:'reload'|'none') => {
     if(refresh==='none'){
         const db = await initDB();
@@ -154,6 +169,7 @@ export const addQuestions = async (data: DataType,refresh:'reload'|'none') => {
         await db.add(STORE_NAME, rec);
     }
 };
+
 export const getQuestions = async (): Promise<DataType | null> => {
     const db = await initDB();
     const rec = (await db.get(STORE_NAME, ROOT_ID)) as DBRecord | undefined;
@@ -162,7 +178,7 @@ export const getQuestions = async (): Promise<DataType | null> => {
 
 export const data: DataType = {
     simple: {
-        ['Present']: {
+        ['Simple Present']: {
             ['.']: [
                 {
                     id: v1(),
@@ -1029,7 +1045,7 @@ export const data: DataType = {
             ]
 
         },
-        ['Past']: {
+        ['Simple Past']: {
             ['.']: [
                 {
                     id: v1(),
@@ -1081,7 +1097,7 @@ export const data: DataType = {
                 },
             ],
         },
-        ['Future']: {
+        ['Simple Future']: {
             ['.']: [
                 {
                     id: v1(),

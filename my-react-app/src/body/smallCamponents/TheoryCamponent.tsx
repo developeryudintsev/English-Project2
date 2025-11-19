@@ -3,7 +3,7 @@ import { Collapse, IconButton, Paper, Box } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 type PropsType = {
-    time: 'Present' | 'Past' | 'Future';
+    time: 'Simple Present' | 'Simple Past' | 'Simple Future';
     thorium: boolean;
     toggleTheory:(theory:boolean) => void;
     getTheoryComponent: (toggleTheory:(theory:boolean) => void) => React.ReactNode;
@@ -14,11 +14,11 @@ export const TheoryComponent = (props: PropsType) => {
         <Paper
             elevation={3}
             sx={{
-                padding: '10px 16px', // оставляем padding для толщины блока
+                padding: '10px 16px',
                 position: 'relative',
                 cursor: 'pointer',
                 width: '95%',
-                maxWidth: '980px', // сохраняем максимальную ширину
+                maxWidth: '980px',
                 marginBottom: 0,
                 textAlign: 'center',
                 backgroundColor: '#444447',
@@ -57,7 +57,7 @@ export const TheoryComponent = (props: PropsType) => {
                         padding: '8px 0',
                     }}
                 >
-                    Теория – {props.time} Simple
+                    Теория – {props.time}
                 </span>
             )}
         </Paper>
