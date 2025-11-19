@@ -41,11 +41,11 @@ export const App = () => {
 
     const getTheoryComponent = (toggleTheory: (theory: boolean) => void) => {
         switch (time) {
-            case "Present":
+            case "Simple Present":
                 return <PresentSimple thorium={thorium} toggleTheory={toggleTheory}/>;
-            case "Past":
+            case "Simple Past":
                 return <PastSimple thorium={thorium} toggleTheory={toggleTheory}/>;
-            case "Future":
+            case "Simple Future":
                 return <FutureSimple thorium={thorium} toggleTheory={toggleTheory}/>;
             default:
                 return null;
