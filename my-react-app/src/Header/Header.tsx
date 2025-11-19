@@ -81,67 +81,77 @@ export const Header = (props: HeaderType) => {
         return {lesson, total, doneCount};
     };
     const renderModalBody = () => {
-        if (!rating || !questions) {
+        // Используем questions для проверки, так как rating зависит от questions
+        if (!questions) {
             return (
-                <Box sx={{p: 2}}>
-                    <Typography sx={{color: "#FFF44F"}}>Загрузка...</Typography>
+                <Box sx={{ p: 2 }}>
+                    <Typography sx={{ color: "#FFF44F" }}>Загрузка...</Typography>
                 </Box>
             );
         }
 
+        // ИСПРАВЛЕНИЕ 1: Правильное определение массива времен
+        const TENSE_KEYS = ['Simple Present', 'Simple Past', 'Simple Future'] as const;
+
         return (
-            <Box sx={{p: 2}}>
-                {(["Present", "Past", "Future"] as const).map((tense) => (
-                    <Box key={tense} sx={{mb: 2}}>
-                        <Typography variant="subtitle1" sx={{fontWeight: "bold", color: "#FFF44F", mb: 1}}>
-                            {tense} Simple
-                        </Typography>
+            <Box sx={{ p: 2 }}>
+                {TENSE_KEYS.map((tense) => {
+                    const lessons = questions.simple[tense];
+                    if (!lessons) return null;
 
-                        <TableContainer component={Paper} sx={{my: 2}}>
-                            <Table size="small">
-                                <TableBody>
+                    return (
+                        <Box key={tense} sx={{mb: 2}}>
+                            <Typography variant="subtitle1" sx={{fontWeight: "bold", color: "#FFF44F", mb: 1}}>
+                                {/* ИСПРАВЛЕНИЕ 2: Отрисовываем только название времени без лишнего "Simple" */}
+                                {tense}
+                            </Typography>
 
-                                    {Object.keys(questions.simple[tense]).map((lessonKey) => {
-                                        const starValue = rating?.simple[tense]?.[lessonKey] ?? 0;
+                            <TableContainer component={Paper} sx={{my: 2}}>
+                                <Table size="small">
+                                    <TableBody>
 
-                                        const typeSentence =
-                                            lessonKey === "."
-                                                ? "утвердительное"
-                                                : lessonKey === "?"
-                                                    ? "вопросительное"
-                                                    : "отрицательное";
+                                        {Object.keys(lessons).map((lessonKey) => {
+                                            const starValue = rating?.simple[tense]?.[lessonKey] ?? 0;
+                                            console.log(starValue)
+                                            const typeSentence =
+                                                lessonKey === "."
+                                                    ? "утвердительное"
+                                                    : lessonKey === "?"
+                                                        ? "вопросительное"
+                                                        : "отрицательное";
 
-                                        const {total, doneCount} = getLessonInfo(tense, lessonKey);
+                                            const {total, doneCount} = getLessonInfo(tense, lessonKey);
 
-                                        return (
-                                            <TableRow key={lessonKey}>
-                                                <TableCell>
-                                                    <Typography sx={{color: "black"}}>
-                                                        {typeSentence} ({doneCount}/{total})
-                                                    </Typography>
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    <Rating
-                                                        name={`${tense}-${lessonKey}`}
-                                                        value={starValue}
-                                                        max={1}
-                                                        readOnly
-                                                        sx={{fontSize: "30px", color: "#FFF44F"}}
-                                                    />
-                                                </TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
+                                            return (
+                                                <TableRow key={lessonKey}>
+                                                    <TableCell>
+                                                        <Typography sx={{color: "black"}}>
+                                                            {typeSentence} ({doneCount}/{total})
+                                                        </Typography>
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        <Rating
+                                                            name={`${tense}-${lessonKey}`}
+                                                            value={starValue}
+                                                            max={1}
+                                                            readOnly
+                                                            sx={{fontSize: "30px", color: "#FFF44F"}}
+                                                        />
+                                                    </TableCell>
+                                                </TableRow>
+                                            );
+                                        })}
 
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </Box>
-                ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Box>
+                    )
+                })}
             </Box>
         );
     };
-    console.log(props.time==="Simple Present")
+    // console.log(props.time==="Simple Present")
     return (
         <AppBar position="static" sx={{backgroundColor: '#444447'}}>
             <Container maxWidth="xl">
@@ -273,7 +283,7 @@ export const Header = (props: HeaderType) => {
                                                         pointerEvents: "none",
                                                     }}
                                                 >
-                                                    {props.star}
+                                                    {props.star-1}
                                                 </Typography>
                                             )}
                                         </Box>
@@ -433,7 +443,7 @@ export const Header = (props: HeaderType) => {
                                                     fontSize: "1.2rem",
                                                     pointerEvents: "none"
                                                 }}>
-                                                    {props.star}
+                                                    {props.star-1}
                                                 </Typography>
                                             )}
                                         </Box>

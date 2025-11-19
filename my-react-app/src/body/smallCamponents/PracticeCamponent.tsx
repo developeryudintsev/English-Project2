@@ -139,16 +139,41 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         const init = async () => {
             const stored = await getQuestions();
             if (!stored || !stored.simple) {
-                // ... (логика добавления вопросов) ...
+                // Если данных нет, добавляем их
+                await addQuestions(data, "none");
+                const fresh = await getQuestions();
                 if (fresh) {
-                    // time используется как ключ, все ОК
+                    // Используем time как ключ (теперь он соответствует ключам в fresh.simple)
                     const loaded = fresh.simple[time][type];
-                    // ... (остальная логика) ...
+                    setFullData(fresh);
+                    setQuestions(loaded);
+
+                    const firstUnfinishedIndex = loaded.findIndex((q) => !q.isDone);
+                    const idx = firstUnfinishedIndex === -1 ? 0 : firstUnfinishedIndex;
+
+                    setCurrentQuestion(loaded[idx] ?? null);
+                    setCurrentIndex((prev) => ({...prev, [type]: idx}));
+                    setCongratulation(firstUnfinishedIndex === -1);
+
+                    // 👇 авто-выбор страницы с первой незакрытой задачей
+                    setPage(Math.floor(idx / itemsPerPage));
                 }
             } else {
-                // time используется как ключ, все ОК
+                // Если данные уже есть, загружаем их
+                // Используем time как ключ (он соответствует ключам в stored.simple)
                 const loaded = stored.simple[time][type];
-                // ... (остальная логика) ...
+                setFullData(stored);
+                setQuestions(loaded);
+
+                const firstUnfinishedIndex = loaded.findIndex((q) => !q.isDone);
+                const idx = firstUnfinishedIndex === -1 ? 0 : firstUnfinishedIndex;
+
+                setCurrentQuestion(loaded[idx] ?? null);
+                setCurrentIndex((prev) => ({...prev, [type]: idx}));
+                setCongratulation(false);
+                console.log(congratulation)
+                // 👇 авто-выбор страницы
+                setPage(Math.floor(idx / itemsPerPage));
             }
             setAnswerStatus("none");
             setSelectedAnswer(null);
@@ -156,27 +181,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
 
         init();
     }, [time, type]);
-    const handleAnswer = async (answerText: string, id: string) => {
-        // ... (логика обработки ответа) ...
-
-        if (currentQuestion && fullData) {
-            // ...
-            const updatedData: DataType = {
-                ...fullData,
-                simple: {
-                    ...fullData.simple,
-                    [time]: { // time используется как ключ, все ОК
-                        ...fullData.simple[time],
-                        [type]: questions.map((q) => (q.id === id ? updatedQuestion : q)),
-                    },
-                },
-            };
-            const exest = updatedData['simple'][time][type].find((q) => !q.isDone); // time используется как ключ, все ОК
-            // ...
-            setFullData(updatedData);
-            await updateQuestion(updatedData);
-        }
-    };
     useEffect(() => {
         const allDone = questions.every((q) => q.isDone);
         if (allDone) {
@@ -207,48 +211,91 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         loadProgress();
     }, [time]);
     useEffect(() => {
-        const init = async () => {
-            const stored = await getQuestions();
-            if (!stored || !stored.simple) {
-                await addQuestions(data, "none");
-                const fresh = await getQuestions();
-                if (fresh) {
-                    const loaded = fresh.simple[time][type];
-                    setFullData(fresh);
-                    setQuestions(loaded);
+        const allDone = questions.every((q) => q.isDone);
+        setCongratulation(allDone);
+    }, [questions, type]);
+    // useEffect(() => {
+    //     const init = async () => {
+    //         const stored = await getQuestions();
+    //         if (!stored || !stored.simple) {
+    //             await addQuestions(data, "none");
+    //             const fresh = await getQuestions();
+    //             if (fresh) {
+    //                 const loaded = fresh.simple[time][type];
+    //                 setFullData(fresh);
+    //                 setQuestions(loaded);
+    //
+    //                 const firstUnfinishedIndex = loaded.findIndex((q) => !q.isDone);
+    //                 const idx = firstUnfinishedIndex === -1 ? 0 : firstUnfinishedIndex;
+    //
+    //                 setCurrentQuestion(loaded[idx] ?? null);
+    //                 setCurrentIndex((prev) => ({...prev, [type]: idx}));
+    //                 setCongratulation(firstUnfinishedIndex === -1);
+    //
+    //                 // 👇 авто-выбор страницы с первой незакрытой задачей
+    //                 setPage(Math.floor(idx / itemsPerPage));
+    //             }
+    //         } else {
+    //             const loaded = stored.simple[time][type];
+    //             setFullData(stored);
+    //             setQuestions(loaded);
+    //
+    //             const firstUnfinishedIndex = loaded.findIndex((q) => !q.isDone);
+    //             const idx = firstUnfinishedIndex === -1 ? 0 : firstUnfinishedIndex;
+    //
+    //             setCurrentQuestion(loaded[idx] ?? null);
+    //             setCurrentIndex((prev) => ({...prev, [type]: idx}));
+    //             setCongratulation(false);
+    //             console.log(congratulation)
+    //             // 👇 авто-выбор страницы
+    //             setPage(Math.floor(idx / itemsPerPage));
+    //         }
+    //         setAnswerStatus("none");
+    //         setSelectedAnswer(null);
+    //     };
+    //
+    //     init();
+    // }, [time, type]);
+    const handleAnswer = async (answerText: string, id: string) => {
 
-                    const firstUnfinishedIndex = loaded.findIndex((q) => !q.isDone);
-                    const idx = firstUnfinishedIndex === -1 ? 0 : firstUnfinishedIndex;
+        if (answerStatus !== "none") return;
+        setSelectedAnswer(answerText);
+        setToggelModal(1);
 
-                    setCurrentQuestion(loaded[idx] ?? null);
-                    setCurrentIndex((prev) => ({...prev, [type]: idx}));
-                    setCongratulation(firstUnfinishedIndex === -1);
+        if (currentQuestion && fullData) {
+            const correctAnswer = currentQuestion.answers.find((ans) => ans.isCorrect);
+            if (correctAnswer && correctAnswer.text === answerText) {
 
-                    // 👇 авто-выбор страницы с первой незакрытой задачей
-                    setPage(Math.floor(idx / itemsPerPage));
+                setAnswerStatus("correct");
+                setToggelVideoCat(2)
+                const updatedQuestion = {...currentQuestion, isDone: true};
+                setQuestions((prev) => prev.map((q) => (q.id === id ? updatedQuestion : q)));
+                setCurrentQuestion(updatedQuestion);
+                const updatedData: DataType = {
+                    ...fullData,
+                    simple: {
+                        ...fullData.simple,
+                        [time]: {
+                            ...fullData.simple[time],
+                            [type]: questions.map((q) => (q.id === id ? updatedQuestion : q)),
+                        },
+                    },
+                };
+                const exest = updatedData['simple'][time][type].find((q) => !q.isDone);
+                if (!exest) {
+                    setToggelVideoCat(3)
                 }
+                if (!exest) {
+                    setToggelVideoCat(3); // 👈 победа
+                }
+                setFullData(updatedData);
+                await updateQuestion(updatedData);
             } else {
-                const loaded = stored.simple[time][type];
-                setFullData(stored);
-                setQuestions(loaded);
-
-                const firstUnfinishedIndex = loaded.findIndex((q) => !q.isDone);
-                const idx = firstUnfinishedIndex === -1 ? 0 : firstUnfinishedIndex;
-
-                setCurrentQuestion(loaded[idx] ?? null);
-                setCurrentIndex((prev) => ({...prev, [type]: idx}));
-                setCongratulation(false);
-                console.log(congratulation)
-                // 👇 авто-выбор страницы
-                setPage(Math.floor(idx / itemsPerPage));
+                setAnswerStatus("wrong");
+                setToggelVideoCat(1)
             }
-            setAnswerStatus("none");
-            setSelectedAnswer(null);
-        };
-
-        init();
-    }, [time, type]);
-
+        }
+    };
     const newData = () => {
         const init = async () => {
             await addQuestions(data, 'reload');
