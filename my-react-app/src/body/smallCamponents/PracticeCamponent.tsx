@@ -31,9 +31,9 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import {timeType} from "../../App";
 
 export type changeType = "." | "?" | "!";
-
+const TimeKey='Simple Present' | 'Simple Past' | 'Simple Future';
 type PracticeComponentProps = {
-    time: timeType;
+    time: TimeKey;
     toggle: boolean;
     openTheory: (theory: boolean) => void;
     toggleTheory: (togglePractice: boolean) => void;
