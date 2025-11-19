@@ -369,6 +369,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                     maxWidth: "980px",
                     textAlign: "center",
                     backgroundColor: "#444447",
+                    cursor: 'pointer',
                     transition: "all 1s ease",
                     ...(answerStatus === "correct"
                         ? {
@@ -463,49 +464,49 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                 </TableHead>
                                                 <TableBody>
                                                     <TableRow>
-                                                        <TableCell align="center">Я {time === 'Present' ? 'люблю' :
-                                                            time === 'Past' ? 'любил' : 'буду любить'}</TableCell>
-                                                        <TableCell align="center">I {time === 'Present' ? 'love' :
-                                                            time === 'Past' ? 'loved' : 'will love'}</TableCell>
+                                                        <TableCell align="center">Я {time === 'Simple Present' ? 'люблю' :
+                                                            time === 'SimplePast' ? 'любил' : 'буду любить'}</TableCell>
+                                                        <TableCell align="center">I {time === 'Simple Present' ? 'love' :
+                                                            time === 'Simple Past' ? 'loved' : 'will love'}</TableCell>
                                                         <TableCell
-                                                            align="center">I {time === 'Present' ? 'don\'t love' :
-                                                            time === 'Past' ? 'didn\'t love' : 'won\'t love'}</TableCell>
-                                                        <TableCell align="center">{time === 'Present' ? 'Do I love?' :
-                                                            time === 'Past' ? 'Did I love?' : 'Will I love?'}</TableCell>
+                                                            align="center">I {time === 'Simple Present' ? 'don\'t love' :
+                                                            time === 'Simple Past' ? 'didn\'t love' : 'won\'t love'}</TableCell>
+                                                        <TableCell align="center">{time === 'Simple Present' ? 'Do I love?' :
+                                                            time === 'Simple Past' ? 'Did I love?' : 'Will I love?'}</TableCell>
                                                     </TableRow>
                                                     <TableRow>
                                                         <TableCell sx={{backgroundColor: "#FFF44F", color: "#000"}}>
-                                                            Он/Она/Оно {time === 'Present' ? 'любит' :
-                                                            time === 'Past' ? 'любил' : 'будет любить'}
+                                                            Он/Она/Оно {time === 'Simple Present' ? 'любит' :
+                                                            time === 'Simple Past' ? 'любил' : 'будет любить'}
                                                         </TableCell>
                                                         <TableCell
                                                             sx={{backgroundColor: "#FFF44F", color: "#000", px: '10%'}}
                                                         >
-                                                            He/She/It {time === 'Present' ? 'loves' :
-                                                            time === 'Past' ? 'loved' : 'will love'}
+                                                            He/She/It {time === 'Simple Present' ? 'loves' :
+                                                            time === 'Simple Past' ? 'loved' : 'will love'}
                                                         </TableCell>
                                                         <TableCell
                                                             sx={{backgroundColor: "#FFF44F", color: "#000", px: 1}}
                                                         >
-                                                            He/She/It {time === 'Present' ? 'does not (doesn\'t) love' :
-                                                            time === 'Past' ? 'did not (didn\'t) love' : 'will not (won\'t) love'}
+                                                            He/She/It {time === 'Simple Present' ? 'does not (doesn\'t) love' :
+                                                            time === 'Simple Past' ? 'did not (didn\'t) love' : 'will not (won\'t) love'}
                                                         </TableCell>
                                                         <TableCell sx={{backgroundColor: "#FFF44F", color: "#000"}}>
-                                                            {time === 'Present' ? 'Does he/she/it love?' :
-                                                                time === 'Past' ? 'Did he/she/it love?' : 'Will he/she/it love?'}
+                                                            {time === 'Simple Present' ? 'Does he/she/it love?' :
+                                                                time === 'Simple Past' ? 'Did he/she/it love?' : 'Will he/she/it love?'}
                                                         </TableCell>
                                                     </TableRow>
                                                     <TableRow>
-                                                        <TableCell>Мы/Ты/Они {time === 'Present' ? 'любим' :
-                                                            time === 'Past' ? 'любили' : 'будут любить'}</TableCell>
+                                                        <TableCell>Мы/Ты/Они {time === 'Simple Present' ? 'любим' :
+                                                            time === 'Simple Past' ? 'любили' : 'будут любить'}</TableCell>
                                                         <TableCell
-                                                            sx={{px: '10%'}}>We/You/They {time === 'Present' ? 'love' :
-                                                            time === 'Past' ? 'loved' : 'will love'}</TableCell>
+                                                            sx={{px: '10%'}}>We/You/They {time === 'Simple Present' ? 'love' :
+                                                            time === 'Simple Past' ? 'loved' : 'will love'}</TableCell>
                                                         <TableCell
-                                                            sx={{px: 1}}>We/You/They {time === 'Present' ? 'don\'t love' :
-                                                            time === 'Past' ? 'didn\'t love' : 'won\'t love'}</TableCell>
-                                                        <TableCell>{time === 'Present' ? 'Do we/you/they love?' :
-                                                            time === 'Past' ? 'Did we/you/they love?' : 'Will we/you/they love?'}</TableCell>
+                                                            sx={{px: 1}}>We/You/They {time === 'Simple Present' ? 'don\'t love' :
+                                                            time === 'Simple Past' ? 'didn\'t love' : 'won\'t love'}</TableCell>
+                                                        <TableCell>{time === 'Simple Present' ? 'Do we/you/they love?' :
+                                                            time === 'Simple Past' ? 'Did we/you/they love?' : 'Will we/you/they love?'}</TableCell>
                                                     </TableRow>
                                                 </TableBody>
                                             </Table>

@@ -27,6 +27,7 @@ export const VideoComponent = ({toggle,setToggle,openTheory, setShowPractice,set
                 padding: 2,
                 position: 'relative',
                 width: '95%',
+                cursor: 'pointer',
                 maxWidth: '980px',
                 marginBottom: 0,
                 textAlign: 'center',

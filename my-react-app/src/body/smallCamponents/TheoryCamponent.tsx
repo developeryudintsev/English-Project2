@@ -16,6 +16,7 @@ export const TheoryComponent = (props: PropsType) => {
             sx={{
                 padding: '10px 16px', // оставляем padding для толщины блока
                 position: 'relative',
+                cursor: 'pointer',
                 width: '95%',
                 maxWidth: '980px', // сохраняем максимальную ширину
                 marginBottom: 0,

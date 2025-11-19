@@ -52,6 +52,7 @@ export const TopicDetailPage = () => {
                         animation: "blinkGreen 1s infinite",
                         marginLeft: 'auto',
                         marginRight: 'auto',
+                        cursor: 'pointer',
                     }}
                 >
                     <h3 onClick={() => setToggleIcon(!toggleIcon)}
@@ -117,6 +118,7 @@ export const TopicDetailPage = () => {
                         animation: "blinkGreen 1s infinite",
                         marginTop: '20px',
                         marginLeft: 'auto',
+                        cursor: 'pointer',
                         marginRight: 'auto',
                     }}
                 >

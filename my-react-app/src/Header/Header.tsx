@@ -141,7 +141,7 @@ export const Header = (props: HeaderType) => {
             </Box>
         );
     };
-
+    console.log(props.time==="Simple Present")
     return (
         <AppBar position="static" sx={{backgroundColor: '#444447'}}>
             <Container maxWidth="xl">
@@ -318,13 +318,13 @@ export const Header = (props: HeaderType) => {
                                         color: '#2fd300',
                                     }}/>
 
-                                    <Typography sx={{
-                                        color: '#FFF44F',
-                                        fontWeight: 500,
-                                        flexShrink: 0,
-                                    }}>
-                                        Simple
-                                    </Typography>
+                                    {/*<Typography sx={{*/}
+                                    {/*    color: '#FFF44F',*/}
+                                    {/*    fontWeight: 500,*/}
+                                    {/*    flexShrink: 0,*/}
+                                    {/*}}>*/}
+                                    {/*    Simple*/}
+                                    {/*</Typography>*/}
                                 </Box>
 
                                 <FormControl sx={{
@@ -342,9 +342,9 @@ export const Header = (props: HeaderType) => {
                                             minWidth:'150px'
                                         }}
                                     >
-                                        <MenuItem value="Present">Present</MenuItem>
-                                        <MenuItem value="Past">Past</MenuItem>
-                                        <MenuItem value="Future">Future</MenuItem>
+                                        <MenuItem value="Simple Present">Simple Present</MenuItem>
+                                        <MenuItem value="Simple Past">Simple Past</MenuItem>
+                                        <MenuItem value="Simple Future">Simple Future</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Box>
@@ -387,9 +387,9 @@ export const Header = (props: HeaderType) => {
                                         inputProps={{'aria-label': 'Select tense'}}
                                         sx={{ backgroundColor: 'white', borderRadius: 1, width: '40%',minWidth:'150px' }}
                                     >
-                                        <MenuItem value="Present">Present</MenuItem>
-                                        <MenuItem value="Past">Past</MenuItem>
-                                        <MenuItem value="Future">Future</MenuItem>
+                                        <MenuItem value="Simple Present">Simple Present</MenuItem>
+                                        <MenuItem value="Simple Past">Simple Past</MenuItem>
+                                        <MenuItem value="Simple Future">Simple Future</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Box>
