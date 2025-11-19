@@ -342,9 +342,9 @@ export const Header = (props: HeaderType) => {
                                             minWidth:'150px'
                                         }}
                                     >
-                                        <MenuItem value="Simple Present">Simple Present</MenuItem>
-                                        <MenuItem value="Simple Past">Simple Past</MenuItem>
-                                        <MenuItem value="Simple Future">Simple Future</MenuItem>
+                                        <MenuItem value='Simple Present'>Simple Present</MenuItem>
+                                        <MenuItem value='Simple Past'>Simple Past</MenuItem>
+                                        <MenuItem value='Simple Future'>Simple Future</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Box>
@@ -387,9 +387,9 @@ export const Header = (props: HeaderType) => {
                                         inputProps={{'aria-label': 'Select tense'}}
                                         sx={{ backgroundColor: 'white', borderRadius: 1, width: '40%',minWidth:'150px' }}
                                     >
-                                        <MenuItem value="Simple Present">Simple Present</MenuItem>
-                                        <MenuItem value="Simple Past">Simple Past</MenuItem>
-                                        <MenuItem value="Simple Future">Simple Future</MenuItem>
+                                        <MenuItem value='Simple Present'>Simple Present</MenuItem>
+                                        <MenuItem value='Simple Past'>Simple Past</MenuItem>
+                                        <MenuItem value='Simple Future'>Simple Future</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Box>

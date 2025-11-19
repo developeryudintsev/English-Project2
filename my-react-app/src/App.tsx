@@ -23,7 +23,7 @@ export function HomeIcon(props: SvgIconProps) {
 
 export type timeType = 'Simple Present' | 'Simple Past' | 'Simple Future';
 export const App = () => {
-    const [time, setTime] = useState<timeType>("Simple Present");
+    const [time, setTime] = useState<timeType>('Simple Present');
     const [thorium, setThorium] = useState(false);
     const [toggleVideo, setToggleVideo] = useState(false);
     const [firstClick, setFirstClick] = useState(false);
