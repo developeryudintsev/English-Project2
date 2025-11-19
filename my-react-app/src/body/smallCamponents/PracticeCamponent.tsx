@@ -465,7 +465,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                 <TableBody>
                                                     <TableRow>
                                                         <TableCell align="center">Я {time === 'Simple Present' ? 'люблю' :
-                                                            time === 'SimplePast' ? 'любил' : 'буду любить'}</TableCell>
+                                                            time === 'Simple Past' ? 'любил' : 'буду любить'}</TableCell>
                                                         <TableCell align="center">I {time === 'Simple Present' ? 'love' :
                                                             time === 'Simple Past' ? 'loved' : 'will love'}</TableCell>
                                                         <TableCell
