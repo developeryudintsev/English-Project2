@@ -73,7 +73,7 @@ export const Header = (props: HeaderType) => {
             }
         })();
     }, [modalToggle]);
-    const getLessonInfo = (tense: "Past" | "Present" | "Future", lessonKey: string) => {
+    const getLessonInfo = (tense: 'Simple Present' | 'Simple Past' | 'Simple Future', lessonKey: string) => {
         const lessons = questions?.simple?.[tense] ?? {};
         const lesson = lessons?.[lessonKey] ?? [];
         const total = Array.isArray(lesson) ? lesson.length : 0;
