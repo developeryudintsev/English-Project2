@@ -20,7 +20,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import type {DataType, QuestionType} from "../../Data/Data";
-import {addQuestions, data, getQuestions, getRatingMap, updateQuestion, updateRatingFor,} from "../../Data/Data";
+import {addQuestions, data, getQuestions, updateQuestion, updateRatingFor,} from "../../Data/Data";
 import {VideoCat} from "../../camponent/VideoCat";
 import {ModalCamponent} from "../../modal/Modal";
 import CloseIcon from "@mui/icons-material/Close";
@@ -28,12 +28,11 @@ import {TypeAnimation} from 'react-type-animation';
 import Rating from '@mui/material/Rating';
 import Modal from '@mui/material/Modal';
 import AutorenewIcon from "@mui/icons-material/Autorenew";
-import {timeType} from "../../App";
+import type {timeType} from "../../App";
 
 export type changeType = "." | "?" | "!";
-const TimeKey='Simple Present' | 'Simple Past' | 'Simple Future';
 type PracticeComponentProps = {
-    time: TimeKey;
+    time: timeType;
     toggle: boolean;
     openTheory: (theory: boolean) => void;
     toggleTheory: (togglePractice: boolean) => void;
@@ -50,7 +49,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                                         toggleTheory,
                                                                         setShowPractice,
                                                                         setToggleVC,
-                                                                        setStar,
                                                                     }) => {
     const [type, setType] = useState<changeType>(".");
     const [currentIndex, setCurrentIndex] = useState<Record<changeType, number>>({
@@ -116,14 +114,12 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         const loadProgress = async () => {
             const stored = await getQuestions();
             if (!stored) return;
-
-            // Теперь time имеет тип TimeKey ('Simple Present'...),
-            // и ключи в stored.simple совпадают. Ошибка исчезнет.
             const timeData = stored.simple[time];
             let done = 0;
             let total = 0;
 
             Object.values(timeData).forEach((questionsArr) => {
+                if (!questionsArr) return;
                 total += questionsArr.length;
                 done += questionsArr.filter((q) => q.isDone).length;
             });
