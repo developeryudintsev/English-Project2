@@ -370,14 +370,6 @@ export const Header = (props: HeaderType) => {
                                         marginTop:'10px'
                                     }}/>
 
-                                    <Typography sx={{
-                                        color: '#FFF44F',
-                                        fontWeight: 500,
-                                        flexShrink: 0,
-                                        marginTop:'25px'
-                                    }}>
-                                        Simple
-                                    </Typography>
                                 </Box>
                                 <FormControl sx={{ flexGrow: 1, minWidth: isSuperSmall ? 120 : 160, marginLeft: '20px' }} size="small">
                                     <Select

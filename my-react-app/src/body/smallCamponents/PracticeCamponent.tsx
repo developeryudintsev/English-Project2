@@ -28,12 +28,12 @@ import {TypeAnimation} from 'react-type-animation';
 import Rating from '@mui/material/Rating';
 import Modal from '@mui/material/Modal';
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import {timeType} from "../../App";
 
-type TimeKey = "Present" | "Future" | "Past";
 export type changeType = "." | "?" | "!";
 
 type PracticeComponentProps = {
-    time: TimeKey;
+    time: timeType;
     toggle: boolean;
     openTheory: (theory: boolean) => void;
     toggleTheory: (togglePractice: boolean) => void;
@@ -81,7 +81,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
     const startIndex = page * itemsPerPage;
     const visibleQuestions = questions.slice(startIndex, startIndex + itemsPerPage);
     const [progress, setProgress] = useState<{ done: number, total: number }>({done: 0, total: 0});
-    console.log(questions.length)
     useEffect(() => {
         const loadProgress = async () => {
             const stored = await getQuestions();
