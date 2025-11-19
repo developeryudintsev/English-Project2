@@ -28,11 +28,12 @@ import {TypeAnimation} from 'react-type-animation';
 import Rating from '@mui/material/Rating';
 import Modal from '@mui/material/Modal';
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import {timeType} from "../../App";
 
 export type changeType = "." | "?" | "!";
 
 type PracticeComponentProps = {
-    time: 'Simple Present' | 'Simple Past' | 'Simple Future';
+    time: timeType;
     toggle: boolean;
     openTheory: (theory: boolean) => void;
     toggleTheory: (togglePractice: boolean) => void;
@@ -133,8 +134,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         loadProgress();
     }, [time]);
 
-    // ... (остальные useEffects) ...
-
     useEffect(() => {
         const init = async () => {
             const stored = await getQuestions();
@@ -214,48 +213,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         const allDone = questions.every((q) => q.isDone);
         setCongratulation(allDone);
     }, [questions, type]);
-    // useEffect(() => {
-    //     const init = async () => {
-    //         const stored = await getQuestions();
-    //         if (!stored || !stored.simple) {
-    //             await addQuestions(data, "none");
-    //             const fresh = await getQuestions();
-    //             if (fresh) {
-    //                 const loaded = fresh.simple[time][type];
-    //                 setFullData(fresh);
-    //                 setQuestions(loaded);
-    //
-    //                 const firstUnfinishedIndex = loaded.findIndex((q) => !q.isDone);
-    //                 const idx = firstUnfinishedIndex === -1 ? 0 : firstUnfinishedIndex;
-    //
-    //                 setCurrentQuestion(loaded[idx] ?? null);
-    //                 setCurrentIndex((prev) => ({...prev, [type]: idx}));
-    //                 setCongratulation(firstUnfinishedIndex === -1);
-    //
-    //                 // 👇 авто-выбор страницы с первой незакрытой задачей
-    //                 setPage(Math.floor(idx / itemsPerPage));
-    //             }
-    //         } else {
-    //             const loaded = stored.simple[time][type];
-    //             setFullData(stored);
-    //             setQuestions(loaded);
-    //
-    //             const firstUnfinishedIndex = loaded.findIndex((q) => !q.isDone);
-    //             const idx = firstUnfinishedIndex === -1 ? 0 : firstUnfinishedIndex;
-    //
-    //             setCurrentQuestion(loaded[idx] ?? null);
-    //             setCurrentIndex((prev) => ({...prev, [type]: idx}));
-    //             setCongratulation(false);
-    //             console.log(congratulation)
-    //             // 👇 авто-выбор страницы
-    //             setPage(Math.floor(idx / itemsPerPage));
-    //         }
-    //         setAnswerStatus("none");
-    //         setSelectedAnswer(null);
-    //     };
-    //
-    //     init();
-    // }, [time, type]);
     const handleAnswer = async (answerText: string, id: string) => {
 
         if (answerStatus !== "none") return;
