@@ -187,26 +187,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
             })();
         }
     }, [questions, type, time]);
-    useEffect(() => {
-        const loadProgress = async () => {
-            const stored = await getQuestions();
-            if (!stored) return;
-
-            const timeData = stored.simple[time];
-            let done = 0;
-            let total = 0;
-
-            Object.values(timeData).forEach((questionsArr) => {
-                total += questionsArr.length;
-                done += questionsArr.filter((q) => q.isDone).length;
-            });
-
-            setProgress({done, total});
-        };
-
-        loadProgress();
-    }, [time]);
-
     const handleAnswer = async (answerText: string, id: string) => {
 
         if (answerStatus !== "none") return;
