@@ -5,7 +5,7 @@ import {Box} from "@mui/material";
 import React from "react";
 
 type PropsType = {
-    time: "Present" | "Future" | "Past";
+    time: "Simple Present" | "Simple Past" | "Simple Future";
     thorium: boolean;
     toggleTheory: (theory: boolean) => void;
     getTheoryComponent: (toggleTheory: (theory: boolean) => void) => React.ReactNode;
