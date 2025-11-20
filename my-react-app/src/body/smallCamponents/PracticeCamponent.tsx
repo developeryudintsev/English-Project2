@@ -29,7 +29,6 @@ import Rating from '@mui/material/Rating';
 import Modal from '@mui/material/Modal';
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import type {timeType} from "../../App";
-
 export type changeType = "." | "?" | "!";
 type PracticeComponentProps = {
     time: timeType;
@@ -79,7 +78,10 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
     const startIndex = page * itemsPerPage;
     const visibleQuestions = questions.slice(startIndex, startIndex + itemsPerPage);
     const [progress, setProgress] = useState<{ done: number, total: number }>({done: 0, total: 0});
-
+    useEffect(() => {
+        const allDone = questions.every((q) => q.isDone);
+        setCongratulation(allDone);
+    }, [questions, type]);
     useEffect(() => {
         // Симулируем загрузку видео при монтировании компонента
         const timer = setTimeout(() => {
@@ -129,7 +131,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
 
         loadProgress();
     }, [time]);
-
     useEffect(() => {
         const init = async () => {
             const stored = await getQuestions();
@@ -205,10 +206,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
 
         loadProgress();
     }, [time]);
-    useEffect(() => {
-        const allDone = questions.every((q) => q.isDone);
-        setCongratulation(allDone);
-    }, [questions, type]);
+
     const handleAnswer = async (answerText: string, id: string) => {
 
         if (answerStatus !== "none") return;

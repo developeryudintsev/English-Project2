@@ -1,9 +1,10 @@
 import {ThoriumComponent} from "./ThoriumComponent";
 import {Box} from '@mui/material';
 import React from "react";
+import type {timeType} from "../App";
 
 type PropsType = {
-    time: "Present" | "Future" | "Past";
+    time: timeType;
     thorium: boolean;
     toggleTheory: (theory: boolean) => void;
     getTheoryComponent: (toggleTheory: (theory: boolean) => void) => React.ReactNode;
