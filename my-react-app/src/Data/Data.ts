@@ -26,7 +26,6 @@ export type DataType = {
         'Simple Future': TimeData;
     };
 };
-
 export type RatingMap = {
     simple: {
         'Simple Past': { [lessonKey: string]: 0|1 };

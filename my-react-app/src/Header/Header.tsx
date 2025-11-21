@@ -92,7 +92,7 @@ export const Header = (props: HeaderType) => {
         await db.delete("answers", "DATA_V1");
 
         // создаём новое
-        const rec: DBRecord = { id: "DATA_V1", payload: newData };
+        const rec = { id: "DATA_V1", payload: newData };
         await db.add("answers", rec);
 
     };
