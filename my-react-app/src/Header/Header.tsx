@@ -17,7 +17,7 @@ import Modal from "@mui/material/Modal";
 import {IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import type {DataType, RatingMap} from "../Data/Data";
-import {computeRatingMapFromData, getQuestions, getRatingMap, setRatingMap} from "../Data/Data";
+import {computeRatingMapFromData, getQuestions, getRatingMap, initDB, setRatingMap} from "../Data/Data";
 
 type HeaderType = {
     time: timeType;
@@ -80,6 +80,23 @@ export const Header = (props: HeaderType) => {
         const doneCount = Array.isArray(lesson) ? lesson.filter((q) => q.isDone).length : 0;
         return {lesson, total, doneCount};
     };
+    const replaceQuestions = async () => {
+        const db = await initDB();
+
+        // берём данные
+        const newData = await getQuestions();
+
+        if (!newData) return;
+
+        // удаляем старое
+        await db.delete("answers", "DATA_V1");
+
+        // создаём новое
+        const rec: DBRecord = { id: "DATA_V1", payload: newData };
+        await db.add("answers", rec);
+
+    };
+
     const renderModalBody = () => {
         // Используем questions для проверки, так как rating зависит от questions
         if (!questions) {
@@ -102,7 +119,6 @@ export const Header = (props: HeaderType) => {
                     return (
                         <Box key={tense} sx={{mb: 2}}>
                             <Typography variant="subtitle1" sx={{fontWeight: "bold", color: "#FFF44F", mb: 1}}>
-                                {/* ИСПРАВЛЕНИЕ 2: Отрисовываем только название времени без лишнего "Simple" */}
                                 {tense}
                             </Typography>
 
@@ -112,6 +128,9 @@ export const Header = (props: HeaderType) => {
 
                                         {Object.keys(lessons).map((lessonKey) => {
                                             const starValue = rating?.simple[tense]?.[lessonKey] ?? 0;
+                                            if (starValue === null) {
+                                                replaceQuestions();
+                                            }
                                             console.log(starValue)
                                             const typeSentence =
                                                 lessonKey === "."
