@@ -1,8 +1,9 @@
 import {Link, useParams} from 'react-router-dom';
 import {topics} from "../AppRoutes";
 import {Box, IconButton, Paper} from "@mui/material";
-import {useState} from "react";
+import React, {useState} from "react";
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 export const TopicDetailPage = () => {
     const {topicId} = useParams<{ topicId: string }>();
@@ -62,7 +63,7 @@ export const TopicDetailPage = () => {
                         sx={{color: '#FFF44F', position: 'absolute', top: 10, right: 8}}
                         size="small"
                     >
-                        <FingerprintIcon/>
+                        <InfoOutlinedIcon />
                     </IconButton>
                     {toggleIcon && <div style={{margin: '30px'}}>
                         {topic.vocabulary.length > 0 ? (
@@ -132,7 +133,7 @@ export const TopicDetailPage = () => {
                         sx={{color: '#FFF44F', position: 'absolute', top: 10, right: 8}}
                         size="small"
                     >
-                        <FingerprintIcon/>
+                        <InfoOutlinedIcon />
                     </IconButton>
                     {toggleText && <div style={{margin: '30px'}}>
                         {topic.vocabulary.length > 0 ? (

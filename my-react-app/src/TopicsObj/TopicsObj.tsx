@@ -32,11 +32,14 @@ export const TextAbout = () => {
                 color: 'black'
             }}>
                 <h4 >
+                    <div>
                     Hello, I would like to introduce myself. My name is …. I am from …. My native
                     town/city
                     is …. My mother tongue is….. I am…. years old. I am married (single). My family is
                     not
                     large (small).
+                    </div>
+                    <p></p>
                     First of all, I’d like to say a few words about my character. I am on friendly terms
                     with my parents and I get along well with people. I am a sociable person, very
                     responsible and hardworking. So I’ve a lot of friends and I often go out with them.
@@ -54,9 +57,12 @@ export const TextAbout = () => {
                     and I
                     have visited many ancient Russian cities. And we also like to spend time at the sea
                     every summer.
+                    <p></p>
+                    <div>
                     Of course, I have a lot of plans and dreams for the future. I try to do my best
                     because
                     I want my dreams to come true. That’s all I can tell you about myself.
+                    </div>
                 </h4>
             </div>
             <h3 style={{color: '#FFF44F'}}>О себе</h3>
@@ -67,9 +73,12 @@ export const TextAbout = () => {
                 color: 'black'
             }}>
                 <h4>
+                    <div>
                     Привет, я бы хотел(а) представиться. Меня зовут…. Я из…. Мой родной город/городок….
                     Мой родной язык….. Мне …. лет. Я замужем/женат (не замужем, холост). Моя семья
                     небольшая (маленькая).
+                    </div>
+                    <p></p>
                     Прежде всего, я бы хотел(а) сказать несколько слов о своем характере. Я в дружеских
                     отношениях со своими родителями и хорошо лажу с людьми. Я общительный человек, очень
                     ответственный и трудолюбивый. Поэтому у меня много друзей и я часто хожу с ними
@@ -82,8 +91,11 @@ export const TextAbout = () => {
                     жизни, узнавать новые культуры, наслаждаться живописными пейзажами и пробовать
                     разную экзотическую еду. Мои родители и я посетили много древних, русских городов. И
                     мы также любим проводить время на море каждое лето.
+                    <p></p>
+                    <div>
                     Конечно, у меня много планов на будущее. Я стараюсь делать все возможное, чтобы мои
                     мечты осуществились. Вот и всё, что я хотел(а) рассказать о себе.
+                    </div>
                 </h4>
             </div>
         </div>
