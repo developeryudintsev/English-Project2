@@ -1,8 +1,7 @@
 import {Link, useParams} from 'react-router-dom';
 import {topics} from "../AppRoutes";
 import {Box, IconButton, Paper} from "@mui/material";
-import React, {useState} from "react";
-import FingerprintIcon from '@mui/icons-material/Fingerprint';
+import  {useState} from "react";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 export const TopicDetailPage = () => {
