@@ -80,22 +80,6 @@ export const Header = (props: HeaderType) => {
         const doneCount = Array.isArray(lesson) ? lesson.filter((q) => q.isDone).length : 0;
         return {lesson, total, doneCount};
     };
-    const replaceQuestions = async () => {
-        const db = await initDB();
-
-        // берём данные
-        const newData = await getQuestions();
-
-        if (!newData) return;
-
-        // удаляем старое
-        await db.delete("answers", "DATA_V1");
-
-        // создаём новое
-        const rec = { id: "DATA_V1", payload: newData };
-        await db.add("answers", rec);
-
-    };
 
     const renderModalBody = () => {
         // Используем questions для проверки, так как rating зависит от questions
