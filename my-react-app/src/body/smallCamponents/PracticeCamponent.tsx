@@ -241,6 +241,18 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         wordFoo(newQuestion[0].id)
         console.log(newQuestion[0])
     }
+    useEffect(()=>{
+        const loadProgress = async () => {
+            const stored = await getQuestions();
+            if (!stored) return;
+            if(!stored.simple[time]){
+                newData()
+            }
+        };
+
+        loadProgress();
+
+    },[questions])
     const handleNextQuestion = () => {
         const next = questions.find((q) => !q.isDone);
         if (next) {

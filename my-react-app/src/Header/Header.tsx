@@ -128,9 +128,9 @@ export const Header = (props: HeaderType) => {
 
                                         {Object.keys(lessons).map((lessonKey) => {
                                             const starValue = rating?.simple[tense]?.[lessonKey] ?? 0;
-                                            if (starValue === null) {
-                                                replaceQuestions();
-                                            }
+                                            // if (starValue === null) {
+                                            //     return
+                                            // }
                                             console.log(starValue)
                                             const typeSentence =
                                                 lessonKey === "."
