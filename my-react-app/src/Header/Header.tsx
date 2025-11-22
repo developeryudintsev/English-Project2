@@ -17,7 +17,7 @@ import Modal from "@mui/material/Modal";
 import {IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import type {DataType, RatingMap} from "../Data/Data";
-import {computeRatingMapFromData, getQuestions, getRatingMap, initDB, setRatingMap} from "../Data/Data";
+import {computeRatingMapFromData, getQuestions, getRatingMap,  setRatingMap} from "../Data/Data";
 
 type HeaderType = {
     time: timeType;
