@@ -14,8 +14,6 @@ export const TopicDetailPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const ORIGINAL_W = 240;
     const ORIGINAL_H = 480;
-    const GAP = 12;
-    const ARROW_SIZE = 64;
     const SCALE = 0.8;
 
     const topic = topics.find(f => f.path === topicId);
