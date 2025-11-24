@@ -24,6 +24,23 @@ export const clipsReverse: Record<changeType, string[]> = {
     ],
     'отрицательное': [
         "https://vk.com/video_ext.php?oid=885405802&id=456239177&hd=2&autoplay=0",
+    ],
+    'микс':[
+        "https://vk.com/video_ext.php?oid=885405802&id=456239214&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239210&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239209&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239208&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239205&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239204&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239202&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239187&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239185&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239184&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239183&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239180&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239179&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239178&hd=2&autoplay=0",
+        "https://vk.com/video_ext.php?oid=885405802&id=456239177&hd=2&autoplay=0",
     ]
 };
 

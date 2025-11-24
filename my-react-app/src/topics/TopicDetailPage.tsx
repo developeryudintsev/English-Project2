@@ -1,23 +1,75 @@
 import {Link, useParams} from 'react-router-dom';
 import {topics} from "../AppRoutes";
 import {Box, IconButton, Paper} from "@mui/material";
-import  {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import CircularProgress from "@mui/material/CircularProgress";
 
+const ORIGINAL_W = 240;
+const ORIGINAL_H = 480;
+const SCALE = 0.8;
+
+const MIN_VISIBLE = 1;
+const MAX_VISIBLE = 4;
+const videos=[
+    {id: 1, src:"https://vk.com/video_ext.php?oid=885405802&id=456239188&autoplay=0"},
+    {id: 2, src:"https://vk.com/video_ext.php?oid=885405802&id=456239189&autoplay=0"},
+    {id: 3, src:"https://vk.com/video_ext.php?oid=885405802&id=456239190&autoplay=0"},
+    {id: 4, src:"https://vk.com/video_ext.php?oid=885405802&id=456239193&autoplay=0"},
+    {id: 5, src:"https://vk.com/video_ext.php?oid=885405802&id=456239195&autoplay=0"},
+    {id: 6, src:"https://vk.com/video_ext.php?oid=885405802&id=456239196&autoplay=0"},
+    {id: 7, src:"https://vk.com/video_ext.php?oid=885405802&id=456239200&autoplay=0"},
+    {id: 8, src:"https://vk.com/video_ext.php?oid=885405802&id=456239201&autoplay=0"},
+    {id: 9, src:"https://vk.com/video_ext.php?oid=885405802&id=456239216&autoplay=0"},
+    {id: 10, src:"https://vk.com/video_ext.php?oid=885405802&id=456239217&autoplay=0"},
+    {id: 11, src:"https://vk.com/video_ext.php?oid=885405802&id=456239218&autoplay=0"},
+    {id: 12, src:"https://vk.com/video_ext.php?oid=885405802&id=456239220&autoplay=0"},
+    {id: 13, src:"https://vk.com/video_ext.php?oid=885405802&id=456239221&autoplay=0"},
+    {id: 14, src:"https://vk.com/video_ext.php?oid=885405802&id=456239222&autoplay=0"},
+    {id: 15, src:"https://vk.com/video_ext.php?oid=885405802&id=456239224&autoplay=0"},
+    {id: 16, src:"https://vk.com/video_ext.php?oid=885405802&id=456239225&autoplay=0"},
+]
 
 export const TopicDetailPage = () => {
     const {topicId} = useParams<{ topicId: string }>();
     let [toggleIcon, setToggleIcon] = useState(false)
     let [toggleText, setToggleText] = useState(false)
-    let [toggleVideo, setToggleVideo] = useState(false)
-    const [isLoading, setIsLoading] = useState(true);
-    const ORIGINAL_W = 240;
-    const ORIGINAL_H = 480;
-    const SCALE = 0.8;
+    const [visibleCount, setVisibleCount] = useState(MAX_VISIBLE);
+    const [startIndex, setStartIndex] = useState(0);
+    const [loaded, setLoaded] = useState<Record<number, boolean>>({});
+    const [toggleVideo, setToggleVideo] = useState(false);
+
+    // responsive logic
+    useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+            if (width < 620) setVisibleCount(MIN_VISIBLE);
+            else if (width < 820) setVisibleCount(2);
+            else if (width < 1050) setVisibleCount(3);
+            else setVisibleCount(MAX_VISIBLE);
+        };
+
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const visibleVideos = videos.slice(startIndex, startIndex + visibleCount);
+
+    const canGoLeft = startIndex > 0;
+    const canGoRight = startIndex + visibleCount < videos.length;
+
+    const handleLeft = () => {
+        if (canGoLeft) setStartIndex(prev => prev - 1);
+    };
+
+    const handleRight = () => {
+        if (canGoRight) setStartIndex(prev => prev + 1);
+    };
 
     const topic = topics.find(f => f.path === topicId);
-
     if (!topic) {
         return (
             <div style={{padding: '40px', textAlign: 'center'}}>
@@ -160,103 +212,163 @@ export const TopicDetailPage = () => {
                     </div>}
                 </Paper>
 
-                <Paper
-                    elevation={3}
-                    sx={{
-                        padding: 2,
-                        position: "relative",
-                        width: "95%",
-                        maxWidth: "980px",
-                        textAlign: "center",
-                        backgroundColor: "#444447",
-                        transition: "all 1s ease",
-                        animation: "blinkGreen 1s infinite",
-                        marginTop: "20px",
-                        marginLeft: "auto",
-                        cursor: "pointer",
-                        marginRight: "auto",
-                    }}
-                >
-                    <h3
-                        onClick={() => setToggleVideo(!toggleVideo)}
-                        style={{
-                            color: "#FFF44F",
-                            marginTop: "0px",
-                            height: "7px",
+                {/*<div style={{ width: "100%", display: "flex", justifyContent: "center" }}>*/}
+                    <Paper
+                        elevation={3}
+                        sx={{
+                            padding: 2,
+                            position: "relative",
+                            width: "95%",
+                            maxWidth: "980px",
+                            textAlign: "center",
+                            backgroundColor: "#444447",
+                            transition: "all 1s ease",
+                            animation: "blinkGreen 1s infinite",
+                            marginTop: '20px',
+                            marginLeft: 'auto',
+                            cursor: 'pointer',
+                            marginRight: 'auto',
                         }}
                     >
-                        {topic.label}-видео
-                    </h3>
-
-                    <IconButton
-                        onClick={() => setToggleVideo(!toggleVideo)}
-                        sx={{ color: "#FFF44F", position: "absolute", top: 10, right: 8 }}
-                        size="small"
-                    >
-                        <InfoOutlinedIcon />
-                    </IconButton>
-
-                    {toggleVideo && (
-                        <div
+                        <h3
+                            onClick={() => setToggleVideo(!toggleVideo)}
                             style={{
-                                margin: "30px",
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
+                                color: '#FFF44F',
+                                marginTop: '0px',
+                                height: '7px' }}
                         >
-                            {/* LOADER Пока iframe грузится */}
-                            {isLoading && (
-                                <div
+                            Видео-уроки
+                        </h3>
+
+                        <IconButton
+                            onClick={() => setToggleVideo(!toggleVideo)}
+                            sx={{ color: "#FFF44F", position: "absolute", top: 10, right: 8 }}
+                            size="small"
+                        >
+                            <InfoOutlinedIcon />
+                        </IconButton>
+
+                        {toggleVideo && (
+                            <div style={{ marginTop: "30px", position: "relative" }}>
+                                {/* LEFT BUTTON */}
+                                <button
+                                    onClick={handleLeft}
+                                    disabled={!canGoLeft}
                                     style={{
-                                        width: ORIGINAL_W * SCALE,
-                                        height: ORIGINAL_H * SCALE,
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
+                                        position: "absolute",
+                                        left: 0,
+                                        top: "50%",
+                                        transform: "translateY(-50%)",
+                                        padding: "10px 15px",
+                                        opacity: canGoLeft ? 1 : 0.3,
+                                        background: "none",
+                                        border: "none",
+                                        fontSize: 90,
+                                        color: "#FFF44F",
+                                        cursor: canGoLeft ? "pointer" : "default",
                                     }}
                                 >
-                                    <CircularProgress sx={{ color: "#FFF44F" }} />
-                                </div>
-                            )}
-
-                            {/* Видео */}
-                            <div
-                                style={{
-                                    width: ORIGINAL_W,
-                                    height: ORIGINAL_H,
-                                    transform: `scale(${SCALE})`,
-                                    transformOrigin: "top left",
-                                    display: isLoading ? "none" : "block",
-                                }}
-                            >
-                                <iframe
-                                    src={
-                                        "https://vk.com/video_ext.php?oid=885405802&id=456239188&autoplay=0"
-                                    }
-                                    width={ORIGINAL_W}
-                                    height={ORIGINAL_H}
-                                    frameBorder={0}
-                                    allow="autoplay=0;mute=1; encrypted-media; fullscreen; picture-in-picture"
-                                    allowFullScreen
-                                    onLoad={() => setIsLoading(false)} // ⬅️ Скрываем loader после загрузки
-                                    style={{
-                                        display: "block",
-                                        border: 0,
-                                        marginLeft:'30px'
-                                    }}
-                                />
-                            </div>
-
-                            <Link to="/themes">
-                                <button style={{ padding: "10px 20px", marginTop: "-60px" }}>
-                                    Вернуться к списку тем
+                                    ‹
                                 </button>
-                            </Link>
-                        </div>
-                    )}
-                </Paper>
+
+                                {/* VIDEO ROW */}
+                                {/*<div*/}
+                                {/*    style={{*/}
+                                {/*        width: ORIGINAL_W,*/}
+                                {/*        height: ORIGINAL_H,*/}
+                                {/*        transform: `scale(${SCALE})`,*/}
+                                {/*        transformOrigin: "top left",*/}
+                                {/*    }}*/}
+                                {/*>*/}
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        gap: "15px",
+                                        width: "100%",
+                                        transform: `scale(${SCALE})`,
+                                        overflow: "hidden", // NO SCROLL
+                                        padding: "0 0px",
+                                    }}
+                                >
+                                    {visibleVideos.map(video => (
+                                        <div
+                                            key={video.id}
+                                            style={{
+                                                width: ORIGINAL_W ,
+                                                height: ORIGINAL_H ,
+                                                position: "relative",
+
+                                            }}
+                                        >
+                                            {!loaded[video.id] && (
+                                                <div
+                                                    style={{
+                                                        position: "absolute",
+                                                        top: 0,
+                                                        left: 0,
+                                                        right: 0,
+                                                        bottom: 0,
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        background: "#333",
+                                                        borderRadius: "6px",
+                                                    }}
+                                                >
+                                                    <CircularProgress />
+                                                </div>
+                                            )}
+
+                                            <iframe
+                                                src={video.src}
+                                                width={ORIGINAL_W }
+                                                height={ORIGINAL_H }
+                                                frameBorder={0}
+                                                allow="autoplay=0; encrypted-media; fullscreen"
+                                                allowFullScreen
+                                                style={{
+                                                    display: loaded[video.id] ? "block" : "none",
+                                                    borderRadius: "6px",
+                                                }}
+                                                onLoad={() =>
+                                                    setLoaded(prev => ({ ...prev, [video.id]: true }))
+                                                }
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* RIGHT BUTTON */}
+                                <button
+                                    onClick={handleRight}
+                                    disabled={!canGoRight}
+                                    style={{
+                                        position: "absolute",
+                                        right: 0,
+                                        top: "50%",
+                                        transform: "translateY(-50%)",
+                                        padding: "10px 15px",
+                                        opacity: canGoRight ? 1 : 0.3,
+                                        background: "none",
+                                        border: "none",
+                                        fontSize: 90,
+                                        color: "#FFF44F",
+                                        cursor: canGoRight ? "pointer" : "default",
+                                    }}
+                                >
+                                    ›
+                                </button>
+
+                                <Link to="/themes">
+                                    <button style={{ padding: "10px 20px", marginTop: "0px" }}>
+                                        Вернуться к темам
+                                    </button>
+                                </Link>
+                            </div>
+                        )}
+                    </Paper>
+                {/*</div>*/}
 
             </Box>
         </Box>

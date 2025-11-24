@@ -13,7 +13,7 @@ type VideoComponentType = {
     setShowPractice: (showPractice: boolean) => void
     setToggleVideo: (theory: boolean) => void;
 }
-export type changeType='утвердительное'|'вопросительное'|'отрицательное'
+export type changeType='утвердительное'|'вопросительное'|'отрицательное'|'микс'
 export const VideoComponent = ({toggle,setToggle,openTheory, setShowPractice,setToggleVideo}: VideoComponentType) => {
     const [type, setType] = useState<changeType>('утвердительное');
     const toggleVideo = (toggle: boolean) => {
@@ -70,6 +70,7 @@ export const VideoComponent = ({toggle,setToggle,openTheory, setShowPractice,set
                         <MenuItem value="утвердительное">утвердительное</MenuItem>
                         <MenuItem value="вопросительное">вопросительное</MenuItem>
                         <MenuItem value="отрицательное">отрицательное</MenuItem>
+                        <MenuItem value="микс">микс</MenuItem>
                     </Select>
                 </FormControl>
                 <Box
