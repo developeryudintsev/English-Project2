@@ -1,10 +1,8 @@
 import {Link, useParams} from 'react-router-dom';
 import {topics} from "../AppRoutes";
 import {Box, IconButton, Paper} from "@mui/material";
-import {useEffect, useRef, useState} from "react";
+import {useEffect,  useState} from "react";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const ORIGINAL_W = 240;
