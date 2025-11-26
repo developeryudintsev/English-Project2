@@ -366,6 +366,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         <>
             <Paper
                 elevation={3}
+                onClick={() => ButtonFoo(toggle)}
                 sx={{
                     padding: 2,
                     position: "relative",

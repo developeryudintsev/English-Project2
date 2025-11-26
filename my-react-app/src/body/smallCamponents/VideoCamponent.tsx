@@ -23,6 +23,7 @@ export const VideoComponent = ({toggle,setToggle,openTheory, setShowPractice,set
     return (
         <Paper
             elevation={3}
+            onClick={() => toggleVideo(!toggle)}
             sx={{
                 padding: 2,
                 position: 'relative',
