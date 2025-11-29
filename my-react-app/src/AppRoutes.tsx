@@ -16,6 +16,8 @@ import about from "./picture/about3.png";
 import {TopicsPage} from "./topics/TopicsPage";
 import {TopicDetailPage} from "./topics/TopicDetailPage";
 import {AboutMyself, Text, TextAbout} from "./TopicsObj/TopicsObj";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 interface VocabularyWord {
     en: string;
@@ -160,6 +162,8 @@ export const AppRoutes = () => {
         cursor: "pointer",
         fontSize: "20px",
     };
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     return (
         <>
             {location.pathname !== '/app' &&
@@ -169,72 +173,139 @@ export const AppRoutes = () => {
                             disableGutters
                             sx={{
                                 display: 'flex',
-                                flexWrap: 'wrap',
-                                gap: { xs: 2, md: 0 },
-                                justifyContent: 'space-between',
+                                flexDirection: { xs: 'column', sm: 'row' },
+                                justifyContent: { xs: 'center', sm: 'space-between' },
                                 alignItems: 'center',
                                 width: '100%',
                                 py: 1,
+                                gap: { xs: 1, sm: 0 },
                             }}
                         >
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 0.5,
-                                    flexWrap: 'wrap',
-                                    width: { xs: '100%', sm: 'auto' },
-                                    justifyContent: 'center',
-                                }}
-                            >
+
+                            {/* --- Условие для мобилки и десктопа --- */}
+                            {isMobile ? (
+                                // ===== 1. МОБИЛЬНЫЙ МАКЕТ (HomeIcon снизу) =====
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column', // Элементы идут вертикально друг за другом
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        width: '100%',
+                                    }}
+                                >
+                                    {/* Название + Версия (в одной строке) */}
+                                    <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center' }}>
+                                        <Typography
+                                            sx={{
+                                                color: '#FFF44F', fontWeight: 700, fontFamily: '"South Park Ext", sans-serif',
+                                                fontSize: '1.5rem',
+                                                textShadow: '2px 2px 0px #000, -1px -1px 0px #000',
+                                            }}
+                                        >
+                                            English cat
+                                        </Typography>
+                                        <Typography sx={{ color: '#FFF44F', fontWeight: 400, fontSize: '1rem', ml: 1 }}>
+                                            (v0.7)
+                                        </Typography>
+                                    </Box>
+                                    <Box
+                                        sx={{
+                                            position: { xs: 'absolute', sm: 'static' },
+                                            right: { xs: 10, sm: 'auto' },
+                                            top: { xs: 10, sm: 'auto' },
+                                        }}
+                                    >
+                                        <Tooltip title="Ссылка на наш сайт">
+                                            <a
+                                                href="https://www.kiber-rus.ru/"
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                style={{ textDecoration: 'none' }}
+                                            >
+                                                <Avatar
+                                                    alt="User Avatar"
+                                                    src={cat}
+                                                    sx={{
+                                                        border: '2px solid white',
+                                                        width: { xs: 45, md: 55 },
+                                                        height: { xs: 45, md: 55 },
+                                                    }}
+                                                />
+                                            </a>
+                                        </Tooltip>
+                                    </Box>
+
+
+                                    {/* HomeIcon (Отдельная строка снизу) */}
+                                    {location.pathname !== '/' && (
+                                        <HomeIcon
+                                            sx={{
+                                                color: '#2fd300',
+                                                fontSize: 35,
+                                                mt: 1, // Отступ сверху
+                                            }}
+                                        />
+                                    )}
+                                </Box>
+
+                            ) : (
+
+                                // ===== 2. ДЕСКТОПНЫЙ МАКЕТ (Все в одну строку) =====
                                 <Box
                                     sx={{
                                         display: 'flex',
                                         alignItems: 'center',
-                                        gap: '10px',
-                                        paddingY: { xs: 1, md: 0 },
+                                        justifyContent: 'center',
+                                        gap: 1,
+                                        width: '100%',
                                     }}
                                 >
-                                    {location.pathname !== '/'&&
-                                    <HomeIcon
-                                        sx={{
-                                            color: '#2fd300',
-                                            fontSize: { xs: 35, sm: 40, md: 50 },
-                                            marginTop:'-10px'
-                                        }}
-                                    />
-                                    }
+                                    {/* HomeIcon */}
+                                    {location.pathname !== '/' && (
+                                        <HomeIcon
+                                            sx={{
+                                                color: '#2fd300',
+                                                fontSize: 50,
+                                                mt: '-10px', // Отступ как был изначально
+                                            }}
+                                        />
+                                    )}
+
+                                    {/* Название */}
                                     <Typography
                                         sx={{
                                             color: '#FFF44F',
                                             fontWeight: 700,
                                             fontFamily: '"South Park Ext", sans-serif',
-                                            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.7rem' },
+                                            fontSize: '2.7rem',
                                             textShadow: '2px 2px 0px #000, -1px -1px 0px #000',
                                             whiteSpace: 'nowrap',
                                         }}
                                     >
                                         English cat
                                     </Typography>
+
+                                    {/* Версия */}
+                                    <Typography
+                                        sx={{
+                                            color: '#FFF44F',
+                                            fontWeight: 400,
+                                            fontSize: '2rem',
+                                            whiteSpace: 'nowrap',
+                                        }}
+                                    >
+                                        (v0.7)
+                                    </Typography>
                                 </Box>
-                                <Typography
-                                    sx={{
-                                        color: '#FFF44F',
-                                        fontWeight: 400,
-                                        fontSize: { xs: '1rem', sm: '1.5rem', md: '2rem' },
-                                        whiteSpace: 'nowrap',
-                                        ml: 1,
-                                    }}
-                                >
-                                    (v0.7)
-                                </Typography>
-                            </Box>
+                            )}
+
+                            {/* ===== Аватарка справа (остается без изменений) ===== */}
                             <Box
                                 sx={{
-                                    width: { xs: '100%', sm: 'auto' },
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    marginTop: { xs: '10px', sm: '0px' },
+                                    position: { xs: 'absolute', sm: 'static' },
+                                    right: { xs: 10, sm: 'auto' },
+                                    top: { xs: 10, sm: 'auto' },
                                 }}
                             >
                                 <Tooltip title="Ссылка на наш сайт">
@@ -256,10 +327,14 @@ export const AppRoutes = () => {
                                     </a>
                                 </Tooltip>
                             </Box>
+
+
                         </Toolbar>
                     </Container>
                 </AppBar>
             }
+
+
             <Routes>
                 <Route
                     path="/"
