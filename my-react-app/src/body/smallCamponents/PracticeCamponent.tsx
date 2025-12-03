@@ -56,6 +56,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         "?": 0,
         "!": 0,
     });
+    console.log(currentIndex)
     const [fullData, setFullData] = useState<DataType | null>(null);
     const [questions, setQuestions] = useState<QuestionType[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<QuestionType | null>(null);
