@@ -41,6 +41,7 @@ type PracticeComponentProps = {
     setStar: (star: number) => void
     star: number
 };
+
 export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                                         time,
                                                                         toggle = false,
@@ -135,11 +136,9 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         const init = async () => {
             const stored = await getQuestions();
             if (!stored || !stored.simple) {
-                // Если данных нет, добавляем их
                 await addQuestions(data, "none");
                 const fresh = await getQuestions();
                 if (fresh) {
-                    // Используем time как ключ (теперь он соответствует ключам в fresh.simple)
                     const loaded = fresh.simple[time][type];
                     setFullData(fresh);
                     setQuestions(loaded);
@@ -151,16 +150,12 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                     setCurrentIndex((prev) => ({...prev, [type]: idx}));
                     setCongratulation(firstUnfinishedIndex === -1);
 
-                    // 👇 авто-выбор страницы с первой незакрытой задачей
                     setPage(Math.floor(idx / itemsPerPage));
                 }
             } else {
-                // Если данные уже есть, загружаем их
-                // Используем time как ключ (он соответствует ключам в stored.simple)
                 const loaded = stored.simple[time][type];
                 setFullData(stored);
                 setQuestions(loaded);
-
                 const firstUnfinishedIndex = loaded.findIndex((q) => !q.isDone);
                 const idx = firstUnfinishedIndex === -1 ? 0 : firstUnfinishedIndex;
 
@@ -168,13 +163,11 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                 setCurrentIndex((prev) => ({...prev, [type]: idx}));
                 setCongratulation(false);
                 console.log(congratulation)
-                // 👇 авто-выбор страницы
                 setPage(Math.floor(idx / itemsPerPage));
             }
             setAnswerStatus("none");
             setSelectedAnswer(null);
         };
-
         init();
     }, [time, type]);
     useEffect(() => {
@@ -366,7 +359,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         <>
             <Paper
                 elevation={3}
-                onClick={() => ButtonFoo(toggle)}
+                onDoubleClick={() => ButtonFoo(toggle)}
                 sx={{
                     padding: 2,
                     position: "relative",
@@ -604,6 +597,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                             userSelect: "none",
                             cursor: "pointer",
                         }}
+
                     >
 
                         {!toggle ? (
@@ -613,7 +607,8 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                 justifyContent: "space-between",
                                 flexWrap: "wrap",
                                 gap: "10px"
-                            }}>
+                            }}
+                            >
                             <span onClick={() => ButtonFoo(toggle)}>
                                 Практика – {time} ({progress.done}/{progress.total})
                             </span>
@@ -637,15 +632,15 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                     sx={{fontSize: 56, color: "#FFF44F"}}/>
                                         </Box>
                                     )}
-                                    <FormControl sx={{minWidth: 160}} size="small">
+                                    <FormControl onSubmit={(e) => e.preventDefault()} sx={{minWidth: 160}} size="small">
                                         <Select
                                             value={type}
                                             onChange={(e) => {
                                                 const newType = e.target.value as changeType;
                                                 setType(newType);
-                                                setCurrentQuestion(
-                                                    data.simple[time][newType][currentIndex[newType]]
-                                                );
+                                                // setCurrentQuestion(
+                                                //     data.simple[time][newType]
+                                                // );
                                             }}
                                             displayEmpty
                                             inputProps={{"aria-label": "Select tense"}}

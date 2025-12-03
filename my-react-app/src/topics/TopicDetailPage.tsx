@@ -115,7 +115,7 @@ export const TopicDetailPage = () => {
             >
                 <Paper
                     elevation={3}
-                    onClick={() => setToggleIcon(!toggleIcon)}
+                    onDoubleClick={() => setToggleIcon(!toggleIcon)}
                     sx={{
                         padding: 2,
                         position: "relative",
@@ -182,7 +182,7 @@ export const TopicDetailPage = () => {
                 </Paper>
                 <Paper
                     elevation={3}
-                    onClick={() => setToggleText(!toggleText)}
+                    onDoubleClick={() => setToggleText(!toggleText)}
                     sx={{
                         padding: 2,
                         position: "relative",
@@ -231,7 +231,7 @@ export const TopicDetailPage = () => {
 
                     <Paper
                         elevation={3}
-                        onClick={() => setToggleVideo(!toggleVideo)}
+                        onDoubleClick={() => setToggleVideo(!toggleVideo)}
                         sx={{
                             padding: 2,
                             position: "relative",

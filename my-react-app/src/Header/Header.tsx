@@ -17,7 +17,7 @@ import Modal from "@mui/material/Modal";
 import {IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import type {DataType, RatingMap} from "../Data/Data";
-import {computeRatingMapFromData, getQuestions, getRatingMap,  setRatingMap} from "../Data/Data";
+import {computeRatingMapFromData, getQuestions, getRatingMap, setRatingMap} from "../Data/Data";
 
 type HeaderType = {
     time: timeType;
@@ -85,8 +85,8 @@ export const Header = (props: HeaderType) => {
         // Используем questions для проверки, так как rating зависит от questions
         if (!questions) {
             return (
-                <Box sx={{ p: 2 }}>
-                    <Typography sx={{ color: "#FFF44F" }}>Загрузка...</Typography>
+                <Box sx={{p: 2}}>
+                    <Typography sx={{color: "#FFF44F"}}>Загрузка...</Typography>
                 </Box>
             );
         }
@@ -95,7 +95,7 @@ export const Header = (props: HeaderType) => {
         const TENSE_KEYS = ['Simple Present', 'Simple Past', 'Simple Future'] as const;
 
         return (
-            <Box sx={{ p: 2 }}>
+            <Box sx={{p: 2}}>
                 {TENSE_KEYS.map((tense) => {
                     const lessons = questions.simple[tense];
                     if (!lessons) return null;
@@ -182,83 +182,112 @@ export const Header = (props: HeaderType) => {
                                     gap: 2,
                                 }}
                             >
-                                <Box sx={{display: 'flex', alignItems: 'baseline', gap: 0.5}}>
-                                    <Typography
-                                        sx={{
-                                            color: '#FFF44F',
-                                            fontWeight: 700,
-                                            fontFamily: '"South Park Ext", sans-serif',
-                                            fontSize: isSuperSmall ? '0.8rem' : '1.7rem',
-                                            textShadow: '2px 2px 0px #000, -1px -1px 0px #000',
-                                            whiteSpace: 'nowrap',
+
+                                <Box sx={{display: 'flex', alignItems: 'baseline'}}>
+                                    <Box sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        width: '100%',
+                                        px: 1,
+                                        gap: 0
+                                    }}>
+                                        <Box sx={{
                                             display: 'flex',
                                             alignItems: 'center',
-                                            gap: '10px',
-                                            paddingY: {xs: 1, md: 0},
-                                        }}
-                                    >
-                                        English cat
-                                    </Typography>
-                                    <Typography
-                                        sx={{
-                                            color: '#FFF44F',
-                                            fontWeight: 400,
-                                            fontSize: '1rem',
-                                            whiteSpace: 'nowrap',
-                                        }}
-                                    >
-                                        (v0.7)
-                                    </Typography>
-                                    <Modal open={modalToggle} onClose={() => setModalToggle(false)}>
-                                        <Box
-                                            sx={{
-                                                width: 400,
-                                                bgcolor: "#2c2c2c",
-                                                borderRadius: 2,
-                                                boxShadow: 24,
-                                                mx: "auto",
-                                                mt: "10%",
-                                                overflow: "hidden",
-                                            }}
-                                        >
-                                            <Box
+                                            gap: '16px'
+                                        }}>
+                                            <HomeIcon sx={{
+                                                fontSize: 50,
+                                                color: '#2fd300',
+                                                marginTop: '0px'
+                                            }}/>
+                                        </Box>
+                                        <Box sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            marginTop:'10px',
+                                            marginLeft:'10px'
+                                        }}>
+                                            <Typography
                                                 sx={{
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                    backgroundColor: "#444447",
-                                                    color: "#fff",
-                                                    py: 1,
-                                                    position: "relative",
+                                                    color: '#FFF44F',
+                                                    fontWeight: 700,
+                                                    fontFamily: '"South Park Ext", sans-serif',
+                                                    fontSize: isSuperSmall ? '0.8rem' : '1.7rem',
+                                                    textShadow: '2px 2px 0px #000, -1px -1px 0px #000',
+                                                    whiteSpace: 'nowrap',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '10px',
+                                                    paddingY: {xs: 1, md: 0},
                                                 }}
                                             >
-                                                <IconButton
-                                                    onClick={() => setModalToggle(false)}
+                                                English cat
+                                            </Typography>
+                                            <Typography
+                                                sx={{
+                                                    color: '#FFF44F',
+                                                    fontWeight: 400,
+                                                    fontSize: '1rem',
+                                                    whiteSpace: 'nowrap',
+                                                }}
+                                            >
+                                                (v0.7)
+                                            </Typography>
+                                            <Modal open={modalToggle} onClose={() => setModalToggle(false)}>
+                                                <Box
                                                     sx={{
-                                                        position: "absolute",
-                                                        right: "10px",
-                                                        top: "6px",
-                                                        color: "#fff",
-                                                        backgroundColor: "red",
-                                                        "&:hover": {backgroundColor: "#cc0000"},
+                                                        width: 400,
+                                                        bgcolor: "#2c2c2c",
+                                                        borderRadius: 2,
+                                                        boxShadow: 24,
+                                                        mx: "auto",
+                                                        mt: "10%",
+                                                        overflow: "hidden",
                                                     }}
                                                 >
-                                                    <CloseIcon/>
-                                                </IconButton>
-                                                <Typography variant="h6" sx={{
-                                                    fontWeight: "bold",
-                                                    textAlign: "center",
-                                                    color: "#FFF44F",
-                                                    width: "100%",
-                                                    px: 6
-                                                }}>
-                                                    Выполненные времена:
-                                                </Typography>
-                                            </Box>
+                                                    <Box
+                                                        sx={{
+                                                            display: "flex",
+                                                            alignItems: "center",
+                                                            justifyContent: "center",
+                                                            backgroundColor: "#444447",
+                                                            color: "#fff",
+                                                            py: 1,
+                                                            position: "relative",
+                                                        }}
+                                                    >
+                                                        <IconButton
+                                                            onClick={() => setModalToggle(false)}
+                                                            sx={{
+                                                                position: "absolute",
+                                                                right: "10px",
+                                                                top: "6px",
+                                                                color: "#fff",
+                                                                backgroundColor: "red",
+                                                                "&:hover": {backgroundColor: "#cc0000"},
+                                                            }}
+                                                        >
+                                                            <CloseIcon/>
+                                                        </IconButton>
+                                                        <Typography variant="h6" sx={{
+                                                            fontWeight: "bold",
+                                                            textAlign: "center",
+                                                            color: "#FFF44F",
+                                                            width: "100%",
+                                                            px: 6
+                                                        }}>
+                                                            Выполненные времена:
+                                                        </Typography>
+                                                    </Box>
 
-                                            {renderModalBody()}
+                                                    {renderModalBody()}
+                                                </Box>
+                                            </Modal>
                                         </Box>
-                                    </Modal>
+                                    </Box>
                                 </Box>
                                 <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
                                     {/* Звезда слева */}
@@ -286,7 +315,7 @@ export const Header = (props: HeaderType) => {
                                                         pointerEvents: "none",
                                                     }}
                                                 >
-                                                    {props.star-1}
+                                                    {props.star - 1}
                                                 </Typography>
                                             )}
                                         </Box>
@@ -316,32 +345,14 @@ export const Header = (props: HeaderType) => {
                             <Box sx={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'space-between',
+                                justifyContent: 'center',
                                 width: '95%',
                                 px: 1,
                                 gap: 0
                             }}>
-                                <Box sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px'
-                                }}>
-                                    <HomeIcon sx={{
-                                        fontSize: 50,
-                                        color: '#2fd300',
-                                    }}/>
-
-                                    {/*<Typography sx={{*/}
-                                    {/*    color: '#FFF44F',*/}
-                                    {/*    fontWeight: 500,*/}
-                                    {/*    flexShrink: 0,*/}
-                                    {/*}}>*/}
-                                    {/*    Simple*/}
-                                    {/*</Typography>*/}
-                                </Box>
 
                                 <FormControl sx={{
-                                    minWidth: isSuperSmall ? 120 : 160,
+                                    minWidth: isSuperSmall ? 160 : 200,
                                 }} size="small">
                                     <Select
                                         value={props.time}
@@ -352,7 +363,7 @@ export const Header = (props: HeaderType) => {
                                             backgroundColor: 'white',
                                             borderRadius: 1,
                                             width: '110%',
-                                            minWidth:'150px'
+                                            minWidth: '150px'
                                         }}
                                     >
                                         <MenuItem value='Simple Present'>Simple Present</MenuItem>
@@ -380,17 +391,22 @@ export const Header = (props: HeaderType) => {
                                     <HomeIcon sx={{
                                         fontSize: 50,
                                         color: '#2fd300',
-                                        marginTop:'10px'
+                                        marginTop: '10px'
                                     }}/>
-
                                 </Box>
-                                <FormControl sx={{ flexGrow: 1, minWidth: isSuperSmall ? 120 : 160, marginLeft: '20px' }} size="small">
+                                <FormControl sx={{flexGrow: 1, minWidth: isSuperSmall ? 120 : 160, marginLeft: '20px'}}
+                                             size="small">
                                     <Select
                                         value={props.time}
                                         onChange={(e) => props.handleChange(e.target.value as timeType)}
                                         displayEmpty
                                         inputProps={{'aria-label': 'Select tense'}}
-                                        sx={{ backgroundColor: 'white', borderRadius: 1, width: '40%',minWidth:'150px' }}
+                                        sx={{
+                                            backgroundColor: 'white',
+                                            borderRadius: 1,
+                                            width: '40%',
+                                            minWidth: '150px'
+                                        }}
                                     >
                                         <MenuItem value='Simple Present'>Simple Present</MenuItem>
                                         <MenuItem value='Simple Past'>Simple Past</MenuItem>
@@ -446,7 +462,7 @@ export const Header = (props: HeaderType) => {
                                                     fontSize: "1.2rem",
                                                     pointerEvents: "none"
                                                 }}>
-                                                    {props.star-1}
+                                                    {props.star - 1}
                                                 </Typography>
                                             )}
                                         </Box>
