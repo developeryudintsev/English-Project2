@@ -181,20 +181,16 @@ export const AppRoutes = () => {
                                 gap: { xs: 1, sm: 0 },
                             }}
                         >
-
-                            {/* --- Условие для мобилки и десктопа --- */}
                             {isMobile ? (
-                                // ===== 1. МОБИЛЬНЫЙ МАКЕТ (HomeIcon снизу) =====
                                 <Box
                                     sx={{
                                         display: 'flex',
-                                        flexDirection: 'column', // Элементы идут вертикально друг за другом
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
+                                        flexDirection: 'column',
+                                        alignItems: 'start',
+                                        justifyContent: 'start',
                                         width: '100%',
                                     }}
                                 >
-                                    {/* Название + Версия (в одной строке) */}
                                     <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center' }}>
                                         <Typography
                                             sx={{
@@ -236,14 +232,12 @@ export const AppRoutes = () => {
                                         </Tooltip>
                                     </Box>
 
-
-                                    {/* HomeIcon (Отдельная строка снизу) */}
                                     {location.pathname !== '/' && (
                                         <HomeIcon
                                             sx={{
                                                 color: '#2fd300',
                                                 fontSize: 35,
-                                                mt: 1, // Отступ сверху
+                                                mt: 1,
                                             }}
                                         />
                                     )}
@@ -251,28 +245,24 @@ export const AppRoutes = () => {
 
                             ) : (
 
-                                // ===== 2. ДЕСКТОПНЫЙ МАКЕТ (Все в одну строку) =====
                                 <Box
                                     sx={{
                                         display: 'flex',
                                         alignItems: 'center',
-                                        justifyContent: 'center',
+                                        justifyContent: 'start',
                                         gap: 1,
                                         width: '100%',
                                     }}
                                 >
-                                    {/* HomeIcon */}
                                     {location.pathname !== '/' && (
                                         <HomeIcon
                                             sx={{
                                                 color: '#2fd300',
                                                 fontSize: 50,
-                                                mt: '-10px', // Отступ как был изначально
+                                                mt: '-10px',
                                             }}
                                         />
                                     )}
-
-                                    {/* Название */}
                                     <Typography
                                         sx={{
                                             color: '#FFF44F',
@@ -286,7 +276,6 @@ export const AppRoutes = () => {
                                         English cat
                                     </Typography>
 
-                                    {/* Версия */}
                                     <Typography
                                         sx={{
                                             color: '#FFF44F',
@@ -299,8 +288,6 @@ export const AppRoutes = () => {
                                     </Typography>
                                 </Box>
                             )}
-
-                            {/* ===== Аватарка справа (остается без изменений) ===== */}
                             <Box
                                 sx={{
                                     position: { xs: 'absolute', sm: 'static' },
