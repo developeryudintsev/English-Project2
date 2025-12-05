@@ -360,7 +360,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         <>
             <Paper
                 elevation={3}
-                onDoubleClick={() => ButtonFoo(toggle)}
+                onClick={() =>{if (!toggle) {ButtonFoo(toggle)}}}
                 sx={{
                     padding: 2,
                     position: "relative",

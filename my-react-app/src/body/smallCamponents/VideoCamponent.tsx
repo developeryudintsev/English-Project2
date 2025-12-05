@@ -16,14 +16,17 @@ type VideoComponentType = {
 export type changeType='утвердительное'|'вопросительное'|'отрицательное'|'микс'
 export const VideoComponent = ({toggle,setToggle,openTheory, setShowPractice,setToggleVideo}: VideoComponentType) => {
     const [type, setType] = useState<changeType>('утвердительное');
-    const toggleVideo = (toggle: boolean) => {
+    const handleToggleVideo = (toggle: boolean) => {
         setToggle(toggle)
     }
-
     return (
         <Paper
             elevation={3}
-            // onClick={() => toggleVideo(!toggle)}
+            onClick={() => {
+                if (!toggle) {
+                    handleToggleVideo(true);
+                }
+            }}
             sx={{
                 padding: 2,
                 position: 'relative',
@@ -37,7 +40,10 @@ export const VideoComponent = ({toggle,setToggle,openTheory, setShowPractice,set
             }}
         >
             <IconButton
-                onClick={() => toggleVideo(!toggle)}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    handleToggleVideo(!toggle);
+                }}
                 sx={{color: '#FFF44F', position: "absolute", top: 8, right: 8}}
                 size="small"
             >
@@ -45,7 +51,16 @@ export const VideoComponent = ({toggle,setToggle,openTheory, setShowPractice,set
             </IconButton>
 
             <Collapse in={toggle}>
-                <Typography sx={{color: '#FFF44F', pr: {xs: 4, sm: 0}, cursor: "pointer",}}  onClick={() => toggleVideo(!toggle)}>Выбери тип предложения:</Typography>
+                {/* Все элементы внутри Collapse должны останавливать всплытие при клике, чтобы не закрыть Paper */}
+                <Typography
+                    sx={{color: '#FFF44F', pr: {xs: 4, sm: 0}, cursor: "pointer",}}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggleVideo(!toggle);
+                    }}
+                >
+                    Выбери тип предложения:
+                </Typography>
                 <FormControl
                     sx={{
                         flexGrow: 1,
@@ -56,9 +71,10 @@ export const VideoComponent = ({toggle,setToggle,openTheory, setShowPractice,set
                 >
                     <Select
                         value={type}
-                        onChange={(e) =>
+                        onChange={(e) =>{
+                            e.stopPropagation(); // <-- !!! ГЛАВНОЕ ИСПРАВЛЕНИЕ ЗДЕСЬ !!!
                             setType(e.target.value as changeType)
-                        }
+                        }}
                         displayEmpty
                         inputProps={{ 'aria-label': 'Select tense' }}
                         sx={{
@@ -81,6 +97,7 @@ export const VideoComponent = ({toggle,setToggle,openTheory, setShowPractice,set
                         width: '100%',
                         maxWidth: '980px',
                     }}
+                    onClick={(e) => e.stopPropagation()} // <-- Останавливаем всплытие из слайдера
                 >
                     <ClipsSlider
                         type={type} setToggle={setToggle}
@@ -94,7 +111,13 @@ export const VideoComponent = ({toggle,setToggle,openTheory, setShowPractice,set
 
             {!toggle && (
                 <span
-                    onClick={() => toggleVideo(!toggle)}
+                    onClick={(e) => {
+                        // Здесь НЕ НУЖНО останавливать всплытие,
+                        // потому что мы хотим, чтобы оно дошло до родительского Paper onClick
+                        // e.stopPropagation(); <-- УДАЛЕНО!
+                        // handleToggleVideo(!toggle); // Это тоже лишнее, родительский onClick сделает это
+                        handleToggleVideo(!toggle);
+                    }}
                     style={{
                         cursor: "pointer",
                         fontFamily: "Roboto, sans-serif",
