@@ -231,7 +231,7 @@ export const TopicDetailPage = () => {
 
                     <Paper
                         elevation={3}
-                        onClick={() =>{if (!toggle) { setToggleVideo(!toggleVideo)}}}
+                        onClick={() =>{if (!toggleVideo) { setToggleVideo(!toggleVideo)}}}
                         sx={{
                             padding: 2,
                             position: "relative",

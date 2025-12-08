@@ -111,11 +111,7 @@ export const VideoComponent = ({toggle,setToggle,openTheory, setShowPractice,set
 
             {!toggle && (
                 <span
-                    onClick={(e) => {
-                        // Здесь НЕ НУЖНО останавливать всплытие,
-                        // потому что мы хотим, чтобы оно дошло до родительского Paper onClick
-                        // e.stopPropagation(); <-- УДАЛЕНО!
-                        // handleToggleVideo(!toggle); // Это тоже лишнее, родительский onClick сделает это
+                    onClick={() => {
                         handleToggleVideo(!toggle);
                     }}
                     style={{
