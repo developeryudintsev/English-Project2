@@ -344,8 +344,8 @@ export const Header = (props: HeaderType) => {
                             </Box>
                             <Box sx={{
                                 display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
+                                alignItems: 'start',
+                                justifyContent: 'start',
                                 width: '95%',
                                 px: 1,
                                 gap: 0

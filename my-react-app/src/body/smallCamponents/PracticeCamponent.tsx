@@ -29,6 +29,7 @@ import Rating from '@mui/material/Rating';
 import Modal from '@mui/material/Modal';
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import type {timeType} from "../../App";
+
 export type changeType = "." | "?" | "!";
 type PracticeComponentProps = {
     time: timeType;
@@ -385,7 +386,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                             : {border: "2px solid transparent"}),
                 }}
             >
-
                 {toggelModal === 1 && answerStatus === 'wrong' && (
                     <ModalCamponent open={toggelModal === 1} onClose={CloseButton}>
                         <Box sx={{height: '350px'}}>
