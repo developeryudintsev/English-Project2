@@ -361,7 +361,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         <>
             <Paper
                 elevation={3}
-                onClick={() =>{if (!toggle) {ButtonFoo(toggle)}}}
                 sx={{
                     padding: 2,
                     position: "relative",
@@ -383,7 +382,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                 animation: "blinkRed 1s infinite",
                                 ...blinkAnimation,
                             }
-                            : {border: "2px solid transparent"}),
+                            : { border: "2px solid transparent" }),
                 }}
             >
                 {toggelModal === 1 && answerStatus === 'wrong' && (
@@ -581,334 +580,228 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                         </Box>
                     </ModalCamponent>
                 )}
-
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        mb: 0,
-                        position: "relative",
-                    }}
-                >
-                    <Typography
-                        sx={{
-                            color: "#FFF44F",
-                            fontFamily: "Roboto, sans-serif",
-                            userSelect: "none",
-                            cursor: "pointer",
-                        }}
-
-                    >
-
-                        {!toggle ? (
-                            <div style={{
+                        <Box
+                            sx={{
+                                width: "100%",
                                 display: "flex",
                                 alignItems: "center",
-                                justifyContent: "space-between",
+                                justifyContent: "center",
                                 flexWrap: "wrap",
-                                gap: "10px"
+                                gap: "10px",
+                                padding: "0px 0",
+                                position: "relative",
+                                cursor: "pointer"
                             }}
+                            onClick={() => ButtonFoo(toggle)}
+                        >
+                            <Typography
+                                sx={{
+                                    color: "#FFF44F",
+                                    fontFamily: "Roboto, sans-serif",
+                                    userSelect: "none"
+                                }}
+                                onClick={(e) => e.stopPropagation()} // ❗ ВАЖНО! Иначе всплытие вызовет ButtonFoo
                             >
-                            <span onClick={() => ButtonFoo(toggle)}>
-                                Практика – {time} ({progress.done}/{progress.total})
-                            </span>
-                            </div>
-                        ) : (
-                            <div>
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        flexWrap: "wrap",
-                                        gap: 2,
-                                        marginTop: "-5px",
-                                        pr: 3,
-                                    }}
-                                >
-                                    {isFinished && (
-                                        <Box sx={{position: 'relative', width: 56, height: 56}}>
-                                            <Rating name="done-star" value={1} max={1} readOnly
-                                                    sx={{fontSize: 56, color: "#FFF44F"}}/>
-                                        </Box>
-                                    )}
-                                    <FormControl onSubmit={(e) => e.preventDefault()} sx={{minWidth: 160}} size="small">
-                                        <Select
-                                            value={type}
-                                            onChange={(e) => {
-                                                const newType = e.target.value as changeType;
-                                                setType(newType);
-                                                // setCurrentQuestion(
-                                                //     data.simple[time][newType]
-                                                // );
-                                            }}
-                                            displayEmpty
-                                            inputProps={{"aria-label": "Select tense"}}
-                                            sx={{
-                                                backgroundColor: "white",
-                                                borderRadius: 1,
-                                                width: "100%",
-                                            }}
-                                        >
-                                            <MenuItem value=".">утвердительное</MenuItem>
-                                            <MenuItem value="?">вопросительное</MenuItem>
-                                            <MenuItem value="!">отрицательное</MenuItem>
-                                        </Select>
-                                    </FormControl>
-
-                                    <Button
-                                        onClick={() => setToggelModal(2)}
-                                        sx={{
-                                            backgroundColor: "#ff0202",
-                                            color: "black",
-                                            textTransform: "none",
-                                            height: "40px",
-                                        }}
-                                    >
-                                        очистить результаты
-                                    </Button>
-                                </Box>
-                                <div style={{margin: 3}} onClick={() => ButtonFoo(toggle)}>
-                                    Выбери глагол или просто иди по порядку
-                                </div>
-                                <Box sx={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
-                                    <Box
-                                        sx={{
+                                {!toggle ? (
+                                    <div
+                                        style={{
                                             display: "flex",
                                             alignItems: "center",
-                                            justifyContent: "center",
-                                            gap: 2,
-                                            width: "100%",
+                                            justifyContent: "space-between",
+                                            flexWrap: "wrap",
+                                            gap: "10px",
+                                            maxWidth: "980px",
                                         }}
+                                        onClick={(e) => e.stopPropagation()}
                                     >
-                                        {questions.length > itemsPerPage && (
-                                            <Button
-                                                variant="outlined"
-                                                disabled={page === 0}
-                                                onClick={() => LeftSlider()}
-                                                sx={{
-                                                    fontSize: 40,
-                                                    border: "#FFF44F",
-                                                    color: "#FFF44F",
-                                                    minWidth: "40px",
-                                                }}
-                                            >
-                                                {`<`}
-                                            </Button>
-                                        )}
+                                        <span>Практика – {time} ({progress.done}/{progress.total})</span>
+                                    </div>
+                                ) : (
+                                    <div onClick={(e) => e.stopPropagation()}>
                                         <Box
                                             sx={{
-                                                display: "grid",
-                                                gridTemplateColumns: "repeat(3, 1fr)", // 3 кнопки в ряд
-                                                gap: 1,
-                                                width: "70%",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                flexWrap: "wrap",
+                                                gap: 2,
+                                                marginTop: "-5px",
+                                                pr: 3,
+                                                maxWidth: "100%",
                                             }}
                                         >
-                                            {visibleQuestions.map((m) => {
-                                                const isCurrent = currentQuestion?.id === m.id;
-                                                return (
-                                                    <Button
-                                                        key={m.id}
-                                                        variant={m.isDone ? "contained" : "outlined"}
-                                                        onClick={() => wordFoo(m.id)}
-                                                        size="medium"
-                                                        sx={{
-                                                            backgroundColor: isCurrent
-                                                                ? "#1976d2"
-                                                                : m.isDone
-                                                                    ? "#FFF44F"
-                                                                    : "transparent",
-                                                            borderColor: "#FFF44F",
-                                                            color: isCurrent ? "white" : "black",
-                                                            textTransform: "none",
-                                                            paddingY: 2,
-                                                            fontSize: "1.1rem",
-                                                            "&:hover": {
-                                                                backgroundColor: isCurrent
-                                                                    ? "#1565c0"
-                                                                    : m.isDone
-                                                                        ? "#ffea00"
-                                                                        : "#555",
-                                                                color: "white",
-                                                            },
-                                                        }}
-                                                    >
-                                                        {m.word}
-                                                    </Button>
-                                                );
-                                            })}
-                                        </Box>
-                                        {questions.length > itemsPerPage && (
-                                            <Button
-                                                variant="outlined"
-                                                disabled={startIndex + itemsPerPage >= questions.length}
-                                                onClick={() => RightSlider()}
-                                                sx={{
-                                                    fontSize: 40,
-                                                    border: "#FFF44F",
-                                                    color: "#FFF44F",
-                                                    minWidth: "40px",
-                                                }}
-                                            >
-                                                {'>'}
-                                            </Button>
-                                        )}
-                                    </Box>
-                                </Box>
+                                            {isFinished && (
+                                                <Box sx={{ position: "relative", width: 56, height: 56 }}>
+                                                    <Rating
+                                                        name="done-star"
+                                                        value={1}
+                                                        max={1}
+                                                        readOnly
+                                                        sx={{ fontSize: 56, color: "#FFF44F" }}
+                                                    />
+                                                </Box>
+                                            )}
 
-                                {toggelVideoCat === 3 && (
-                                    <Modal
-                                        open={toggelVideoCat === 3}
-                                        aria-labelledby="modal-modal-title"
-                                        aria-describedby="modal-modal-description"
-                                    >
-                                        <Box
-                                            sx={{
-                                                position: "absolute",
-                                                width: "90%",
-                                                maxWidth: "600px",
-                                                top: "50%",
-                                                left: "50%",
-                                                transform: "translate(-50%, -50%)",
-                                                bgcolor: "#444447",
-                                                border: "2px solid #FFF44F",
-                                                boxShadow: 24,
-                                                p: {xs: 2, sm: 4},
-                                                borderRadius: "12px",
-                                                textAlign: "center",
-                                            }}
-                                        >
+                                            <FormControl
+                                                onClick={(e) => e.stopPropagation()}
+                                                sx={{ minWidth: 160 }}
+                                                size="small"
+                                            >
+                                                <Select
+                                                    value={type}
+                                                    onChange={(e) => {
+                                                        const newType = e.target.value as changeType;
+                                                        setType(newType);
+                                                    }}
+                                                    displayEmpty
+                                                    inputProps={{ "aria-label": "Select tense" }}
+                                                    sx={{
+                                                        backgroundColor: "white",
+                                                        borderRadius: 1,
+                                                        width: "100%",
+                                                    }}
+                                                >
+                                                    <MenuItem value=".">утвердительное</MenuItem>
+                                                    <MenuItem value="?">вопросительное</MenuItem>
+                                                    <MenuItem value="!">отрицательное</MenuItem>
+                                                </Select>
+                                            </FormControl>
+
+                                            <Button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setToggelModal(2);
+                                                }}
+                                                sx={{
+                                                    backgroundColor: "#ff0202",
+                                                    color: "black",
+                                                    textTransform: "none",
+                                                    height: "40px",
+                                                }}
+                                            >
+                                                очистить результаты
+                                            </Button>
+                                        </Box>
+
+                                        <div style={{ margin: 3 }}>Выбери глагол или просто иди по порядку</div>
+
+                                        <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
                                             <Box
                                                 sx={{
-                                                    position: "relative",
                                                     display: "flex",
-                                                    flexDirection: "column",
-                                                    justifyContent: "center",
                                                     alignItems: "center",
-                                                    gap: 0,
+                                                    justifyContent: "center",
+                                                    gap: 2,
+                                                    width: "100%",
                                                 }}
+                                                onClick={(e) => e.stopPropagation()}
                                             >
-                                                <IconButton
-                                                    onClick={handleRefresh}
-                                                    sx={{
-                                                        position: "absolute",
-                                                        top: -16,
-                                                        right: 28, // 👈 немного левее крестика
-                                                        backgroundColor: "green",
-                                                        color: "white",
-                                                        "&:hover": {backgroundColor: "darkgreen"},
-                                                        width: {xs: 32, sm: 40},
-                                                        height: {xs: 32, sm: 40},
-                                                    }}
-                                                >
-                                                    <AutorenewIcon fontSize="small"/>
-                                                </IconButton>
-                                                <IconButton
-                                                    onClick={() => setToggelVideoCat(0)}
-                                                    sx={{
-                                                        position: "absolute",
-                                                        top: -16,
-                                                        right: -16,
-                                                        backgroundColor: "red",
-                                                        color: "white",
-                                                        "&:hover": {backgroundColor: "darkred"},
-                                                        width: {xs: 32, sm: 40},
-                                                        height: {xs: 32, sm: 40},
-                                                    }}
-                                                >
-                                                    <CloseIcon fontSize="small"/>
-                                                </IconButton>
-
-                                                <Typography
-                                                    sx={{
-                                                        color: "#FFF44F",
-                                                        mb: 2,
-                                                        fontSize: {xs: "0.9rem", sm: "1.2rem"},
-                                                        textAlign: "center",
-                                                        wordBreak: "break-word",
-                                                        marginTop: '40px'
-                                                    }}
-                                                >
-                                                    <TypeAnimation
-                                                        sequence={["Поздравляем! Вы ответили на все вопросы.", 1000]}
-                                                        wrapper="span"
-                                                        speed={50}
-                                                        style={{
-                                                            fontSize: "inherit",
-                                                            display: "inline-block",
+                                                {questions.length > itemsPerPage && (
+                                                    <Button
+                                                        variant="outlined"
+                                                        disabled={page === 0}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            LeftSlider();
                                                         }}
-                                                        repeat={Infinity}
-                                                    />
-                                                </Typography>
+                                                        sx={{
+                                                            fontSize: 40,
+                                                            border: "#FFF44F",
+                                                            color: "#FFF44F",
+                                                            minWidth: "40px",
+                                                        }}
+                                                    >
+                                                        {`<`}
+                                                    </Button>
+                                                )}
+
                                                 <Box
                                                     sx={{
-                                                        position: "relative",
-                                                        width: "100%",
-                                                        maxWidth: {xs: "280px", sm: "400px"},
-                                                        height: {xs: "200px", sm: "280px"},
-                                                        mx: "auto",
+                                                        display: "grid",
+                                                        gridTemplateColumns: "repeat(3, 1fr)",
+                                                        gap: 1,
+                                                        width: "70%",
                                                     }}
                                                 >
-                                                    <Box
-                                                        sx={{
-                                                            position: "absolute",
-                                                            top: "50%",
-                                                            left: "50%",
-                                                            transform: "translate(-50%, -50%)",
-                                                            pointerEvents: "none",
-                                                        }}
-                                                    >
-                                                        <Rating
-                                                            name="customized-10"
-                                                            defaultValue={1}
-                                                            max={1}
-                                                            sx={{
-                                                                fontSize: {xs: "180px", sm: "280px", md: "350px"},
-                                                                color: "#FFF44F",
-                                                            }}
-                                                        />
-                                                    </Box>
-                                                    <Box
-                                                        sx={{
-                                                            position: "absolute",
-                                                            top: "50%",
-                                                            left: "50%",
-                                                            transform: "translate(-50%, -50%)",
-                                                        }}
-                                                    >
-                                                        <VideoCat
-                                                            src={"/win2.mp4"}
-                                                            setToggelVideoCatFoo={() => setToggelVideoCat(3)}
-                                                            toggelVideoCat={toggelVideoCat}
-                                                            showCondition={toggelVideoCat === 3}
-                                                            size={window.innerWidth < 480 ? "small" : "normal"}
-                                                        />
-                                                    </Box>
+                                                    {visibleQuestions.map((m) => {
+                                                        const isCurrent = currentQuestion?.id === m.id;
+                                                        return (
+                                                            <Button
+                                                                key={m.id}
+                                                                variant={m.isDone ? "contained" : "outlined"}
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    wordFoo(m.id);
+                                                                }}
+                                                                size="medium"
+                                                                sx={{
+                                                                    backgroundColor: isCurrent
+                                                                        ? "#1976d2"
+                                                                        : m.isDone
+                                                                            ? "#FFF44F"
+                                                                            : "transparent",
+                                                                    borderColor: "#FFF44F",
+                                                                    color: isCurrent ? "white" : "black",
+                                                                    textTransform: "none",
+                                                                    paddingY: 2,
+                                                                    fontSize: "1.1rem",
+                                                                    "&:hover": {
+                                                                        backgroundColor: isCurrent
+                                                                            ? "#1565c0"
+                                                                            : m.isDone
+                                                                                ? "#ffea00"
+                                                                                : "#555",
+                                                                        color: "white",
+                                                                    },
+                                                                }}
+                                                            >
+                                                                {m.word}
+                                                            </Button>
+                                                        );
+                                                    })}
                                                 </Box>
+
+                                                {questions.length > itemsPerPage && (
+                                                    <Button
+                                                        variant="outlined"
+                                                        disabled={startIndex + itemsPerPage >= questions.length}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            RightSlider();
+                                                        }}
+                                                        sx={{
+                                                            fontSize: 40,
+                                                            border: "#FFF44F",
+                                                            color: "#FFF44F",
+                                                            minWidth: "40px",
+                                                        }}
+                                                    >
+                                                        {`>`}
+                                                    </Button>
+                                                )}
                                             </Box>
                                         </Box>
-                                    </Modal>
+                                    </div>
                                 )}
+                            </Typography>
 
-                            </div>
-                        )}
-                    </Typography>
-
-                    <IconButton
-                        onClick={() => ButtonFoo(toggle)}
-                        sx={{
-                            color: "#FFF44F",
-                            position: "absolute",
-                            right: -8,
-                            top: "12px",
-                            transform: "translateY(-50%)",
-                        }}
-                        size="small"
-                        aria-label="Toggle practice info"
-                    >
-                        <InfoOutlinedIcon/>
-                    </IconButton>
+                            {/* ICON BUTTON ↑ тоже блокируем всплытие */}
+                            <IconButton
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    ButtonFoo(toggle);
+                                }}
+                                sx={{
+                                    color: "#FFF44F",
+                                    position: "absolute",
+                                    right: -8,
+                                    top: "12px",
+                                    transform: "translateY(-50%)",
+                                }}
+                                size="small"
+                            >
+                                <InfoOutlinedIcon />
+                            </IconButton>
                 </Box>
                 {toggle && currentQuestion && (
                     <span>
