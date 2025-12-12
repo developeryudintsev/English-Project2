@@ -24,10 +24,7 @@ import {addQuestions, data, getQuestions, updateQuestion, updateRatingFor,} from
 import {VideoCat} from "../../camponent/VideoCat";
 import {ModalCamponent} from "../../modal/Modal";
 import CloseIcon from "@mui/icons-material/Close";
-import {TypeAnimation} from 'react-type-animation';
 import Rating from '@mui/material/Rating';
-import Modal from '@mui/material/Modal';
-import AutorenewIcon from "@mui/icons-material/Autorenew";
 import type {timeType} from "../../App";
 
 export type changeType = "." | "?" | "!"|'.?!';
@@ -56,6 +53,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         ".": 0,
         "?": 0,
         "!": 0,
+        '.?!': 0,
     });
     console.log(currentIndex)
     const [fullData, setFullData] = useState<DataType | null>(null);
