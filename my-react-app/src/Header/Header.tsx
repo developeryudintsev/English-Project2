@@ -116,7 +116,7 @@ export const Header = (props: HeaderType) => {
                                             //     return
                                             // }
                                             console.log(starValue)
-                                            const typeSentence =
+                                            let typeSentence =lessonKey ==='.?!' ?'микс':
                                                 lessonKey === "."
                                                     ? "утвердительное"
                                                     : lessonKey === "?"
@@ -345,14 +345,14 @@ export const Header = (props: HeaderType) => {
                             <Box sx={{
                                 display: 'flex',
                                 alignItems: 'start',
-                                justifyContent: 'start',
+                                justifyContent: 'center',
                                 width: '95%',
                                 px: 1,
                                 gap: 0
                             }}>
 
                                 <FormControl sx={{
-                                    minWidth: isSuperSmall ? 160 : 200,
+                                    minWidth: isSuperSmall ? 190 : 230,
                                 }} size="small">
                                     <Select
                                         value={props.time}

@@ -1041,8 +1041,108 @@ export const data: DataType = {
                         {text: "They did not bring", isCorrect: false},
                     ],
                 },
+            ],
+            ['.?!']: [
+                {
+                    id: v1(),
+                    question: "Я говорю",
+                    isDone: false,
+                    word: 'say',
+                    answers: [
+                        {text: "I say", isCorrect: true},
+                        {text: "I says", isCorrect: false},
+                        {text: "Do i say?", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Вы(ты) идете",
+                    isDone: false,
+                    word: 'go',
+                    answers: [
+                        {text: "I go", isCorrect: false},
+                        {text: "She says", isCorrect: false},
+                        {text: "You go", isCorrect: true},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Он получает",
+                    isDone: false,
+                    word: 'get',
+                    answers: [
+                        {text: "We get", isCorrect: false},
+                        {text: "I got", isCorrect: false},
+                        {text: "He gets", isCorrect: true},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Я говорю?",
+                    isDone: false,
+                    word: 'say',
+                    answers: [
+                        {text: "Do I say?", isCorrect: true},
+                        {text: "Does I say?", isCorrect: false},
+                        {text: "I say?", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Вы(ты) идете?",
+                    isDone: false,
+                    word: 'go',
+                    answers: [
+                        {text: "Do you go?", isCorrect: true},
+                        {text: "Does you go?", isCorrect: false},
+                        {text: "You goes?", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Он получает?",
+                    isDone: false,
+                    word: 'get',
+                    answers: [
+                        {text: "Does he get?", isCorrect: true},
+                        {text: "Do he get?", isCorrect: false},
+                        {text: "He gets?", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Я не говорю",
+                    isDone: false,
+                    word: 'say',
+                    answers: [
+                        {text: "I do not say", isCorrect: true},
+                        {text: "I does not say", isCorrect: false},
+                        {text: "I did not say", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Вы(ты) не идете",
+                    isDone: false,
+                    word: 'go',
+                    answers: [
+                        {text: "You do not go", isCorrect: true},
+                        {text: "You does not go", isCorrect: false},
+                        {text: "You not go", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Он не получает",
+                    isDone: false,
+                    word: 'get',
+                    answers: [
+                        {text: "He does not get", isCorrect: true},
+                        {text: "He do not get", isCorrect: false},
+                        {text: "He did not get", isCorrect: false},
+                    ],
+                },
             ]
-
         },
         ['Simple Past']: {
             ['.']: [
@@ -1095,6 +1195,41 @@ export const data: DataType = {
                     ],
                 },
             ],
+            ['.?!']: [
+                {
+                    id: v1(),
+                    question: "Он мне позвонил",
+                    isDone: false,
+                    word: 'came',
+                    answers: [
+                        {text: "He called me", isCorrect: true},
+                        {text: "He call me", isCorrect: false},
+                        {text: "He do call me", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Ты это видел?",
+                    isDone: false,
+                    word: 'saw',
+                    answers: [
+                        {text: "Do you saw it?", isCorrect: false},
+                        {text: "You did saw it?", isCorrect: false},
+                        {text: "Did you see it?", isCorrect: true},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Он мне не позвонил.",
+                    isDone: false,
+                    word: 'came',
+                    answers: [
+                        {text: "He did not call me", isCorrect: true},
+                        {text: "He not called me", isCorrect: false},
+                        {text: "He didn’t called me", isCorrect: false},
+                    ],
+                },
+            ]
         },
         ['Simple Future']: {
             ['.']: [
@@ -1109,7 +1244,6 @@ export const data: DataType = {
                         {text: "She don’t come", isCorrect: false},
                     ],
                 },
-
             ],
             ['?']: [
                 {
@@ -1137,6 +1271,41 @@ export const data: DataType = {
                     ],
                 },
             ],
+            ['.?!']: [
+                {
+                    id: v1(),
+                    question: "Она придет",
+                    isDone: false,
+                    word: 'will came',
+                    answers: [
+                        {text: "She will come", isCorrect: true},
+                        {text: "She will not come", isCorrect:false},
+                        {text: "She don’t come", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Они идут?",
+                    isDone: false,
+                    word: 'go',
+                    answers: [
+                        {text: "They will go?", isCorrect: false},
+                        {text: "Do they go?", isCorrect: false},
+                        {text: "Will they go?", isCorrect: true},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Она не придет.",
+                    isDone: false,
+                    word: 'came',
+                    answers: [
+                        {text: "She not will come", isCorrect: false},
+                        {text: "She will not come", isCorrect: true},
+                        {text: "She don’t come", isCorrect: false},
+                    ],
+                },
+            ]
         },
     },
 }

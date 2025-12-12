@@ -30,7 +30,7 @@ import Modal from '@mui/material/Modal';
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import type {timeType} from "../../App";
 
-export type changeType = "." | "?" | "!";
+export type changeType = "." | "?" | "!"|'.?!';
 type PracticeComponentProps = {
     time: timeType;
     toggle: boolean;
@@ -70,7 +70,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
     const isFinished = congratulation;
     let [toggelModal, setToggelModal] = useState<0 | 1 | 2>(0)
     let [toggelVideoCat, setToggelVideoCat] = useState<0 | 1 | 2 | 3>(0)
-    let typeSentence =
+    let typeSentence =type ==='.?!' ?'микс':
         type === "."
             ? "утвердительное"
             : type === "?"
@@ -331,9 +331,9 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
     const GoToTheorya = () => {
         setToggelModal(0)
         setAnswerStatus("none")
-        toggleTheory(true); // открываем теорию
+        toggleTheory(true);
         openTheory(true)
-        setShowPractice(false); // закрываем практику
+        setShowPractice(false);
     }
     const LeftSlider = () => {
         setPage((p) => Math.max(p - 1, 0))
@@ -353,10 +353,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         setCurrentQuestion(result)
         wordFoo(result.id)
     }
-    const handleRefresh = () => {
-        setToggelVideoCat(0);
-        setTimeout(() => setToggelVideoCat(3), 0); // 👈 сброс + запуск заново
-    };
     return (
         <>
             <Paper
@@ -537,7 +533,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                         </Box>
                     </ModalCamponent>
                 )}
-
                 {toggelModal === 2 && (
                     <ModalCamponent open={toggelModal === 2 ? true : false} onClose={CloseButton}>
                         <Box
@@ -600,7 +595,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                     fontFamily: "Roboto, sans-serif",
                                     userSelect: "none"
                                 }}
-                                onClick={(e) => e.stopPropagation()} // ❗ ВАЖНО! Иначе всплытие вызовет ButtonFoo
+                                onClick={(e) => e.stopPropagation()}
                             >
                                 {!toggle ? (
                                     <div
@@ -614,7 +609,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                         }}
                                         onClick={(e) => e.stopPropagation()}
                                     >
-                                        <span>Практика – {time} ({progress.done}/{progress.total})</span>
+                                        <span onClick={() => ButtonFoo(toggle)}>Практика – {time} ({progress.done}/{progress.total})</span>
                                     </div>
                                 ) : (
                                     <div onClick={(e) => e.stopPropagation()}>
@@ -641,7 +636,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                     />
                                                 </Box>
                                             )}
-
                                             <FormControl
                                                 onClick={(e) => e.stopPropagation()}
                                                 sx={{ minWidth: 160 }}
@@ -664,6 +658,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                     <MenuItem value=".">утвердительное</MenuItem>
                                                     <MenuItem value="?">вопросительное</MenuItem>
                                                     <MenuItem value="!">отрицательное</MenuItem>
+                                                    <MenuItem value=".?!">микс</MenuItem>
                                                 </Select>
                                             </FormControl>
 
