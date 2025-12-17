@@ -1,10 +1,8 @@
 import React, {useState} from "react";
 import {ModalCamponent} from "../modal/Modal";
-import {Box, Button, FormControl, IconButton, MenuItem, Paper, Select, Typography} from "@mui/material";
+import {Box, Button, IconButton, Paper, Typography} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import {VideoCat} from "../camponent/VideoCat";
-import Rating from "@mui/material/Rating";
-import {changeType} from "../body/smallCamponents/PracticeCamponent";
 import {v1} from "uuid";
 
 export const FreePage = () => {
