@@ -88,6 +88,7 @@ export const VideoCat: React.FC<VideoCatProps> = ({
                 ref={videoRef}
                 src={src}
                 playsInline
+                muted
                 onCanPlay={handleCanPlay}
                 onEnded={() => setToggelVideoCatFoo()}
                 style={{

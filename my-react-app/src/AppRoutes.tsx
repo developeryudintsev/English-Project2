@@ -10,6 +10,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import cat from "./picture/cat.JPG";
 import cat3 from "./picture/cat3.jpg";
+import free from "./picture/free.jpg";
 import thems2 from "./picture/thems2.jpg";
 import cubok from "./picture/klipartz.com.png";
 import about from "./picture/about3.png";
@@ -18,6 +19,7 @@ import {TopicDetailPage} from "./topics/TopicDetailPage";
 import {AboutMyself, Text, TextAbout} from "./TopicsObj/TopicsObj";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import {Free} from "./free/Free";
 
 interface VocabularyWord {
     en: string;
@@ -125,6 +127,7 @@ export const AppRoutes = () => {
     const MIN_VISIBLE = 1;
     const MAX_VISIBLE = 4;
     const buttons = [
+        {to: "/free", label: "выйграй беспланый английский"},
         {to: "/app", label: "Тренажер по временам"},
         {to: "/themes", label: "Тренажер по темам английского"},
         {to: "/about", label: "О нас и связаться с нами"},
@@ -358,7 +361,29 @@ export const AppRoutes = () => {
                                                 onMouseEnter={() => setHoveredIndex(index)}
                                                 onMouseLeave={() => setHoveredIndex(null)}
                                             >
-                                                {btn.to === '/app' ?
+                                                {btn.to === '/free'?
+                                                    <div>
+                                                        <img
+                                                            src={free}
+                                                            style={{
+                                                                borderRadius: "12px",
+                                                                width: "250px",
+                                                                height: "434px",
+                                                                marginTop: '-1px'
+                                                            }}
+                                                        />
+                                                        <p style={{
+                                                            fontFamily: 'sans-serif',
+                                                            fontWeight:900,
+                                                            fontSize:19,
+                                                            width: "240px",
+                                                            color:'#008875',
+                                                            marginTop: '-80px'
+                                                        }}>
+                                                            {btn.label}
+                                                        </p>
+                                                    </div>
+                                                    :btn.to === '/app' ?
                                                     <div>
                                                         <img
                                                             src={cat3}
@@ -468,6 +493,7 @@ export const AppRoutes = () => {
                     }
                 />
 
+                <Route path="/free" element={<Free/>}/>
                 <Route path="/app" element={<App/>}/>
                 <Route path="/themes" element={<TopicsPage/>} />
                 <Route path="/themes/:topicId" element={<TopicDetailPage/>} />

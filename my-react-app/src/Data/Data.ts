@@ -28,9 +28,9 @@ export type DataType = {
 };
 export type RatingMap = {
     simple: {
-        'Simple Past': { [lessonKey: string]: 0|1 };
-        'Simple Present': { [lessonKey: string]: 0|1 };
-        'Simple Future': { [lessonKey: string]: 0|1 };
+        'Simple Past': { [lessonKey: string]: 0 | 1 };
+        'Simple Present': { [lessonKey: string]: 0 | 1 };
+        'Simple Future': { [lessonKey: string]: 0 | 1 };
     };
 };
 const DB_NAME = "englishApp";
@@ -43,10 +43,10 @@ export const initDB = async () => {
     return openDB(DB_NAME, 2, {
         upgrade(db) {
             if (!db.objectStoreNames.contains(STORE_NAME)) {
-                db.createObjectStore(STORE_NAME, { keyPath: "id" });
+                db.createObjectStore(STORE_NAME, {keyPath: "id"});
             }
             if (!db.objectStoreNames.contains(RATING_STORE)) {
-                db.createObjectStore(RATING_STORE, { keyPath: "id" });
+                db.createObjectStore(RATING_STORE, {keyPath: "id"});
             }
         },
     });
@@ -90,7 +90,7 @@ export const getRatingMap = async (): Promise<RatingMap | null> => {
 
 export const setRatingMap = async (map: RatingMap) => {
     const db = await initDB();
-    await db.put(RATING_STORE, { id: RATING_ID, payload: map });
+    await db.put(RATING_STORE, {id: RATING_ID, payload: map});
 };
 
 // --- ИСПРАВЛЕНИЕ: Функция updateRatingFor теперь ожидает длинный ключ ---
@@ -98,7 +98,7 @@ export const updateRatingFor = async (tense: TenseKey, lessonKey: string) => {
     const map = await getRatingMap();
 
     const updated: RatingMap = map ?? {
-        simple: { 'Simple Past': {}, 'Simple Present': {}, 'Simple Future': {} },
+        simple: {'Simple Past': {}, 'Simple Present': {}, 'Simple Future': {}},
     };
 
     const data = await getQuestions();
@@ -111,19 +111,19 @@ export const updateRatingFor = async (tense: TenseKey, lessonKey: string) => {
     updated.simple[tense][lessonKey] = total > 0 && done === total ? 1 : 0;
 
     const db = await initDB();
-    await db.put(RATING_STORE, { id: RATING_ID, payload: updated });
+    await db.put(RATING_STORE, {id: RATING_ID, payload: updated});
 };
 // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
 
 
 export const saveRatingMap = async (rating: RatingMap) => {
     const db = await initDB();
-    await db.put(RATING_STORE, { id: ROOT_ID, payload: rating });
+    await db.put(RATING_STORE, {id: ROOT_ID, payload: rating});
 };
 
 export const updateQuestion = async (updatedData: DataType) => {
     const db = await initDB();
-    const rec: DBRecord = { id: ROOT_ID, payload: updatedData };
+    const rec: DBRecord = {id: ROOT_ID, payload: updatedData};
     await db.put(STORE_NAME, rec);
 
     const newRating = calculateRating(updatedData);
@@ -132,7 +132,7 @@ export const updateQuestion = async (updatedData: DataType) => {
 
 // --- ИСПРАВЛЕНИЕ: Функция calculateRating теперь использует длинные ключи ---
 const calculateRating = (data: DataType): RatingMap => {
-    const result: RatingMap = { simple: { 'Simple Past': {}, 'Simple Present': {}, 'Simple Future': {} } };
+    const result: RatingMap = {simple: {'Simple Past': {}, 'Simple Present': {}, 'Simple Future': {}}};
     (['Simple Present', 'Simple Past', 'Simple Future'] as const).forEach((tense) => {
         const lessons = data.simple[tense];
         Object.keys(lessons).forEach((lessonKey) => {
@@ -152,19 +152,19 @@ type DBRecord = {
     payload: DataType;
 };
 
-export const addQuestions = async (data: DataType,refresh:'reload'|'none') => {
-    if(refresh==='none'){
+export const addQuestions = async (data: DataType, refresh: 'reload' | 'none') => {
+    if (refresh === 'none') {
         const db = await initDB();
         const exists = await db.get(STORE_NAME, ROOT_ID);
         console.log(exists)
         if (!exists) {
-            const rec: DBRecord = { id: ROOT_ID, payload: data };
+            const rec: DBRecord = {id: ROOT_ID, payload: data};
             await db.add(STORE_NAME, rec);
         }
-    }else if(refresh==='reload'){
+    } else if (refresh === 'reload') {
         const db = await initDB();
         await db.delete(STORE_NAME, ROOT_ID);
-        const rec: DBRecord = { id: ROOT_ID, payload: data };
+        const rec: DBRecord = {id: ROOT_ID, payload: data};
         await db.add(STORE_NAME, rec);
     }
 };
@@ -1045,101 +1045,288 @@ export const data: DataType = {
             ['.?!']: [
                 {
                     id: v1(),
-                    question: "Я говорю",
+                    question: "Я говорю каждый день",
                     isDone: false,
-                    word: 'say',
+                    word: 'speak',
                     answers: [
-                        {text: "I say", isCorrect: true},
-                        {text: "I says", isCorrect: false},
-                        {text: "Do i say?", isCorrect: false},
+                        {text: "I speak every day", isCorrect: true},
+                        {text: "I speak every day", isCorrect: false},
+                        {text: "Do i speak every day?", isCorrect: false},
                     ],
                 },
                 {
                     id: v1(),
-                    question: "Вы(ты) идете",
+                    question: "Вы(ты) ходите в школу",
                     isDone: false,
                     word: 'go',
                     answers: [
-                        {text: "I go", isCorrect: false},
-                        {text: "She says", isCorrect: false},
-                        {text: "You go", isCorrect: true},
+                        {text: "I go to school", isCorrect: false},
+                        {text: "She goes to school", isCorrect: false},
+                        {text: "You go to school", isCorrect: true},
                     ],
                 },
                 {
                     id: v1(),
-                    question: "Он получает",
+                    question: "Он не получает большие деньги",
                     isDone: false,
                     word: 'get',
                     answers: [
-                        {text: "We get", isCorrect: false},
-                        {text: "I got", isCorrect: false},
-                        {text: "He gets", isCorrect: true},
+                        {text: "He does not get paid a lot of money", isCorrect: true},
+                        {text: "He do not get paid a lot of money", isCorrect: false},
+                        {text: "He did not got paid a lot of money", isCorrect: false},
                     ],
                 },
                 {
                     id: v1(),
-                    question: "Я говорю?",
+                    question: "Oна делает(что-то руками) торт каждые выходные",
                     isDone: false,
-                    word: 'say',
+                    word: 'make',
                     answers: [
-                        {text: "Do I say?", isCorrect: true},
-                        {text: "Does I say?", isCorrect: false},
-                        {text: "I say?", isCorrect: false},
+                        {text: "I will make a cake every weekend", isCorrect: false},
+                        {text: "She makes a cake every weekend", isCorrect: true},
+                        {text: "I make a cake every weekend", isCorrect: false},
                     ],
                 },
                 {
                     id: v1(),
-                    question: "Вы(ты) идете?",
+                    question: "Оно знает английский язык?",
                     isDone: false,
-                    word: 'go',
+                    word: 'know',
                     answers: [
-                        {text: "Do you go?", isCorrect: true},
-                        {text: "Does you go?", isCorrect: false},
-                        {text: "You goes?", isCorrect: false},
+                        {text: "Does it know English?", isCorrect: true},
+                        {text: "Do it know English?", isCorrect: false},
+                        {text: "It know English?", isCorrect: false},
                     ],
                 },
                 {
                     id: v1(),
-                    question: "Он получает?",
+                    question: "Мы не берём сладости в магазине",
                     isDone: false,
-                    word: 'get',
+                    word: 'take',
                     answers: [
-                        {text: "Does he get?", isCorrect: true},
-                        {text: "Do he get?", isCorrect: false},
-                        {text: "He gets?", isCorrect: false},
+                        {text: "We don't take sweets from the store", isCorrect: true},
+                        {text: "We does take sweets from the store", isCorrect: false},
+                        {text: "We not take sweets from the store", isCorrect: false},
                     ],
                 },
                 {
                     id: v1(),
-                    question: "Я не говорю",
+                    question: "Они видят красивую птицу",
                     isDone: false,
-                    word: 'say',
+                    word: 'see',
                     answers: [
-                        {text: "I do not say", isCorrect: true},
-                        {text: "I does not say", isCorrect: false},
-                        {text: "I did not say", isCorrect: false},
+                        {text: "They sees a beautiful bird", isCorrect: false},
+                        {text: "They see a beautiful bird", isCorrect: true},
+                        {text: "They saw a beautiful bird", isCorrect: false},
                     ],
                 },
                 {
                     id: v1(),
-                    question: "Вы(ты) не идете",
+                    question: "Я прихожу домой во время?",
                     isDone: false,
-                    word: 'go',
+                    word: 'come',
                     answers: [
-                        {text: "You do not go", isCorrect: true},
-                        {text: "You does not go", isCorrect: false},
-                        {text: "You not go", isCorrect: false},
+                        {text: "Do I come home on time?", isCorrect: true},
+                        {text: "Does I come home on time?", isCorrect: false},
+                        {text: "I come home on time?", isCorrect: false},
                     ],
                 },
                 {
                     id: v1(),
-                    question: "Он не получает",
+                    question: "Ты не думаешь много",
                     isDone: false,
-                    word: 'get',
+                    word: 'think',
                     answers: [
-                        {text: "He does not get", isCorrect: true},
-                        {text: "He do not get", isCorrect: false},
-                        {text: "He did not get", isCorrect: false},
+                        {text: "You do not think", isCorrect: true},
+                        {text: "You not think", isCorrect: false},
+                        {text: "You doesn’t think", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Она смотрит сериалы каждый вечер",
+                    isDone: false,
+                    word: 'watch',
+                    answers: [
+                        {text: "I watches TV series every evening.", isCorrect: false},
+                        {text: "He watches TV series every evening.", isCorrect: false},
+                        {text: "She watches TV series every evening.", isCorrect: true},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Оно хочет учить английский",
+                    isDone: false,
+                    word: 'want',
+                    answers: [
+                        {text: "I wants to learn English", isCorrect: false},
+                        {text: "It wants to learn English", isCorrect: true},
+                        {text: "I want to learn English", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Мы даём сдачу на кассе?",
+                    isDone: false,
+                    word: 'give',
+                    answers: [
+                        {text: "Do we give change at the checkout?", isCorrect: true},
+                        {text: "Does we give change at the checkout?", isCorrect: false},
+                        {text: "We give change at the checkout?", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Они не используют китайский запчасти",
+                    isDone: false,
+                    word: 'use',
+                    answers: [
+                        {text: "They don't use Chinese parts.", isCorrect: true},
+                        {text: "They don't use Chinese parts.", isCorrect: false},
+                        {text: "They uses not Chinese parts.", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Я нахожу полезную информацию",
+                    isDone: false,
+                    word: 'find',
+                    answers: [
+                        {text: "I find useful information", isCorrect: true},
+                        {text: "I finds useful information", isCorrect: false},
+                        {text: "We find useful information", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Ты рассказываешь анекдоты на работе?",
+                    isDone: false,
+                    word: 'tell',
+                    answers: [
+                        {text: "Do you tell jokes at work?", isCorrect: true},
+                        {text: "Does you tell jokes at work?", isCorrect: false},
+                        {text: "You tell jokes at work?", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Он не спрашивает новый рецепт",
+                    isDone: false,
+                    word: 'ask',
+                    answers: [
+                        {text: "He doesn't ask for a new recipe", isCorrect: true},
+                        {text: "He not ask for a new recipe.", isCorrect: false},
+                        {text: "He asks for a new recipe.", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Она работает изо всех сил",
+                    isDone: false,
+                    word: 'work',
+                    answers: [
+                        {text: "You works as hard as she can.", isCorrect: false},
+                        {text: "She works as hard as she can.", isCorrect: true},
+                        {text: "She work as hard as she can.", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Оно чувствует вкусный запах?",
+                    isDone: false,
+                    word: 'feel',
+                    answers: [
+                        {text: "Does it smell delicious?", isCorrect: true},
+                        {text: "Does it smells delicious?", isCorrect: false},
+                        {text: "Do it smell delicious?", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Мы не пытаемся делать те же вещи",
+                    isDone: false,
+                    word: 'try',
+                    answers: [
+                        {text: "We does not try to do the same things.", isCorrect: true},
+                        {text: "We not try to do the same things.", isCorrect: false},
+                        {text: "We're tryes to do the same things.", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Они уходят на улицу",
+                    isDone: false,
+                    word: 'leave',
+                    answers: [
+                        {text: "We leave outside", isCorrect: false},
+                        {text: "They leave outside", isCorrect: true},
+                        {text: "They leaves outside", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Я не звоню на работу в выходные",
+                    isDone: false,
+                    word: 'call',
+                    answers: [
+                        {text: "I don't call work on weekends", isCorrect: true},
+                        {text: "I not call work on weekends", isCorrect: false},
+                        {text: "I did not call work on weekends", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Тебе нужно учить английский каждый день",
+                    isDone: false,
+                    word: 'need',
+                    answers: [
+                        {text: "They need to learn English every day", isCorrect: false},
+                        {text: "She need to learn English every day", isCorrect: false},
+                        {text: "You need to learn English every day", isCorrect: true},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Он хранит деньги в сейфе?",
+                    isDone: false,
+                    word: 'keep',
+                    answers: [
+                        {text: "Does he keep his money in a safe?", isCorrect: true},
+                        {text: "Do he keep his money in a safe?", isCorrect: false},
+                        {text: "He keeps his money in a safe?", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Она не позволяет играть на улице вечером",
+                    isDone: false,
+                    word: 'let',
+                    answers: [
+                        {text: "She doesn't let me to play outside in the evening.", isCorrect: true},
+                        {text: "She not let me to play outside in the evening.", isCorrect: false},
+                        {text: "She did not let me to play outside in the evening.", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Мы начинаем рабочий день в 9 утра",
+                    isDone: false,
+                    word: 'begin',
+                    answers: [
+                        {text: "I begin work day at 9 am", isCorrect: false},
+                        {text: "We begin our work day at 9 am", isCorrect: true},
+                        {text: "We begins our work day at 9 am", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Они носят покупки в корзине?",
+                    isDone: false,
+                    word: 'bring',
+                    answers: [
+                        {text: "Do they bring their groceries in a basket?", isCorrect: true},
+                        {text: "Does they bring their groceries in a basket?", isCorrect: false},
+                        {text: "They brings their groceries in a basket?", isCorrect: false},
                     ],
                 },
             ]
@@ -1198,38 +1385,115 @@ export const data: DataType = {
             ['.?!']: [
                 {
                     id: v1(),
-                    question: "Он мне позвонил",
+                    question: "Я говорил",
                     isDone: false,
-                    word: 'came',
+                    word: 'say',
                     answers: [
-                        {text: "He called me", isCorrect: true},
-                        {text: "He call me", isCorrect: false},
-                        {text: "He do call me", isCorrect: false},
+                        { text: "I said", isCorrect: true },
+                        { text: "I say", isCorrect: false },
+                        { text: "Did I say?", isCorrect: false },
                     ],
                 },
                 {
                     id: v1(),
-                    question: "Ты это видел?",
+                    question: "Вы(ты) шли",
                     isDone: false,
-                    word: 'saw',
+                    word: 'go',
                     answers: [
-                        {text: "Do you saw it?", isCorrect: false},
-                        {text: "You did saw it?", isCorrect: false},
-                        {text: "Did you see it?", isCorrect: true},
+                        { text: "You went", isCorrect: true },
+                        { text: "You go", isCorrect: false },
+                        { text: "Did you go", isCorrect: false },
                     ],
                 },
                 {
                     id: v1(),
-                    question: "Он мне не позвонил.",
+                    question: "Он не получил",
                     isDone: false,
-                    word: 'came',
+                    word: 'get',
                     answers: [
-                        {text: "He did not call me", isCorrect: true},
-                        {text: "He not called me", isCorrect: false},
-                        {text: "He didn’t called me", isCorrect: false},
+                        { text: "He did not get", isCorrect: true },
+                        { text: "He did not got", isCorrect: false },
+                        { text: "He does not get", isCorrect: false },
                     ],
                 },
-            ]
+                {
+                    id: v1(),
+                    question: "Она сделала",
+                    isDone: false,
+                    word: 'make',
+                    answers: [
+                        { text: "She made", isCorrect: true },
+                        { text: "She make", isCorrect: false },
+                        { text: "She maked", isCorrect: false },
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Оно знало?",
+                    isDone: false,
+                    word: 'know',
+                    answers: [
+                        { text: "Did it know?", isCorrect: true },
+                        { text: "Does it know?", isCorrect: false },
+                        { text: "It knew?", isCorrect: false },
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Мы не взяли",
+                    isDone: false,
+                    word: 'take',
+                    answers: [
+                        { text: "We did not take", isCorrect: true },
+                        { text: "We not took", isCorrect: false },
+                        { text: "We does not take", isCorrect: false },
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Они видели",
+                    isDone: false,
+                    word: 'see',
+                    answers: [
+                        { text: "They saw", isCorrect: true },
+                        { text: "They see", isCorrect: false },
+                        { text: "They sees", isCorrect: false },
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Я пришёл?",
+                    isDone: false,
+                    word: 'come',
+                    answers: [
+                        { text: "Did I come?", isCorrect: true },
+                        { text: "Do I come?", isCorrect: false },
+                        { text: "I came?", isCorrect: false },
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Ты не думал",
+                    isDone: false,
+                    word: 'think',
+                    answers: [
+                        { text: "You did not think", isCorrect: true },
+                        { text: "You not thought", isCorrect: false },
+                        { text: "You don’t think", isCorrect: false },
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Она смотрела",
+                    isDone: false,
+                    word: 'look',
+                    answers: [
+                        { text: "She looked", isCorrect: true },
+                        { text: "She looks", isCorrect: false },
+                        { text: "She look", isCorrect: false },
+                    ],
+                },
+            ],
         },
         ['Simple Future']: {
             ['.']: [
@@ -1240,7 +1504,7 @@ export const data: DataType = {
                     word: 'will came',
                     answers: [
                         {text: "She will come", isCorrect: true},
-                        {text: "She will not come", isCorrect:false},
+                        {text: "She will not come", isCorrect: false},
                         {text: "She don’t come", isCorrect: false},
                     ],
                 },
@@ -1274,38 +1538,115 @@ export const data: DataType = {
             ['.?!']: [
                 {
                     id: v1(),
-                    question: "Она придет",
+                    question: "Я скажу",
                     isDone: false,
-                    word: 'will came',
+                    word: 'say',
                     answers: [
-                        {text: "She will come", isCorrect: true},
-                        {text: "She will not come", isCorrect:false},
-                        {text: "She don’t come", isCorrect: false},
+                        {text: "I will say", isCorrect: true},
+                        {text: "I say", isCorrect: false},
+                        {text: "I will said", isCorrect: false},
                     ],
                 },
                 {
                     id: v1(),
-                    question: "Они идут?",
+                    question: "Вы(ты) пойдёте",
                     isDone: false,
                     word: 'go',
                     answers: [
-                        {text: "They will go?", isCorrect: false},
-                        {text: "Do they go?", isCorrect: false},
-                        {text: "Will they go?", isCorrect: true},
+                        {text: "You will go", isCorrect: true},
+                        {text: "You go", isCorrect: false},
+                        {text: "Will you went", isCorrect: false},
                     ],
                 },
                 {
                     id: v1(),
-                    question: "Она не придет.",
+                    question: "Он не получит",
                     isDone: false,
-                    word: 'came',
+                    word: 'get',
                     answers: [
-                        {text: "She not will come", isCorrect: false},
-                        {text: "She will not come", isCorrect: true},
-                        {text: "She don’t come", isCorrect: false},
+                        {text: "He will not get", isCorrect: true},
+                        {text: "He does not get", isCorrect: false},
+                        {text: "He will not got", isCorrect: false},
                     ],
                 },
-            ]
+                {
+                    id: v1(),
+                    question: "Она сделает",
+                    isDone: false,
+                    word: 'make',
+                    answers: [
+                        {text: "She will make", isCorrect: true},
+                        {text: "She makes", isCorrect: false},
+                        {text: "She will made", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Оно будет знать?",
+                    isDone: false,
+                    word: 'know',
+                    answers: [
+                        {text: "Will it know?", isCorrect: true},
+                        {text: "Does it know?", isCorrect: false},
+                        {text: "It will knows?", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Мы не возьмём",
+                    isDone: false,
+                    word: 'take',
+                    answers: [
+                        {text: "We will not take", isCorrect: true},
+                        {text: "We not will take", isCorrect: false},
+                        {text: "We do not take", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Они увидят",
+                    isDone: false,
+                    word: 'see',
+                    answers: [
+                        {text: "They will see", isCorrect: true},
+                        {text: "They see", isCorrect: false},
+                        {text: "They will saw", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Я приду?",
+                    isDone: false,
+                    word: 'come',
+                    answers: [
+                        {text: "Will I come?", isCorrect: true},
+                        {text: "Do I come?", isCorrect: false},
+                        {text: "I will came?", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Ты не будешь думать",
+                    isDone: false,
+                    word: 'think',
+                    answers: [
+                        {text: "You will not think", isCorrect: true},
+                        {text: "You do not think", isCorrect: false},
+                        {text: "You will not thought", isCorrect: false},
+                    ],
+                },
+                {
+                    id: v1(),
+                    question: "Она посмотрит",
+                    isDone: false,
+                    word: 'look',
+                    answers: [
+                        {text: "She will look", isCorrect: true},
+                        {text: "She looks", isCorrect: false},
+                        {text: "She will looked", isCorrect: false},
+                    ],
+                },
+            ],
         },
     },
 }
