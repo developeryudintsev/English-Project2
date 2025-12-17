@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import  {useState} from "react";
 import {ModalCamponent} from "../modal/Modal";
 import {Box, Button, IconButton, Paper, Typography} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
