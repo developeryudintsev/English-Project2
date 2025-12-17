@@ -1,4 +1,3 @@
-import React from "react";
 import {FreePage} from "./FreePage";
 
 export const Free = () => {
