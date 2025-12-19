@@ -377,7 +377,6 @@ export const AppRoutes = () => {
                                                             fontWeight:900,
                                                             fontSize:19,
                                                             width: "240px",
-                                                            color:'#008875',
                                                             marginTop: '-80px'
                                                         }}>
                                                             {btn.label}
