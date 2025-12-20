@@ -390,7 +390,6 @@ export const AppRoutes = () => {
                                                             width: "240px",
                                                             marginTop: '-80px',
                                                             position: 'relative', // Чтобы текст был поверх картинки
-                                                            color: 'white', // Текст будет лучше виден на темном фоне
                                                             textAlign: 'center',
                                                             marginRight: 'auto',
                                                             marginLeft: 'auto'
