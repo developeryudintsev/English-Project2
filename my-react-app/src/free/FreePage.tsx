@@ -148,7 +148,7 @@ export const FreePage = () => {
             question: "Они не используют китайский запчасти",
             isDone: false,
             word: 'use',
-            answers: [{text: "They don't use Chinese parts.", isCorrect: true}, {
+            answers: [{text: "They doesn't use Chinese parts.", isCorrect: true}, {
                 text: "They don't use Chinese parts.",
                 isCorrect: false
             }, {text: "They uses not Chinese parts.", isCorrect: false}]
@@ -299,7 +299,6 @@ export const FreePage = () => {
             }, {text: "They brings their groceries in a basket?", isCorrect: false}]
         }
     ]);
-
     const [questions, setQuestions] = useState<any[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<any>(null);
     const [toggelModal, setToggelModal] = useState<0 | 1 | 2 | 3>(0);
@@ -398,146 +397,161 @@ export const FreePage = () => {
         }}>
             <Paper elevation={3} sx={{
                 padding: 3, width: "95%", maxWidth: "800px", textAlign: "center",
-                backgroundColor: "#444447", borderRadius: 4, position: "relative"
+                backgroundColor: "#444447", borderRadius: 4, position: "relative",
+                minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center"
             }}>
 
-                {/* Единая логика Модалок */}
-                {toggelModal !== 0 && (
-                    <ModalCamponent open={true}>
-                        <Box sx={{
-                            p: 3, display: "flex", flexDirection: "column",
-                            alignItems: "center", bgcolor: "#444447", position: "relative",
-                            minWidth: "300px"
-                        }}>
-                            <IconButton
-                                onClick={() => setToggelModal(0)}
-                                sx={{position: "absolute", right: 8, top: 8, color: "#fff"}}
-                            >
-                                <CloseIcon/>
-                            </IconButton>
+                {/* --- ОТОБРАЖЕНИЕ ПРИ ОШИБКЕ --- */}
+                {answerStatus === "wrong" ? (
+                    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, py: 4 }}>
+                        <Typography variant="h5" sx={{ color: "#FFF44F", fontWeight: "bold", px: 2 }}>
+                            Не расстраивайся, мы приглашаем тебя на бесплатные занятия по английскому языку!
+                        </Typography>
 
-                            <Typography sx={{
-                                color: toggelModal === 1 ? '#FFF44F' : '#4caf50',
-                                fontWeight: "bold", mb: 2, textAlign: 'center'
-                            }}>
-                                {toggelModal === 1 && "ОШИБКА!"}
-                                {toggelModal === 2 && "ВЕРНО!"}
-                                {toggelModal === 3 && "ПОЗДРАВЛЯЕМ! ТЕСТ ПРОЙДЕН! ⭐"}
+                        <Box sx={{marginLeft:'9%', width: "200px", height: "200px" }}>
+                            <VideoCat
+                                src={'/wrong4.mp4'}
+                                // Оставляем пустую функцию или не сбрасываем в 0,
+                                // чтобы кот не исчезал и замер на последнем кадре
+                                setToggelVideoCatFoo={() => {}}
+                                toggelVideoCat={toggelVideoCat}
+                                showCondition={true}
+                            />
+                        </Box>
+
+                        <Button
+                            variant="contained"
+                            onClick={() => window.location.reload()}
+                            sx={{
+                                marginTop:'-5%',
+                                bgcolor: "#FFF44F",
+                                color: "black",
+                                fontWeight: "bold",
+                                "&:hover": { bgcolor: "#fff" }
+                            }}
+                        >
+                            Попробовать еще раз
+                        </Button>
+                    </Box>
+                ) : (
+                    /* --- ОБЫЧНЫЙ ИНТЕРФЕЙС (Вопросы и Глаголы) --- */
+                    <>
+                        {/* Модалки для ВЕРНО и ФИНАЛ (ошибку убрали, так как она теперь в Paper) */}
+                        {(toggelModal === 2 || toggelModal === 3) && (
+                            <ModalCamponent open={true}>
+                                <Box sx={{
+                                    p: 3, display: "flex", flexDirection: "column",
+                                    alignItems: "center", bgcolor: "#444447", position: "relative",
+                                    minWidth: "300px"
+                                }}>
+                                    <IconButton
+                                        onClick={() => setToggelModal(0)}
+                                        sx={{position: "absolute", right: 8, top: 8, color: "#fff"}}
+                                    >
+                                        <CloseIcon/>
+                                    </IconButton>
+
+                                    <Typography sx={{
+                                        color: '#4caf50',
+                                        fontWeight: "bold", mb: 2, textAlign: 'center'
+                                    }}>
+                                        {toggelModal === 2 && "ВЕРНО!"}
+                                        {toggelModal === 3 && "ПОЗДРАВЛЯЕМ! ТЕСТ ПРОЙДЕН! ⭐"}
+                                    </Typography>
+
+                                    <Box sx={{mb: 2}}>
+                                        <VideoCat
+                                            src={'/RightS6.mp4'}
+                                            setToggelVideoCatFoo={() => setToggelVideoCat(0)}
+                                            toggelVideoCat={toggelVideoCat}
+                                            showCondition={true}
+                                        />
+                                    </Box>
+
+                                    {toggelModal === 3 && (
+                                        <Button
+                                            variant="contained"
+                                            onClick={() => window.location.reload()}
+                                            sx={{
+                                                mt: 1, bgcolor: "#FFF44F", color: "#000",
+                                                "&:hover": {bgcolor: "#fff"}, textTransform: 'none'
+                                            }}
+                                        >
+                                            Начать новый тест
+                                        </Button>
+                                    )}
+                                </Box>
+                            </ModalCamponent>
+                        )}
+
+                        {/* Прогресс и кнопки глаголов */}
+                        <Box sx={{mb: 3}}>
+                            <Typography sx={{color: "#FFF44F", mb: 2, fontSize: "0.9rem", fontWeight: "bold"}}>
+                                Прогресс теста: {progressDone} / {questions.length}
                             </Typography>
 
-                            {/* Видео кота */}
-                            <Box sx={{mb: 2}}>
-                                <VideoCat
-                                    src={(toggelModal === 2 || toggelModal === 3) ? '/RightS6.mp4' : '/wrong4.mp4'}
-                                    setToggelVideoCatFoo={() => setToggelVideoCat(0)}
-                                    toggelVideoCat={toggelVideoCat}
-                                    showCondition={true}
-                                />
+                            <Box sx={{display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 1.5}}>
+                                {questions.map((q) => (
+                                    <Button
+                                        key={q.id}
+                                        variant={q.isDone ? "contained" : "outlined"}
+                                        onClick={() => selectQuestion(q.id)}
+                                        sx={{
+                                            bgcolor: currentQuestion.id === q.id ? "#1976d2" : q.isDone ? "#4caf50" : "transparent",
+                                            color: "white",
+                                            borderColor: "#FFF44F",
+                                            textTransform: "none",
+                                            minWidth: "200px",
+                                            height:'40px'
+                                        }}
+                                    >
+                                        {q.word}
+                                    </Button>
+                                ))}
                             </Box>
-
-                            {/* Кнопка в модалке ошибки — перезагружает страницу */}
-                            {toggelModal === 1 && (
-                                <Button
-                                    variant="contained"
-                                    onClick={() => window.location.reload()}
-                                    sx={{
-                                        mt: 1,
-                                        bgcolor: "red",
-                                        color: "#fff",
-                                        "&:hover": {bgcolor: "#cc0000"},
-                                        textTransform: 'none'
-                                    }}
-                                >
-                                    Попробовать еще раз
-                                </Button>
-                            )}
-
-                            {/* Кнопка в модалке финала */}
-                            {toggelModal === 3 && (
-                                <Button
-                                    variant="contained"
-                                    onClick={() => window.location.reload()}
-                                    sx={{
-                                        mt: 1,
-                                        bgcolor: "#FFF44F",
-                                        color: "#000",
-                                        "&:hover": {bgcolor: "#fff"},
-                                        textTransform: 'none'
-                                    }}
-                                >
-                                    Начать новый тест
-                                </Button>
-                            )}
                         </Box>
-                    </ModalCamponent>
-                )}
 
-                {/* Прогресс и кнопки глаголов */}
-                <Box sx={{mb: 3}}>
-                    <Typography sx={{color: "#FFF44F", mb: 2, fontSize: "0.9rem", fontWeight: "bold"}}>
-                        Прогресс теста: {progressDone} / {questions.length}
-                    </Typography>
-
-                    <Box sx={{display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 1.5}}>
-                        {questions.map((q) => (
-                            <Button
-                                key={q.id}
-                                variant={q.isDone ? "contained" : "outlined"}
-                                onClick={() => selectQuestion(q.id)}
-                                size="small"
-                                sx={{
-                                    bgcolor: currentQuestion.id === q.id ? "#1976d2" : q.isDone ? "#4caf50" : "transparent",
-                                    color: "white", borderColor: "#FFF44F", textTransform: "none", minWidth: "100px"
-                                }}
-                            >
-                                {q.word}
-                            </Button>
-                        ))}
-                    </Box>
-                </Box>
-
-                {/* Вопрос и ответы */}
-                <Box sx={{mt: 2}}>
-                    <Typography variant="h5" sx={{color: "white", mb: 4, minHeight: "60px"}}>
-                        {currentQuestion.question}
-                        <IconButton
-                            onClick={() => speakText(currentQuestion.question, "ru")}
-                            sx={{color: "#FFF44F"}}
-                            aria-label="Озвучить вопрос"
-                        >
-                            <VolumeUpIcon/>
-                        </IconButton>
-                    </Typography>
-
-                    <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
-                        {currentQuestion.answers.map((ans: any, idx: number) => (
-                            <div>
-                                <Button
-                                    key={idx}
-                                    variant="contained"
-                                    onClick={() => handleAnswer(ans.text, ans.isCorrect)}
-                                    sx={{
-                                        py: 1.8, textTransform: "none", fontSize: "1.1rem",
-                                        bgcolor: selectedAnswer === ans.text
-                                            ? (ans.isCorrect ? "#4caf50" : "#f44336")
-                                            : "#555",
-                                        "&:hover": {bgcolor: "#666"}
-                                    }}
-                                >
-                                    {ans.text}
-                                </Button>
+                        {/* Вопрос и ответы */}
+                        <Box sx={{mt: 2}}>
+                            <Typography variant="h5" sx={{color: "white", mb: 4, minHeight: "60px"}}>
+                                {currentQuestion.question}
                                 <IconButton
-                                    onClick={() => speakText(ans.text, "en")}
-                                    sx={{ml: 1, color: "#FFF44F", zIndex: 3}}
-                                    aria-label="Озвучить ответ"
+                                    onClick={() => speakText(currentQuestion.question, "ru")}
+                                    sx={{color: "#FFF44F"}}
                                 >
                                     <VolumeUpIcon/>
                                 </IconButton>
-                            </div>
-                        ))}
-                    </Box>
-                </Box>
+                            </Typography>
 
+                            <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
+                                {currentQuestion.answers.map((ans: any, idx: number) => (
+                                    <Box key={idx} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Button
+                                            variant="contained"
+                                            onClick={() => handleAnswer(ans.text, ans.isCorrect)}
+                                            sx={{
+                                                py: 2, textTransform: "none", fontSize: "1.1rem",
+                                                width:'60%',
+                                                bgcolor: selectedAnswer === ans.text
+                                                    ? (ans.isCorrect ? "#4caf50" : "#f44336")
+                                                    : "#555",
+                                                "&:hover": {bgcolor: "#666"}
+                                            }}
+                                        >
+                                            {ans.text}
+                                        </Button>
+                                        <IconButton
+                                            onClick={() => speakText(ans.text, "en")}
+                                            sx={{ml: 1, color: "#FFF44F"}}
+                                        >
+                                            <VolumeUpIcon/>
+                                        </IconButton>
+                                    </Box>
+                                ))}
+                            </Box>
+                        </Box>
+                    </>
+                )}
             </Paper>
         </Box>
     );

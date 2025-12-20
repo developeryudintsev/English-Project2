@@ -124,6 +124,7 @@ export const AppRoutes = () => {
     };
     const [visibleCount, setVisibleCount] = useState<number>(4);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
     const MIN_VISIBLE = 1;
     const MAX_VISIBLE = 4;
     const buttons = [
@@ -362,22 +363,37 @@ export const AppRoutes = () => {
                                                 onMouseLeave={() => setHoveredIndex(null)}
                                             >
                                                 {btn.to === '/free'?
-                                                    <div>
+                                                    <div
+                                                        onMouseEnter={() => setIsHovered(true)}
+                                                        onMouseLeave={() => setIsHovered(false)}
+                                                        style={{
+                                                            position: 'relative',
+                                                            cursor: 'pointer',
+                                                            width: "250px"
+                                                        }}
+                                                    >
                                                         <img
                                                             src={free}
                                                             style={{
                                                                 borderRadius: "12px",
                                                                 width: "250px",
                                                                 height: "434px",
-                                                                marginTop: '-1px'
+                                                                marginTop: '-1px',
+                                                                transition: "all 0.3s ease", // Плавность затемнения
+                                                                filter: isHovered ? "brightness(0.8)" : "brightness(1)" // Затемнение
                                                             }}
                                                         />
                                                         <p style={{
                                                             fontFamily: 'sans-serif',
-                                                            fontWeight:900,
-                                                            fontSize:19,
+                                                            fontWeight: 900,
+                                                            fontSize: 19,
                                                             width: "240px",
-                                                            marginTop: '-80px'
+                                                            marginTop: '-80px',
+                                                            position: 'relative', // Чтобы текст был поверх картинки
+                                                            color: 'white', // Текст будет лучше виден на темном фоне
+                                                            textAlign: 'center',
+                                                            marginRight: 'auto',
+                                                            marginLeft: 'auto'
                                                         }}>
                                                             {btn.label}
                                                         </p>
