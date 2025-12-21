@@ -124,7 +124,6 @@ export const AppRoutes = () => {
     };
     const [visibleCount, setVisibleCount] = useState<number>(4);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [isHovered, setIsHovered] = useState(false);
     const MIN_VISIBLE = 1;
     const MAX_VISIBLE = 4;
     const buttons = [
