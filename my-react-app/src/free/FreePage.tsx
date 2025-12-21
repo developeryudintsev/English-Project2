@@ -502,7 +502,7 @@ export const FreePage = () => {
                                             borderColor: "#FFF44F",
                                             textTransform: "none",
                                             minWidth: "200px",
-                                            height:'40px'
+                                            height:'60px'
                                         }}
                                     >
                                         {q.word}
@@ -532,17 +532,20 @@ export const FreePage = () => {
                                             sx={{
                                                 py: 2, textTransform: "none", fontSize: "1.1rem",
                                                 width:'60%',
+                                                color: "black",
                                                 bgcolor: selectedAnswer === ans.text
                                                     ? (ans.isCorrect ? "#4caf50" : "#f44336")
-                                                    : "#555",
-                                                "&:hover": {bgcolor: "#666"}
+                                                    : "#FFF44F",
+                                                "&:hover": {bgcolor: "#FFF44F"}
                                             }}
                                         >
+                                            <span style={{color:'black'}}>
                                             {ans.text}
+                                                </span>
                                         </Button>
                                         <IconButton
                                             onClick={() => speakText(ans.text, "en")}
-                                            sx={{ml: 1, color: "#FFF44F"}}
+                                            sx={{ml: 1,color:'#FFF44F'}}
                                         >
                                             <VolumeUpIcon/>
                                         </IconButton>

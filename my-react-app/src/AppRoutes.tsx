@@ -364,35 +364,48 @@ export const AppRoutes = () => {
                                             >
                                                 {btn.to === '/free'?
                                                     <div
-                                                        onMouseEnter={() => setIsHovered(true)}
-                                                        onMouseLeave={() => setIsHovered(false)}
                                                         style={{
                                                             position: 'relative',
                                                             cursor: 'pointer',
-                                                            width: "250px"
+                                                            width: "250px",
+                                                            height: "434px", // Ограничиваем высоту контейнера
+                                                            borderRadius: "12px",
+                                                            overflow: 'hidden' // Чтобы градиент не вылезал за скругления
                                                         }}
                                                     >
                                                         <img
                                                             src={free}
                                                             style={{
-                                                                borderRadius: "12px",
                                                                 width: "250px",
                                                                 height: "434px",
-                                                                marginTop: '-1px',
-                                                                transition: "all 0.3s ease", // Плавность затемнения
-                                                                filter: isHovered ? "brightness(0.8)" : "brightness(1)" // Затемнение
+                                                                display: "block",
+                                                                transition: "all 0.3s ease",
                                                             }}
                                                         />
+
+                                                        {/* Слой градиентного затемнения */}
+                                                        <div style={{
+                                                            position: 'absolute',
+                                                            bottom: 0,
+                                                            left: 0,
+                                                            width: '100%',
+                                                            height: '50%', // Затемняем нижнюю половину
+                                                            background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%)',
+                                                            pointerEvents: 'none' // Чтобы клики проходили сквозь слой
+                                                        }} />
+
                                                         <p style={{
                                                             fontFamily: 'sans-serif',
                                                             fontWeight: 900,
                                                             fontSize: 19,
                                                             width: "240px",
-                                                            marginTop: '-80px',
-                                                            position: 'relative', // Чтобы текст был поверх картинки
+                                                            position: 'absolute', // Позиционируем точно над низом
+                                                            bottom: '20px',       // Отступ от края
+                                                            left: '50%',
+                                                            transform: 'translateX(-50%)', // Центрируем по горизонтали
+                                                            margin: 0,
                                                             textAlign: 'center',
-                                                            marginRight: 'auto',
-                                                            marginLeft: 'auto'
+                                                            zIndex: 2
                                                         }}>
                                                             {btn.label}
                                                         </p>
