@@ -305,6 +305,7 @@ export const FreePage = () => {
     const [toggelVideoCat, setToggelVideoCat] = useState<0 | 1 | 2 | 3>(0);
     const [answerStatus, setAnswerStatus] = useState<"none" | "correct" | "wrong">("none");
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+
     const [russianVoice, setRussianVoice] = useState<SpeechSynthesisVoice | null>(null);
     const [englishVoice, setEnglishVoice] = useState<SpeechSynthesisVoice | null>(null);
     useEffect(() => {
@@ -326,20 +327,26 @@ export const FreePage = () => {
     }, []);
     const speakText = (text: string, lang: "ru" | "en") => {
         if (!text) return;
+
         if (window.speechSynthesis.speaking) {
             window.speechSynthesis.cancel();
         }
+
         const utterance = new SpeechSynthesisUtterance(text);
+
         if (lang === "ru" && russianVoice) {
             utterance.voice = russianVoice;
             utterance.lang = russianVoice.lang;
+            utterance.rate = 1;
         } else if (lang === "en" && englishVoice) {
             utterance.voice = englishVoice;
             utterance.lang = englishVoice.lang;
+            utterance.rate = 0.65;
         } else {
             utterance.lang = lang === "ru" ? "ru-RU" : "en-US";
+            utterance.rate = lang === "en" ? 0.75 : 1;
         }
-        utterance.rate = 1;
+
         utterance.pitch = 1;
         window.speechSynthesis.speak(utterance);
     };
