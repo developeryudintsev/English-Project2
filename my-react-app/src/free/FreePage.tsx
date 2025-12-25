@@ -356,6 +356,20 @@ export const FreePage = () => {
         setQuestions(selected);
         setCurrentQuestion(selected[0]);
     }, [allData]);
+    useEffect(() => {
+        let timer: any;
+
+        // Если открыта модалка "Верно" (2)
+        if (toggelModal === 2) {
+            timer = setTimeout(() => {
+                setToggelModal(0);
+                setToggelVideoCat(0);
+            }, 2000); // 2 секунды
+        }
+
+        // Очистка таймера при закрытии или смене состояния
+        return () => clearTimeout(timer);
+    }, [toggelModal]);
     const progressDone = questions.filter(q => q.isDone).length;
     const selectQuestion = (id: string) => {
         const found = questions.find(q => q.id === id);
