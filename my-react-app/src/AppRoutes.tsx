@@ -127,7 +127,7 @@ export const AppRoutes = () => {
     const MIN_VISIBLE = 1;
     const MAX_VISIBLE = 4;
     const buttons = [
-        {to: "/free", label: "Выйграй беспланый английский"},
+        {to: "/free", label: "Выйграй бесплатный английский"},
         {to: "/app", label: "Тренажер по временам"},
         {to: "/themes", label: "Тренажер по темам английского"},
         {to: "/about", label: "О нас и связаться с нами"},

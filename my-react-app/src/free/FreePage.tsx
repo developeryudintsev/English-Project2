@@ -43,7 +43,7 @@ export const FreePage = () => {
         },
         {
             id: v1(),
-            question: "Oна делает(что-то руками) торт каждые выходные",
+            question: "Oна делает торт каждые выходные",
             isDone: false,
             word: 'make',
             answers: [{
