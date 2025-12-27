@@ -305,7 +305,7 @@ export const FreePage = () => {
     const [toggelVideoCat, setToggelVideoCat] = useState<0 | 1 | 2 | 3>(0);
     const [answerStatus, setAnswerStatus] = useState<"none" | "correct" | "wrong">("none");
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-
+    const [correctAnswerText, setCorrectAnswerText] = useState<string>("");
     const [russianVoice, setRussianVoice] = useState<SpeechSynthesisVoice | null>(null);
     const [englishVoice, setEnglishVoice] = useState<SpeechSynthesisVoice | null>(null);
     useEffect(() => {
@@ -358,16 +358,12 @@ export const FreePage = () => {
     }, [allData]);
     useEffect(() => {
         let timer: any;
-
-        // Если открыта модалка "Верно" (2)
         if (toggelModal === 2) {
             timer = setTimeout(() => {
                 setToggelModal(0);
                 setToggelVideoCat(0);
             }, 2000); // 2 секунды
         }
-
-        // Очистка таймера при закрытии или смене состояния
         return () => clearTimeout(timer);
     }, [toggelModal]);
     const progressDone = questions.filter(q => q.isDone).length;
@@ -404,6 +400,10 @@ export const FreePage = () => {
                 }, 1500);
             }
         } else {
+            const correct = currentQuestion.answers.find((a: any) => a.isCorrect);
+            if (correct) {
+                setCorrectAnswerText(correct.text);
+            }
             setAnswerStatus("wrong");
             setToggelVideoCat(1);
             setToggelModal(1);
@@ -422,7 +422,6 @@ export const FreePage = () => {
                 minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center"
             }}>
 
-                {/* --- ОТОБРАЖЕНИЕ ПРИ ОШИБКЕ --- */}
                 {answerStatus === "wrong" ? (
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, py: 4 }}>
                         <Typography variant="h5" sx={{ color: "#FFF44F", fontWeight: "bold", px: 2 }}>
@@ -432,19 +431,24 @@ export const FreePage = () => {
                         <Box sx={{marginLeft:'9%', width: "200px", height: "200px" }}>
                             <VideoCat
                                 src={'/wrong4.mp4'}
-                                // Оставляем пустую функцию или не сбрасываем в 0,
-                                // чтобы кот не исчезал и замер на последнем кадре
                                 setToggelVideoCatFoo={() => {}}
                                 toggelVideoCat={toggelVideoCat}
                                 showCondition={true}
                             />
                         </Box>
-
+                        <Box sx={{ color: "#FFF44F", textAlign: "center",marginTop:'-10%'}}>
+                            <Typography variant="body1" sx={{ color: "#aaa", mb: 1 }}>
+                                Правильный ответ:
+                            </Typography>
+                            <Typography variant="h6" sx={{ color: "#4caf50", fontWeight: "bold", border: "1px dashed #4caf50", p: 1, borderRadius: 2 }}>
+                                {correctAnswerText}
+                            </Typography>
+                        </Box>
                         <Button
                             variant="contained"
                             onClick={() => window.location.reload()}
                             sx={{
-                                marginTop:'-5%',
+                                marginTop:'-0%',
                                 bgcolor: "#FFF44F",
                                 color: "black",
                                 fontWeight: "bold",
@@ -455,9 +459,7 @@ export const FreePage = () => {
                         </Button>
                     </Box>
                 ) : (
-                    /* --- ОБЫЧНЫЙ ИНТЕРФЕЙС (Вопросы и Глаголы) --- */
                     <>
-                        {/* Модалки для ВЕРНО и ФИНАЛ (ошибку убрали, так как она теперь в Paper) */}
                         {(toggelModal === 2 || toggelModal === 3) && (
                             <ModalCamponent open={true}>
                                 <Box sx={{
@@ -505,7 +507,6 @@ export const FreePage = () => {
                             </ModalCamponent>
                         )}
 
-                        {/* Прогресс и кнопки глаголов */}
                         <Box sx={{mb: 3}}>
                             <Typography sx={{color: "#FFF44F", mb: 2, fontSize: "0.9rem", fontWeight: "bold"}}>
                                 Прогресс теста: {progressDone} / {questions.length}
