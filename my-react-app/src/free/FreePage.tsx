@@ -34,12 +34,12 @@ export const FreePage = () => {
             isDone: false,
             word: 'get',
             answers: [{
-                text: "He does not get paid a lot of money",
+                text: "He doesn't get big money",
                 isCorrect: true
             }, {
-                text: "He do not get paid a lot of money",
+                text: "He do not get big money",
                 isCorrect: false
-            }, {text: "He did not got paid a lot of money", isCorrect: false}]
+            }, {text: "He did not get big money", isCorrect: false}]
         },
         {
             id: v1(),
@@ -66,16 +66,16 @@ export const FreePage = () => {
         },
         {
             id: v1(),
-            question: "Мы не берём сладости в магазине",
+            question: "Мы не покупаем сладости в магазине",
             isDone: false,
             word: 'take',
             answers: [{
-                text: "We don't take sweets from the store",
+                text: "We don't buy sweets in the store",
                 isCorrect: true
             }, {
-                text: "We does take sweets from the store",
+                text: "We doesn't buy sweets in the store",
                 isCorrect: false
-            }, {text: "We not take sweets from the store", isCorrect: false}]
+            }, {text: "We not buy sweets in the store", isCorrect: false}]
         },
         {
             id: v1(),
@@ -136,22 +136,22 @@ export const FreePage = () => {
             isDone: false,
             word: 'give',
             answers: [{
-                text: "Do we give change at the checkout?",
+                text: "Do we give change at the cash desk?",
                 isCorrect: true
             }, {
-                text: "Does we give change at the checkout?",
+                text: "Does we give change at the cash desk?",
                 isCorrect: false
-            }, {text: "We give change at the checkout?", isCorrect: false}]
+            }, {text: "We give change at the cash desk?", isCorrect: false}]
         },
         {
             id: v1(),
             question: "Они не используют китайский запчасти",
             isDone: false,
             word: 'use',
-            answers: [{text: "They doesn't use Chinese parts.", isCorrect: true}, {
-                text: "They don't use Chinese parts.",
+            answers: [{text: "They doesn't use Chinese parts", isCorrect: true}, {
+                text: "They don't use Chinese parts",
                 isCorrect: false
-            }, {text: "They uses not Chinese parts.", isCorrect: false}]
+            }, {text: "They uses not Chinese parts", isCorrect: false}]
         },
         {
             id: v1(),
@@ -168,10 +168,10 @@ export const FreePage = () => {
             question: "Ты рассказываешь анекдоты на работе?",
             isDone: false,
             word: 'tell',
-            answers: [{text: "Do you tell jokes at work?", isCorrect: true}, {
-                text: "Does you tell jokes at work?",
+            answers: [{text: "Do you tell anecdotes  at work?", isCorrect: true}, {
+                text: "Does you tell anecdotes  at work?",
                 isCorrect: false
-            }, {text: "You tell jokes at work?", isCorrect: false}]
+            }, {text: "You tell anecdotes at work?", isCorrect: false}]
         },
         {
             id: v1(),
@@ -214,7 +214,7 @@ export const FreePage = () => {
             }, {
                 text: "We not try to do the same things.",
                 isCorrect: false
-            }, {text: "We're tryes to do the same things.", isCorrect: false}]
+            }, {text: "We're tries to do the same things.", isCorrect: false}]
         },
         {
             id: v1(),
@@ -255,10 +255,10 @@ export const FreePage = () => {
             isDone: false,
             word: 'keep',
             answers: [{
-                text: "Does he keep his money in a safe?",
+                text: "Does he keep money in a safe?",
                 isCorrect: true
-            }, {text: "Do he keep his money in a safe?", isCorrect: false}, {
-                text: "He keeps his money in a safe?",
+            }, {text: "Do he keep money in a safe?", isCorrect: false}, {
+                text: "He keeps money in a safe?",
                 isCorrect: false
             }]
         },
@@ -268,12 +268,12 @@ export const FreePage = () => {
             isDone: false,
             word: 'let',
             answers: [{
-                text: "She doesn't let me to play outside in the evening.",
+                text: "She doesn't let to play outside in the evening.",
                 isCorrect: true
             }, {
-                text: "She not let me to play outside in the evening.",
+                text: "She not let to play outside in the evening.",
                 isCorrect: false
-            }, {text: "She did not let me to play outside in the evening.", isCorrect: false}]
+            }, {text: "She did not let to play outside in the evening.", isCorrect: false}]
         },
         {
             id: v1(),
@@ -291,12 +291,12 @@ export const FreePage = () => {
             isDone: false,
             word: 'bring',
             answers: [{
-                text: "Do they bring their groceries in a basket?",
+                text: "Do they bring their purchases in a basket?",
                 isCorrect: true
             }, {
-                text: "Does they bring their groceries in a basket?",
+                text: "Does they bring their purchases in a basket?",
                 isCorrect: false
-            }, {text: "They brings their groceries in a basket?", isCorrect: false}]
+            }, {text: "They brings their purchases in a basket?", isCorrect: false}]
         }
     ]);
     const [questions, setQuestions] = useState<any[]>([]);
@@ -425,7 +425,7 @@ export const FreePage = () => {
                 {answerStatus === "wrong" ? (
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, py: 4 }}>
                         <Typography variant="h5" sx={{ color: "#FFF44F", fontWeight: "bold", px: 2 }}>
-                            Не расстраивайся, мы приглашаем тебя на бесплатные занятия по английскому языку!
+                            Не расстраивайся, мы приглашаем тебя на онлайн занятия по английскому языку!
                         </Typography>
 
                         <Box sx={{marginLeft:'9%', width: "200px", height: "200px" }}>
@@ -440,7 +440,8 @@ export const FreePage = () => {
                             <Typography variant="body1" sx={{ color: "#aaa", mb: 1 }}>
                                 Правильный ответ:
                             </Typography>
-                            <Typography variant="h6" sx={{ color: "#4caf50", fontWeight: "bold", border: "1px dashed #4caf50", p: 1, borderRadius: 2 }}>
+                            <Typography variant="h6" sx={{ color: "#4caf50", fontWeight: "bold",backgroundColor: "#4caf50",
+                                color: "white", border: "1px dashed #4caf50", p: 1, borderRadius: 2 }}>
                                 {correctAnswerText}
                             </Typography>
                         </Box>
