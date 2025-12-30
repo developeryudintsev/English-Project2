@@ -441,7 +441,7 @@ export const FreePage = () => {
                                 Правильный ответ:
                             </Typography>
                             <Typography variant="h6" sx={{ color: "#4caf50", fontWeight: "bold",backgroundColor: "#4caf50",
-                                color: "white", border: "1px dashed #4caf50", p: 1, borderRadius: 2 }}>
+                                 border: "1px dashed #4caf50", p: 1, borderRadius: 2 }}>
                                 {correctAnswerText}
                             </Typography>
                         </Box>
