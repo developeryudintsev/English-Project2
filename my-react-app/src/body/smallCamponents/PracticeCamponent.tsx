@@ -98,18 +98,28 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
     }, [toggle]);
     useEffect(() => {
         const loadVoices = () => {
-            const voices = window.speechSynthesis.getVoices();
-            const ruMale = voices.find(
-                (v) => v.lang.startsWith("ru") && /male|man/i.test(v.name)
-            );
-            const ruAny = voices.find((v) => v.lang.startsWith("ru"));
-            const enMale = voices.find(
-                (v) => v.lang.startsWith("en") && /male|man/i.test(v.name)
-            );
-            const enAny = voices.find((v) => v.lang.startsWith("en"));
-            setRussianVoice(ruMale || ruAny || null);
-            setEnglishVoice(enMale || enAny || null);
+            // Получаем все голоса
+            let voices = window.speechSynthesis.getVoices();
+
+            // 1. Ищем РУССКИЙ (сначала мужской, если нет — любой русский)
+            const ruMale = voices.find(v => v.lang.includes("ru") && /male|dmitry|pavel|yuri/i.test(v.name));
+            const ruAny = voices.find(v => v.lang.includes("ru"));
+
+            // 2. Ищем АНГЛИЙСКИЙ (сначала мужской, если нет — любой английский)
+            const enMale = voices.find(v => v.lang.includes("en") && /male|google/i.test(v.name));
+            const enAny = voices.find(v => v.lang.includes("en"));
+
+            // Если голоса еще не загрузились (бывает в Chrome), пробуем снова через 100мс
+            if (voices.length === 0) {
+                setTimeout(loadVoices, 100);
+                return;
+            }
+
+            setRussianVoice(ruMale || ruAny || voices[0]); // Если русского вообще нет, берем самый первый системный
+            setEnglishVoice(enMale || enAny || voices[0]);
         };
+
+        // Обязательно вешаем обработчик для Chrome
         window.speechSynthesis.onvoiceschanged = loadVoices;
         loadVoices();
     }, []);

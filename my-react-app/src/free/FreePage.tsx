@@ -1,4 +1,4 @@
-import  {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {ModalCamponent} from "../modal/Modal";
 import {Box, Button, IconButton, Paper, Typography} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -13,290 +13,286 @@ export const FreePage = () => {
             question: "Я говорю каждый день",
             isDone: false,
             word: 'speak',
-            answers: [{text: "I speak every day", isCorrect: true}, {
-                text: "I speaks every day",
-                isCorrect: false
-            }, {text: "Do i speak every day?", isCorrect: false}]
+            answers: [
+                {text: "I speak every day", isCorrect: true},
+                {text: "I speaks every day", isCorrect: false},
+                {text: "Do i speak every day?", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Вы(ты) ходите в школу",
             isDone: false,
             word: 'go',
-            answers: [{text: "I go to school", isCorrect: false}, {
-                text: "She goes to school",
-                isCorrect: false
-            }, {text: "You go to school", isCorrect: true}]
+            answers: [
+                {text: "I go to school", isCorrect: false},
+                {text: "She goes to school", isCorrect: false},
+                {text: "You go to school", isCorrect: true}
+            ]
         },
         {
             id: v1(),
             question: "Он не получает большие деньги",
             isDone: false,
             word: 'get',
-            answers: [{
-                text: "He doesn't get big money",
-                isCorrect: true
-            }, {
-                text: "He do not get big money",
-                isCorrect: false
-            }, {text: "He did not get big money", isCorrect: false}]
+            answers: [
+                {text: "He doesn't get big money", isCorrect: true},
+                {text: "He do not get big money", isCorrect: false},
+                {text: "He did not get big money", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Oна делает торт каждые выходные",
             isDone: false,
             word: 'make',
-            answers: [{
-                text: "I will make a cake every weekend",
-                isCorrect: false
-            }, {text: "She makes a cake every weekend", isCorrect: true}, {
-                text: "I make a cake every weekend",
-                isCorrect: false
-            }]
+            answers: [
+                {text: "I will make a cake every weekend", isCorrect: false},
+                {text: "She makes a cake every weekend", isCorrect: true},
+                {text: "I make a cake every weekend", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Оно знает английский язык?",
             isDone: false,
             word: 'know',
-            answers: [{text: "Does it know English?", isCorrect: true}, {
-                text: "Do it know English?",
-                isCorrect: false
-            }, {text: "It know English?", isCorrect: false}]
+            answers: [
+                {text: "Does it know English?", isCorrect: true},
+                {text: "Do it know English?", isCorrect: false},
+                {text: "It know English?", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Мы не покупаем сладости в магазине",
             isDone: false,
             word: 'take',
-            answers: [{
-                text: "We don't buy sweets in the store",
-                isCorrect: true
-            }, {
-                text: "We doesn't buy sweets in the store",
-                isCorrect: false
-            }, {text: "We not buy sweets in the store", isCorrect: false}]
+            answers: [
+                {text: "We don't buy sweets in the store", isCorrect: true},
+                {text: "We doesn't buy sweets in the store", isCorrect: false},
+                {text: "We not buy sweets in the store", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Они видят красивую птицу",
             isDone: false,
             word: 'see',
-            answers: [{text: "They sees a beautiful bird", isCorrect: false}, {
-                text: "They see a beautiful bird",
-                isCorrect: true
-            }, {text: "They saw a beautiful bird", isCorrect: false}]
+            answers: [
+                {text: "They sees a beautiful bird", isCorrect: false},
+                {text: "They see a beautiful bird", isCorrect: true},
+                {text: "They saw a beautiful bird", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Я прихожу домой во время?",
             isDone: false,
             word: 'come',
-            answers: [{text: "Do I come home on time?", isCorrect: true}, {
-                text: "Does I come home on time?",
-                isCorrect: false
-            }, {text: "I come home on time?", isCorrect: false}]
+            answers: [
+                {text: "Do I come home on time?", isCorrect: true},
+                {text: "Does I come home on time?", isCorrect: false},
+                {text: "I come home on time?", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Ты не думаешь много",
             isDone: false,
             word: 'think',
-            answers: [{text: "You do not think", isCorrect: true}, {
-                text: "You not think",
-                isCorrect: false
-            }, {text: "You doesn’t think", isCorrect: false}]
+            answers: [
+                {text: "You do not think", isCorrect: true},
+                {text: "You not think", isCorrect: false},
+                {text: "You doesn’t think", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Она смотрит сериалы каждый вечер",
             isDone: false,
             word: 'watch',
-            answers: [{
-                text: "I watches TV series every evening.",
-                isCorrect: false
-            }, {
-                text: "He watches TV series every evening.",
-                isCorrect: false
-            }, {text: "She watches TV series every evening.", isCorrect: true}]
+            answers: [
+                {text: "I watches TV series every evening.", isCorrect: false},
+                {text: "He watches TV series every evening.", isCorrect: false},
+                {text: "She watches TV series every evening.", isCorrect: true}
+            ]
         },
         {
             id: v1(),
             question: "Оно хочет учить английский",
             isDone: false,
             word: 'want',
-            answers: [{text: "I wants to learn English", isCorrect: false}, {
-                text: "It wants to learn English",
-                isCorrect: true
-            }, {text: "I want to learn English", isCorrect: false}]
+            answers: [
+                {text: "I wants to learn English", isCorrect: false},
+                {text: "It wants to learn English", isCorrect: true},
+                {text: "I want to learn English", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Мы даём сдачу на кассе?",
             isDone: false,
             word: 'give',
-            answers: [{
-                text: "Do we give change at the cash desk?",
-                isCorrect: true
-            }, {
-                text: "Does we give change at the cash desk?",
-                isCorrect: false
-            }, {text: "We give change at the cash desk?", isCorrect: false}]
+            answers: [
+                {text: "Do we give change at the cash desk?", isCorrect: true},
+                {text: "Does we give change at the cash desk?", isCorrect: false},
+                {text: "We give change at the cash desk?", isCorrect: false}
+            ]
         },
         {
             id: v1(),
-            question: "Они не используют китайский запчасти",
+            question: "Они не используют китайские запчасти",
             isDone: false,
             word: 'use',
-            answers: [{text: "They doesn't use Chinese parts", isCorrect: true}, {
-                text: "They don't use Chinese parts",
-                isCorrect: false
-            }, {text: "They uses not Chinese parts", isCorrect: false}]
+            answers: [
+                {text: "They don't use Chinese parts", isCorrect: true}, // Исправлено: They don't
+                {text: "They doesn't use Chinese parts", isCorrect: false},
+                {text: "They uses not Chinese parts", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Я нахожу полезную информацию",
             isDone: false,
             word: 'find',
-            answers: [{text: "I find useful information", isCorrect: true}, {
-                text: "I finds useful information",
-                isCorrect: false
-            }, {text: "We find useful information", isCorrect: false}]
+            answers: [
+                {text: "I find useful information", isCorrect: true},
+                {text: "I finds useful information", isCorrect: false},
+                {text: "We find useful information", isCorrect: false}
+            ]
         },
         {
             id: v1(),
-            question: "Ты рассказываешь анекдоты на работе?",
+            question: "Ты рассказываешь шутки на работе?",
             isDone: false,
             word: 'tell',
-            answers: [{text: "Do you tell anecdotes  at work?", isCorrect: true}, {
-                text: "Does you tell anecdotes  at work?",
-                isCorrect: false
-            }, {text: "You tell anecdotes at work?", isCorrect: false}]
+            answers: [
+                {text: "Do you tell jokes at work?", isCorrect: true}, // Исправлено: jokes вместо anecdotes
+                {text: "Does you tell jokes at work?", isCorrect: false},
+                {text: "You tell jokes at work?", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Он не спрашивает новый рецепт",
             isDone: false,
             word: 'ask',
-            answers: [{text: "He doesn't ask for a new recipe", isCorrect: true}, {
-                text: "He not ask for a new recipe.",
-                isCorrect: false
-            }, {text: "He asks for a new recipe.", isCorrect: false}]
+            answers: [
+                {text: "He doesn't ask for a new recipe", isCorrect: true},
+                {text: "He not ask for a new recipe.", isCorrect: false},
+                {text: "He asks for a new recipe.", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Она работает изо всех сил",
             isDone: false,
             word: 'work',
-            answers: [{text: "You works as hard as she can.", isCorrect: false}, {
-                text: "She works as hard as she can.",
-                isCorrect: true
-            }, {text: "She work as hard as she can.", isCorrect: false}]
+            answers: [
+                {text: "You works as hard as she can.", isCorrect: false},
+                {text: "She works as hard as she can.", isCorrect: true},
+                {text: "She work as hard as she can.", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Оно чувствует вкусный запах?",
             isDone: false,
             word: 'feel',
-            answers: [{text: "Does it smell delicious?", isCorrect: true}, {
-                text: "Does it smells delicious?",
-                isCorrect: false
-            }, {text: "Do it smell delicious?", isCorrect: false}]
+            answers: [
+                {text: "Does it smell delicious?", isCorrect: true},
+                {text: "Does it smells delicious?", isCorrect: false},
+                {text: "Do it smell delicious?", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Мы не пытаемся делать те же вещи",
             isDone: false,
             word: 'try',
-            answers: [{
-                text: "We does not try to do the same things.",
-                isCorrect: true
-            }, {
-                text: "We not try to do the same things.",
-                isCorrect: false
-            }, {text: "We're tries to do the same things.", isCorrect: false}]
+            answers: [
+                {text: "We don't try to do the same things.", isCorrect: true}, // Исправлено: We do not
+                {text: "We doesn't try to do the same things.", isCorrect: false},
+                {text: "We're tries to do the same things.", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Они уходят на улицу",
             isDone: false,
             word: 'leave',
-            answers: [{text: "We leave outside", isCorrect: false}, {
-                text: "They leave outside",
-                isCorrect: true
-            }, {text: "They leaves outside", isCorrect: false}]
+            answers: [
+                {text: "We leave outside", isCorrect: false},
+                {text: "They leave outside", isCorrect: true},
+                {text: "They leaves outside", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Я не звоню на работу в выходные",
             isDone: false,
             word: 'call',
-            answers: [{text: "I don't call work on weekends", isCorrect: true}, {
-                text: "I not call work on weekends",
-                isCorrect: false
-            }, {text: "I did not call work on weekends", isCorrect: false}]
+            answers: [
+                {text: "I don't call work on weekends", isCorrect: true},
+                {text: "I not call work on weekends", isCorrect: false},
+                {text: "I did not call work on weekends", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Тебе нужно учить английский каждый день",
             isDone: false,
             word: 'need',
-            answers: [{
-                text: "They need to learn English every day",
-                isCorrect: false
-            }, {
-                text: "She need to learn English every day",
-                isCorrect: false
-            }, {text: "You need to learn English every day", isCorrect: true}]
+            answers: [
+                {text: "They need to learn English every day", isCorrect: false},
+                {text: "She need to learn English every day", isCorrect: false},
+                {text: "You need to learn English every day", isCorrect: true}
+            ]
         },
         {
             id: v1(),
             question: "Он хранит деньги в сейфе?",
             isDone: false,
             word: 'keep',
-            answers: [{
-                text: "Does he keep money in a safe?",
-                isCorrect: true
-            }, {text: "Do he keep money in a safe?", isCorrect: false}, {
-                text: "He keeps money in a safe?",
-                isCorrect: false
-            }]
+            answers: [
+                {text: "Does he keep money in a safe?", isCorrect: true},
+                {text: "Do he keep money in a safe?", isCorrect: false},
+                {text: "He keeps money in a safe?", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Она не позволяет играть на улице вечером",
             isDone: false,
             word: 'let',
-            answers: [{
-                text: "She doesn't let to play outside in the evening.",
-                isCorrect: true
-            }, {
-                text: "She not let to play outside in the evening.",
-                isCorrect: false
-            }, {text: "She did not let to play outside in the evening.", isCorrect: false}]
+            answers: [
+                {text: "She doesn't let anyone play outside in the evening", isCorrect: true},
+                {text: "She not let to play outside in the evening", isCorrect: false},
+                {text: "She did not let to play outside in the evening", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Мы начинаем рабочий день в 9 утра",
             isDone: false,
             word: 'begin',
-            answers: [{text: "I begin work day at 9 am", isCorrect: false}, {
-                text: "We begin our work day at 9 am",
-                isCorrect: true
-            }, {text: "We begins our work day at 9 am", isCorrect: false}]
+            answers: [
+                {text: "I begin work day at 9 am", isCorrect: false},
+                {text: "We begin our work day at 9 am", isCorrect: true},
+                {text: "We begins our work day at 9 am", isCorrect: false}
+            ]
         },
         {
             id: v1(),
             question: "Они носят покупки в корзине?",
             isDone: false,
             word: 'bring',
-            answers: [{
-                text: "Do they bring their purchases in a basket?",
-                isCorrect: true
-            }, {
-                text: "Does they bring their purchases in a basket?",
-                isCorrect: false
-            }, {text: "They brings their purchases in a basket?", isCorrect: false}]
+            answers: [
+                {text: "Do they bring their purchases in a basket?", isCorrect: true},
+                {text: "Does they bring their purchases in a basket?", isCorrect: false},
+                {text: "They brings their purchases in a basket?", isCorrect: false}
+            ]
         }
     ]);
     const [questions, setQuestions] = useState<any[]>([]);
@@ -310,44 +306,56 @@ export const FreePage = () => {
     const [englishVoice, setEnglishVoice] = useState<SpeechSynthesisVoice | null>(null);
     useEffect(() => {
         const loadVoices = () => {
-            const voices = window.speechSynthesis.getVoices();
-            const ruMale = voices.find(
-                (v) => v.lang.startsWith("ru") && /male|man/i.test(v.name)
-            );
-            const ruAny = voices.find((v) => v.lang.startsWith("ru"));
-            const enMale = voices.find(
-                (v) => v.lang.startsWith("en") && /male|man/i.test(v.name)
-            );
-            const enAny = voices.find((v) => v.lang.startsWith("en"));
-            setRussianVoice(ruMale || ruAny || null);
-            setEnglishVoice(enMale || enAny || null);
+            // Получаем все голоса
+            let voices = window.speechSynthesis.getVoices();
+
+            // 1. Ищем РУССКИЙ (сначала мужской, если нет — любой русский)
+            const ruMale = voices.find(v => v.lang.includes("ru") && /male|dmitry|pavel|yuri/i.test(v.name));
+            const ruAny = voices.find(v => v.lang.includes("ru"));
+
+            // 2. Ищем АНГЛИЙСКИЙ (сначала мужской, если нет — любой английский)
+            const enMale = voices.find(v => v.lang.includes("en") && /male|google/i.test(v.name));
+            const enAny = voices.find(v => v.lang.includes("en"));
+
+            // Если голоса еще не загрузились (бывает в Chrome), пробуем снова через 100мс
+            if (voices.length === 0) {
+                setTimeout(loadVoices, 100);
+                return;
+            }
+
+            setRussianVoice(ruMale || ruAny || voices[0]); // Если русского вообще нет, берем самый первый системный
+            setEnglishVoice(enMale || enAny || voices[0]);
         };
+
+        // Обязательно вешаем обработчик для Chrome
         window.speechSynthesis.onvoiceschanged = loadVoices;
         loadVoices();
     }, []);
     const speakText = (text: string, lang: "ru" | "en") => {
         if (!text) return;
 
-        if (window.speechSynthesis.speaking) {
-            window.speechSynthesis.cancel();
-        }
+        // Останавливаем текущую речь, если она идет
+        window.speechSynthesis.cancel();
 
         const utterance = new SpeechSynthesisUtterance(text);
 
-        if (lang === "ru" && russianVoice) {
-            utterance.voice = russianVoice;
-            utterance.lang = russianVoice.lang;
-            utterance.rate = 1;
-        } else if (lang === "en" && englishVoice) {
-            utterance.voice = englishVoice;
-            utterance.lang = englishVoice.lang;
-            utterance.rate = 0.65;
+        if (lang === "ru") {
+            // Если нашли голос в системе — используем, если нет — просто ставим язык
+            if (russianVoice) {
+                utterance.voice = russianVoice;
+            }
+            utterance.lang = "ru-RU";
+            utterance.rate = 1.0;
+            utterance.pitch = 0.9; // Слегка понижаем для более мужского тембра
         } else {
-            utterance.lang = lang === "ru" ? "ru-RU" : "en-US";
-            utterance.rate = lang === "en" ? 0.75 : 1;
+            if (englishVoice) {
+                utterance.voice = englishVoice;
+            }
+            utterance.lang = "en-US";
+            utterance.rate = 0.7; // Твоя просьба: английский медленнее
+            utterance.pitch = 1.0;
         }
 
-        utterance.pitch = 1;
         window.speechSynthesis.speak(utterance);
     };
     useEffect(() => {
@@ -358,14 +366,22 @@ export const FreePage = () => {
     }, [allData]);
     useEffect(() => {
         let timer: any;
+
         if (toggelModal === 2) {
             timer = setTimeout(() => {
                 setToggelModal(0);
                 setToggelVideoCat(0);
-            }, 2000); // 2 секунды
+
+                const nextQ = questions.find(q => !q.isDone);
+                if (nextQ) {
+                    selectQuestion(nextQ.id);
+                }
+            }, 4000); // ⏱ 4 секунды
         }
+
         return () => clearTimeout(timer);
-    }, [toggelModal]);
+    }, [toggelModal, questions]);
+
     const progressDone = questions.filter(q => q.isDone).length;
     const selectQuestion = (id: string) => {
         const found = questions.find(q => q.id === id);
@@ -391,13 +407,7 @@ export const FreePage = () => {
             } else {
                 setToggelVideoCat(2);
                 setToggelModal(2);
-                setTimeout(() => {
-                    const nextQ = updated.find(q => !q.isDone);
-                    if (nextQ) {
-                        selectQuestion(nextQ.id);
-                        setToggelModal(0);
-                    }
-                }, 1500);
+
             }
         } else {
             const correct = currentQuestion.answers.find((a: any) => a.isCorrect);
@@ -423,25 +433,30 @@ export const FreePage = () => {
             }}>
 
                 {answerStatus === "wrong" ? (
-                    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, py: 4 }}>
-                        <Typography variant="h5" sx={{ color: "#FFF44F", fontWeight: "bold", px: 2 }}>
-                            Не расстраивайся, мы приглашаем тебя на онлайн занятия по <a style={{color: "#FFF44F"}} href="https://www.kiber-rus.ru/english/">английскому языку</a>!
+                    <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", gap: 3, py: 4}}>
+                        <Typography variant="h5" sx={{color: "#FFF44F", fontWeight: "bold", px: 2}}>
+                            Не расстраивайся, мы приглашаем тебя на онлайн занятия по <a style={{color: "#FFF44F"}}
+                                                                                         href="https://www.kiber-rus.ru/english/">английскому
+                            языку</a>!
                         </Typography>
 
-                        <Box sx={{marginLeft:'9%', width: "200px", height: "200px" }}>
+                        <Box sx={{marginLeft: '9%', width: "200px", height: "200px"}}>
                             <VideoCat
                                 src={'/wrong4.mp4'}
-                                setToggelVideoCatFoo={() => {}}
+                                setToggelVideoCatFoo={() => {
+                                }}
                                 toggelVideoCat={toggelVideoCat}
                                 showCondition={true}
                             />
                         </Box>
-                        <Box sx={{ color: "#FFF44F", textAlign: "center",marginTop:'-10%'}}>
-                            <Typography variant="body1" sx={{ color: "#aaa", mb: 1 }}>
+                        <Box sx={{color: "#FFF44F", textAlign: "center", marginTop: '-10%'}}>
+                            <Typography variant="body1" sx={{color: "#ffffff", mb: 1}}>
                                 Правильный ответ:
                             </Typography>
-                            <Typography variant="h6" sx={{ color: "#4caf50", fontWeight: "bold",backgroundColor: "#4caf50",
-                                 border: "1px dashed #4caf50", p: 1, borderRadius: 2 }}>
+                            <Typography variant="h6" sx={{
+                                color: "#ffffff", fontWeight: "bold", backgroundColor: "#4caf50",
+                                border: "1px dashed #4caf50", p: 1, borderRadius: 2
+                            }}>
                                 {correctAnswerText}
                             </Typography>
                         </Box>
@@ -449,11 +464,11 @@ export const FreePage = () => {
                             variant="contained"
                             onClick={() => window.location.reload()}
                             sx={{
-                                marginTop:'-0%',
+                                marginTop: '-0%',
                                 bgcolor: "#FFF44F",
                                 color: "black",
                                 fontWeight: "bold",
-                                "&:hover": { bgcolor: "#fff" }
+                                "&:hover": {bgcolor: "#fff"}
                             }}
                         >
                             Попробовать еще раз
@@ -469,7 +484,10 @@ export const FreePage = () => {
                                     minWidth: "300px"
                                 }}>
                                     <IconButton
-                                        onClick={() => setToggelModal(0)}
+                                        onClick={() => {
+                                            setToggelModal(0);
+                                            setToggelVideoCat(0);
+                                        }}
                                         sx={{position: "absolute", right: 8, top: 8, color: "#fff"}}
                                     >
                                         <CloseIcon/>
@@ -486,7 +504,8 @@ export const FreePage = () => {
                                     <Box sx={{mb: 2}}>
                                         <VideoCat
                                             src={'/RightS6.mp4'}
-                                            setToggelVideoCatFoo={() => setToggelVideoCat(0)}
+                                            // ИЗМЕНЕНО: Пустая функция, чтобы видео не исчезало по завершении, а ставилось на паузу
+                                            setToggelVideoCatFoo={() => {}}
                                             toggelVideoCat={toggelVideoCat}
                                             showCondition={true}
                                         />
@@ -507,7 +526,6 @@ export const FreePage = () => {
                                 </Box>
                             </ModalCamponent>
                         )}
-
                         <Box sx={{mb: 3}}>
                             <Typography sx={{color: "#FFF44F", mb: 2, fontSize: "0.9rem", fontWeight: "bold"}}>
                                 Прогресс теста: {progressDone} / {questions.length}
@@ -525,7 +543,7 @@ export const FreePage = () => {
                                             borderColor: "#FFF44F",
                                             textTransform: "none",
                                             minWidth: "200px",
-                                            height:'60px'
+                                            height: '60px'
                                         }}
                                     >
                                         {q.word}
@@ -548,13 +566,14 @@ export const FreePage = () => {
 
                             <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
                                 {currentQuestion.answers.map((ans: any, idx: number) => (
-                                    <Box key={idx} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Box key={idx}
+                                         sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                                         <Button
                                             variant="contained"
                                             onClick={() => handleAnswer(ans.text, ans.isCorrect)}
                                             sx={{
                                                 py: 2, textTransform: "none", fontSize: "1.1rem",
-                                                width:'60%',
+                                                width: '60%',
                                                 color: "black",
                                                 bgcolor: selectedAnswer === ans.text
                                                     ? (ans.isCorrect ? "#4caf50" : "#f44336")
@@ -562,13 +581,13 @@ export const FreePage = () => {
                                                 "&:hover": {bgcolor: "#FFF44F"}
                                             }}
                                         >
-                                            <span style={{color:'black'}}>
+                                            <span style={{color: 'black'}}>
                                             {ans.text}
                                                 </span>
                                         </Button>
                                         <IconButton
                                             onClick={() => speakText(ans.text, "en")}
-                                            sx={{ml: 1,color:'#FFF44F'}}
+                                            sx={{ml: 1, color: '#FFF44F'}}
                                         >
                                             <VolumeUpIcon/>
                                         </IconButton>
