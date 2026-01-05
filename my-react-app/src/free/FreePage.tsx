@@ -3,6 +3,7 @@ import {ModalCamponent} from "../modal/Modal";
 import {Box, Button, IconButton, Paper, Typography} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import {VideoCat} from "../camponent/VideoCat";
+import win from "../picture/win.png";
 import {v1} from "uuid";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 
@@ -428,7 +429,7 @@ export const FreePage = () => {
         }}>
             <Paper elevation={3} sx={{
                 padding: 3, width: "95%", maxWidth: "800px", textAlign: "center",
-                backgroundColor: "#444447", borderRadius: 4, position: "relative",
+                backgroundColor: answerStatus === "wrong"?'#901010': "#444447", borderRadius: 4, position: "relative",
                 minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center"
             }}>
 
@@ -479,32 +480,57 @@ export const FreePage = () => {
                         {(toggelModal === 2 || toggelModal === 3) && (
                             <ModalCamponent open={true}>
                                 <Box sx={{
-                                    p: 3, display: "flex", flexDirection: "column",
-                                    alignItems: "center", bgcolor: "#444447", position: "relative",
-                                    minWidth: "300px"
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    bgcolor: "#279010",
+                                    position: "relative",
+                                    minWidth: "300px",
+                                    pb: 3, // Отступ снизу модалки
                                 }}>
+
+                                    {/* БЕЛАЯ ПОЛОСА С ФИКСИРОВАННЫМИ ОТСТУПАМИ */}
+                                    <Box sx={{
+                                        width: '100%',
+                                        backgroundColor: 'white',
+                                        py: "15px", // Отступ сверху и снизу ровно 15px
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        mb: 3, // Отступ от полосы до видео
+                                    }}>
+                                        <Typography sx={{
+                                            color: '#279010', // Текст цветом фона модалки для красоты
+                                            fontWeight: "bold",
+                                            textAlign: 'center',
+                                            px: 2, // Боковые отступы, чтобы текст не лип к краям
+                                            fontSize: toggelModal === 3 ? '1rem' : '1.3rem',
+                                            lineHeight: 1.2,
+                                        }}>
+                                            {toggelModal === 2 && "ВЕРНО!"}
+                                            {toggelModal === 3 && "ПОЗДРАВЛЯЕМ! ТЕСТ ПРОЙДЕН! ВЫ ПОЛУЧАЕТЕ БЕСПЛАТНЫЕ ОНЛАЙН ЗАНЯТИЯ АНГЛИЙСКОГО ЯЗЫКА ⭐"}
+                                        </Typography>
+                                    </Box>
+
                                     <IconButton
                                         onClick={() => {
                                             setToggelModal(0);
                                             setToggelVideoCat(0);
                                         }}
-                                        sx={{position: "absolute", right: 8, top: 8, color: "#fff"}}
+                                        sx={{
+                                            position: "absolute",
+                                            right: 4,
+                                            top: 4,
+                                            color: "#279010", // Иконка на белом фоне цветом модалки
+                                            zIndex: 10
+                                        }}
                                     >
-                                        <CloseIcon/>
+                                        <CloseIcon fontSize="small" />
                                     </IconButton>
 
-                                    <Typography sx={{
-                                        color: '#4caf50',
-                                        fontWeight: "bold", mb: 2, textAlign: 'center'
-                                    }}>
-                                        {toggelModal === 2 && "ВЕРНО!"}
-                                        {toggelModal === 3 && "ПОЗДРАВЛЯЕМ! ТЕСТ ПРОЙДЕН! ⭐"}
-                                    </Typography>
-
-                                    <Box sx={{mb: 2}}>
+                                    <Box sx={{ mb: 2 }}>
                                         <VideoCat
                                             src={'/RightS6.mp4'}
-                                            // ИЗМЕНЕНО: Пустая функция, чтобы видео не исчезало по завершении, а ставилось на паузу
                                             setToggelVideoCatFoo={() => {}}
                                             toggelVideoCat={toggelVideoCat}
                                             showCondition={true}
@@ -512,16 +538,42 @@ export const FreePage = () => {
                                     </Box>
 
                                     {toggelModal === 3 && (
-                                        <Button
-                                            variant="contained"
-                                            onClick={() => window.location.reload()}
-                                            sx={{
-                                                mt: 1, bgcolor: "#FFF44F", color: "#000",
-                                                "&:hover": {bgcolor: "#fff"}, textTransform: 'none'
-                                            }}
-                                        >
-                                            Начать новый тест
-                                        </Button>
+                                        <Box sx={{ position: 'relative', mt: 1 }}>
+                                            {/* Контейнер для кнопки и картинки */}
+
+                                            <Button
+                                                variant="contained"
+                                                onClick={() => window.location.reload()}
+                                                sx={{
+                                                    bgcolor: "#FFF44F",
+                                                    color: "#000",
+                                                    "&:hover": { bgcolor: "#fff" },
+                                                    textTransform: 'none',
+                                                    fontWeight: 'bold',
+                                                    px: 4,
+                                                    zIndex: 1, // Кнопка на первом слое
+                                                    position: 'relative'
+                                                }}
+                                            >
+                                                Начать новый тест
+                                            </Button>
+
+                                            {/* Картинка win */}
+                                            <img
+                                                src={win}
+                                                style={{
+                                                    width: '50px',
+                                                    height: '130px',
+                                                    position: 'absolute',
+                                                    top: '-60px',   // Смещаем вверх, чтобы она "лежала" на кнопке
+                                                    right: '-20px', // Смещаем вправо
+                                                    transform: 'rotate(45deg)', // Поворот на 45 градусов вправо
+                                                    zIndex: 10,     // Самый верхний слой (поверх кнопки)
+                                                    pointerEvents: 'none' // Чтобы клик сквозь картинку попадал на кнопку
+                                                }}
+                                                alt="win"
+                                            />
+                                        </Box>
                                     )}
                                 </Box>
                             </ModalCamponent>
