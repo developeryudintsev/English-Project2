@@ -103,9 +103,9 @@ export const FreePage = () => {
             isDone: false,
             word: 'think',
             answers: [
-                {text: "You do not think", isCorrect: true},
-                {text: "You not think", isCorrect: false},
-                {text: "You doesn’t think", isCorrect: false}
+                {text: "You do not think a lot", isCorrect: true},
+                {text: "You not think a lot", isCorrect: false},
+                {text: "You doesn’t think a lot", isCorrect: false}
             ]
         },
         {
@@ -382,7 +382,6 @@ export const FreePage = () => {
 
         return () => clearTimeout(timer);
     }, [toggelModal, questions]);
-
     const progressDone = questions.filter(q => q.isDone).length;
     const selectQuestion = (id: string) => {
         const found = questions.find(q => q.id === id);
@@ -483,7 +482,7 @@ export const FreePage = () => {
                                     display: "flex",
                                     flexDirection: "column",
                                     alignItems: "center",
-                                    bgcolor: "#279010",
+                                    bgcolor: "#34fb08",
                                     position: "relative",
                                     minWidth: "300px",
                                     pb: 3, // Отступ снизу модалки
@@ -519,8 +518,8 @@ export const FreePage = () => {
                                         }}
                                         sx={{
                                             position: "absolute",
-                                            right: 4,
-                                            top: 4,
+                                            right: 1,
+                                            top: 1,
                                             color: "#279010", // Иконка на белом фоне цветом модалки
                                             zIndex: 10
                                         }}
@@ -551,7 +550,7 @@ export const FreePage = () => {
                                                     textTransform: 'none',
                                                     fontWeight: 'bold',
                                                     px: 4,
-                                                    zIndex: 1, // Кнопка на первом слое
+                                                    zIndex: 20, // Кнопка на первом слое
                                                     position: 'relative'
                                                 }}
                                             >
@@ -562,11 +561,11 @@ export const FreePage = () => {
                                             <img
                                                 src={win}
                                                 style={{
-                                                    width: '50px',
-                                                    height: '130px',
+
+                                                    height: '240px',
                                                     position: 'absolute',
-                                                    top: '-60px',   // Смещаем вверх, чтобы она "лежала" на кнопке
-                                                    right: '-20px', // Смещаем вправо
+                                                    top: '-160px',   // Смещаем вверх, чтобы она "лежала" на кнопке
+                                                    right: '10px', // Смещаем вправо
                                                     transform: 'rotate(45deg)', // Поворот на 45 градусов вправо
                                                     zIndex: 10,     // Самый верхний слой (поверх кнопки)
                                                     pointerEvents: 'none' // Чтобы клик сквозь картинку попадал на кнопку
