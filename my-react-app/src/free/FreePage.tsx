@@ -268,7 +268,7 @@ export const FreePage = () => {
             isDone: false,
             word: 'let',
             answers: [
-                {text: "She doesn't let anyone play outside in the evening", isCorrect: true},
+                {text: "She doesn't let play outside in the evening", isCorrect: true},
                 {text: "She not let to play outside in the evening", isCorrect: false},
                 {text: "She did not let to play outside in the evening", isCorrect: false}
             ]
@@ -427,9 +427,17 @@ export const FreePage = () => {
             minHeight: "88.5vh", width: "100vw",
         }}>
             <Paper elevation={3} sx={{
-                padding: 3, width: "95%", maxWidth: "800px", textAlign: "center",
-                backgroundColor: answerStatus === "wrong"?'#901010': "#444447", borderRadius: 4, position: "relative",
-                minHeight: "400px", display: "flex", flexDirection: "column", justifyContent: "center"
+                padding: 3,
+                width: "95%",
+                maxWidth: "800px",
+                textAlign: "center",
+                backgroundColor: answerStatus === "wrong" ? '#901010' : "#444447",
+                borderRadius: 4,
+                position: "relative",
+                minHeight: "400px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center"
             }}>
 
                 {answerStatus === "wrong" ? (
@@ -511,42 +519,25 @@ export const FreePage = () => {
                                         </Typography>
                                     </Box>
 
-                                    <IconButton
-                                        onClick={() => {
-                                            setToggelModal(0);
-                                            setToggelVideoCat(0);
-                                        }}
-                                        sx={{
-                                            position: "absolute",
-                                            right: 1,
-                                            top: 1,
-                                            color: "#279010", // Иконка на белом фоне цветом модалки
-                                            zIndex: 10
-                                        }}
-                                    >
-                                        <CloseIcon fontSize="small" />
-                                    </IconButton>
-
-                                    <Box sx={{ mb: 2 }}>
+                                    <Box sx={{mb: 2}}>
                                         <VideoCat
                                             src={'/RightS6.mp4'}
-                                            setToggelVideoCatFoo={() => {}}
+                                            setToggelVideoCatFoo={() => {
+                                            }}
                                             toggelVideoCat={toggelVideoCat}
                                             showCondition={true}
                                         />
                                     </Box>
 
                                     {toggelModal === 3 && (
-                                        <Box sx={{ position: 'relative', mt: 1 }}>
-                                            {/* Контейнер для кнопки и картинки */}
-
+                                        <Box sx={{position: 'relative', mt: 1}}>
                                             <Button
                                                 variant="contained"
                                                 onClick={() => window.location.reload()}
                                                 sx={{
                                                     bgcolor: "#FFF44F",
                                                     color: "#000",
-                                                    "&:hover": { bgcolor: "#fff" },
+                                                    "&:hover": {bgcolor: "#fff"},
                                                     textTransform: 'none',
                                                     fontWeight: 'bold',
                                                     px: 4,
