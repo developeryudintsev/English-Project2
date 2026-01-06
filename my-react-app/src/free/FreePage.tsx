@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import {ModalCamponent} from "../modal/Modal";
 import {Box, Button, IconButton, Paper, Typography} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import {VideoCat} from "../camponent/VideoCat";
 import win from "../picture/win.png";
 import {v1} from "uuid";
