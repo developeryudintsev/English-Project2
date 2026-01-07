@@ -69,31 +69,31 @@ export const FreePage = () => {
             isDone: false,
             word: 'take',
             answers: [
-                {text: "We don't buy sweets in the store", isCorrect: true},
-                {text: "We doesn't buy sweets in the store", isCorrect: false},
-                {text: "We not buy sweets in the store", isCorrect: false}
+                {text: "We don't buy sweets in the shop", isCorrect: true},
+                {text: "We doesn't buy sweets in the shop", isCorrect: false},
+                {text: "We not buy sweets in the shop", isCorrect: false}
             ]
         },
         {
             id: v1(),
-            question: "Они видят красивую птицу",
+            question: "Они видят красивую птицу каждое утро",
             isDone: false,
             word: 'see',
             answers: [
-                {text: "They sees a beautiful bird", isCorrect: false},
-                {text: "They see a beautiful bird", isCorrect: true},
-                {text: "They saw a beautiful bird", isCorrect: false}
+                {text: "They sees a beautiful bird every morning", isCorrect: false},
+                {text: "They see a beautiful bird  every morning", isCorrect: true},
+                {text: "They saw a beautiful bird every morning", isCorrect: false}
             ]
         },
         {
             id: v1(),
-            question: "Я прихожу домой во время?",
+            question: "Я прихожу домой после школы во время?",
             isDone: false,
             word: 'come',
             answers: [
-                {text: "Do I come home on time?", isCorrect: true},
-                {text: "Does I come home on time?", isCorrect: false},
-                {text: "I come home on time?", isCorrect: false}
+                {text: "Do I come home on time after school?", isCorrect: true},
+                {text: "Does I come home on time after school?", isCorrect: false},
+                {text: "I come home on time after school?", isCorrect: false}
             ]
         },
         {
@@ -120,12 +120,12 @@ export const FreePage = () => {
         },
         {
             id: v1(),
-            question: "Оно хочет учить английский",
+            question: "Он хочет учить английский",
             isDone: false,
             word: 'want',
             answers: [
                 {text: "I wants to learn English", isCorrect: false},
-                {text: "It wants to learn English", isCorrect: true},
+                {text: "He wants to learn English", isCorrect: true},
                 {text: "I want to learn English", isCorrect: false}
             ]
         },
@@ -153,13 +153,13 @@ export const FreePage = () => {
         },
         {
             id: v1(),
-            question: "Я нахожу полезную информацию",
+            question: "Я нахожу полезную информацию каждый день",
             isDone: false,
             word: 'find',
             answers: [
-                {text: "I find useful information", isCorrect: true},
-                {text: "I finds useful information", isCorrect: false},
-                {text: "We find useful information", isCorrect: false}
+                {text: "I find useful information every day", isCorrect: true},
+                {text: "I finds useful information every day", isCorrect: false},
+                {text: "We find useful information every day", isCorrect: false}
             ]
         },
         {
@@ -175,13 +175,13 @@ export const FreePage = () => {
         },
         {
             id: v1(),
-            question: "Он не спрашивает новый рецепт",
+            question: "Он не спрашивает новые рецепты на работе",
             isDone: false,
             word: 'ask',
             answers: [
-                {text: "He doesn't ask for a new recipe", isCorrect: true},
-                {text: "He not ask for a new recipe.", isCorrect: false},
-                {text: "He asks for a new recipe.", isCorrect: false}
+                {text: "He doesn't ask for new recipes at work", isCorrect: true},
+                {text: "He not ask for new recipes at work", isCorrect: false},
+                {text: "He asks for new recipes at work", isCorrect: false}
             ]
         },
         {
@@ -190,20 +190,20 @@ export const FreePage = () => {
             isDone: false,
             word: 'work',
             answers: [
-                {text: "You works as hard as she can.", isCorrect: false},
-                {text: "She works as hard as she can.", isCorrect: true},
-                {text: "She work as hard as she can.", isCorrect: false}
+                {text: "You works as hard as she can", isCorrect: false},
+                {text: "She works as hard as she can", isCorrect: true},
+                {text: "She work as hard as she can", isCorrect: false}
             ]
         },
         {
             id: v1(),
-            question: "Оно чувствует вкусный запах?",
+            question: "Оно чувствует вкусный запах каждое утро?",
             isDone: false,
             word: 'feel',
             answers: [
-                {text: "Does it smell delicious?", isCorrect: true},
-                {text: "Does it smells delicious?", isCorrect: false},
-                {text: "Do it smell delicious?", isCorrect: false}
+                {text: "Does it smell delicious every morning?", isCorrect: true},
+                {text: "Does it smells delicious every morning?", isCorrect: false},
+                {text: "Do it smell delicious every morning?", isCorrect: false}
             ]
         },
         {
@@ -212,20 +212,20 @@ export const FreePage = () => {
             isDone: false,
             word: 'try',
             answers: [
-                {text: "We don't try to do the same things.", isCorrect: true}, // Исправлено: We do not
-                {text: "We doesn't try to do the same things.", isCorrect: false},
-                {text: "We're tries to do the same things.", isCorrect: false}
+                {text: "We don't try to do the same things", isCorrect: true}, // Исправлено: We do not
+                {text: "We doesn't try to do the same things", isCorrect: false},
+                {text: "We're tries to do the same things", isCorrect: false}
             ]
         },
         {
             id: v1(),
-            question: "Они уходят на улицу",
+            question: "Они ходят на улицу каждый вечер",
             isDone: false,
             word: 'leave',
             answers: [
-                {text: "We leave outside", isCorrect: false},
-                {text: "They leave outside", isCorrect: true},
-                {text: "They leaves outside", isCorrect: false}
+                {text: "We leave outside every evening", isCorrect: false},
+                {text: "They leave outside every evening", isCorrect: true},
+                {text: "They leaves outside every evening", isCorrect: false}
             ]
         },
         {
@@ -278,7 +278,7 @@ export const FreePage = () => {
             isDone: false,
             word: 'begin',
             answers: [
-                {text: "I begin work day at 9 am", isCorrect: false},
+                {text: "I begin our work day at 9 am", isCorrect: false},
                 {text: "We begin our work day at 9 am", isCorrect: true},
                 {text: "We begins our work day at 9 am", isCorrect: false}
             ]
@@ -514,7 +514,7 @@ export const FreePage = () => {
                                             lineHeight: 1.2,
                                         }}>
                                             {toggelModal === 2 && "ВЕРНО!"}
-                                            {toggelModal === 3 && "ПОЗДРАВЛЯЕМ! ТЕСТ ПРОЙДЕН! ВЫ ПОЛУЧАЕТЕ БЕСПЛАТНЫЕ ОНЛАЙН ЗАНЯТИЯ АНГЛИЙСКОГО ЯЗЫКА ⭐"}
+                                            {toggelModal === 3 && "ПОЗДРАВЛЯЕМ! ТЕСТ ПРОЙДЕН! ВЫ ПОЛУЧАЕТЕ ТРИ БЕСПЛАТНЫХ ОНЛАЙН ЗАНЯТИЯ АНГЛИЙСКОГО ЯЗЫКА ⭐"}
                                         </Typography>
                                     </Box>
 
