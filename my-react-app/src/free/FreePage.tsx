@@ -442,7 +442,7 @@ export const FreePage = () => {
                 {answerStatus === "wrong" ? (
                     <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", gap: 3, py: 4}}>
                         <Typography variant="h5" sx={{color: "#FFF44F", fontWeight: "bold", px: 2}}>
-                            Не расстраивайся, мы приглашаем тебя на онлайн занятия по <a style={{color: "#FFF44F"}}
+                            Не расстраивайся, мы приглашаем тебя на одно бесплатное онлайн занятие по <a style={{color: "#FFF44F"}}
                                                                                          href="https://www.kiber-rus.ru/english/">английскому
                             языку</a>!
                         </Typography>
