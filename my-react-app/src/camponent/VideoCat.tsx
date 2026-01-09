@@ -5,6 +5,7 @@ type VideoCatProps = {
     setToggelVideoCatFoo: () => void;
     showCondition: boolean;
     size?: "small" | "medium" | "normal";
+    free?:boolean;
 };
 
 export const VideoCat: React.FC<VideoCatProps> = ({
@@ -13,6 +14,7 @@ export const VideoCat: React.FC<VideoCatProps> = ({
                                                       toggelVideoCat,
                                                       showCondition,
                                                       size = "normal",
+                                                      free=false
                                                   }) => {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [loaded, setLoaded] = useState(false);
@@ -92,8 +94,8 @@ export const VideoCat: React.FC<VideoCatProps> = ({
                 onCanPlay={handleCanPlay}
                 onEnded={() => setToggelVideoCatFoo()}
                 style={{
-                    width: `${sizePx}px`,
-                    height: `${sizePx}px`,
+                    width: `${free?170:sizePx}px`,
+                    height: `${free?170:sizePx}px`,
                     borderRadius: "50%",
                     objectFit: "cover",
                     objectPosition: "top center",

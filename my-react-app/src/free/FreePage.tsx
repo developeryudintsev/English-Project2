@@ -295,6 +295,7 @@ export const FreePage = () => {
             ]
         }
     ]);
+    const width = window.innerWidth;
     const [questions, setQuestions] = useState<any[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<any>(null);
     const [toggelModal, setToggelModal] = useState<0 | 1 | 2 | 3>(0);
@@ -453,6 +454,7 @@ export const FreePage = () => {
                                 }}
                                 toggelVideoCat={toggelVideoCat}
                                 showCondition={true}
+                                free={width<500?true:false}
                             />
                         </Box>
                         <Box sx={{color: "#FFF44F", textAlign: "center", marginTop: '-10%'}}>
