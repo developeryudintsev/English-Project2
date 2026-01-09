@@ -101,229 +101,130 @@ const Placeholder = ({title}: { title: string }) => (
 );
 export const AppRoutes = () => {
     const location = useLocation();
-    const [hoveredIndex, setHoveredIndex] = useState<number|null>(null);
+
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 600);
+    const [visibleCount, setVisibleCount] = useState<number>(1);
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+    const buttons = [
+        { to: "/free", label: "Выйграй бесплатный английский" },
+        { to: "/app", label: "Тренажер по временам" },
+        { to: "/themes", label: "Тренажер по темам английского" },
+        { to: "/about", label: "О нас и связаться с нами" },
+        { to: "/achievements", label: "Мои Достижения" },
+    ];
+
+    /** 📱 responsive logic */
+    useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+
+            setIsMobile(width < 600);
+
+            if (width < 720) setVisibleCount(1);
+            else if (width < 890) setVisibleCount(2);
+            else if (width < 1180) setVisibleCount(3);
+            else setVisibleCount(4);
+        };
+
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    /** 🛡 защита currentIndex */
+    useEffect(() => {
+        const maxIndex = Math.max(0, buttons.length - visibleCount);
+        if (currentIndex > maxIndex) {
+            setCurrentIndex(maxIndex);
+        }
+    }, [visibleCount, buttons.length, currentIndex]);
+
+    const next = () => {
+        if (currentIndex + visibleCount < buttons.length) {
+            setCurrentIndex(prev => prev + 1);
+        }
+    };
+
+    const prev = () => {
+        if (currentIndex > 0) {
+            setCurrentIndex(prev => prev - 1);
+        }
+    };
+
     const getCardStyle = (index: number): React.CSSProperties => {
-        const isHovered = hoveredIndex === index;
+        const isHovered = hoveredIndex === index && !isMobile;
+
         return {
             background: "#555",
             color: "#FFF44F",
             border: "2px solid black",
             borderRadius: "12px",
             cursor: "pointer",
-            fontSize: "18px",
-            flex: "0 0 auto",
-            textAlign: "center",
-            minWidth: "250px",
-            minHeight: "430px",
+            minWidth: 250,
+            minHeight: 430,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            transform: isHovered ? 'scale(1.15)' : 'scale(1)',
-            transition: 'transform 0.3s ease-in-out',
+            transform: isHovered ? "scale(1.1)" : "scale(1)",
+            transition: "transform 0.25s ease",
         };
     };
-    const [visibleCount, setVisibleCount] = useState<number>(1);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const MIN_VISIBLE = 1;
-    const MAX_VISIBLE = 4;
-    const buttons = [
-        {to: "/free", label: "Выйграй бесплатный английский"},
-        {to: "/app", label: "Тренажер по временам"},
-        {to: "/themes", label: "Тренажер по темам английского"},
-        {to: "/about", label: "О нас и связаться с нами"},
-        {to: "/achievements", label: "Мои Достижения"},
-    ];
-    useEffect(() => {
-        const handleResize = () => {
-            const width = window.innerWidth;
-            if (width < 720) setVisibleCount(MIN_VISIBLE);
-            else if (width < 890) setVisibleCount(2);
-            else if (width < 1180) setVisibleCount(3);
-            else setVisibleCount(MAX_VISIBLE);
-        };
-        handleResize();
 
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-    const next = () => {
-        if (currentIndex < buttons.length - visibleCount) {
-            setCurrentIndex((prev) => prev + 1);
-        }
-    };
-    const prev = () => {
-        if (currentIndex > 0) {
-            setCurrentIndex((prev) => prev - 1);
-        }
-    };
     const arrowStyle: React.CSSProperties = {
         background: "#333",
         color: "#FFF44F",
         border: "none",
         borderRadius: "50%",
-        width: "40px",
-        height: "40px",
+        width: 40,
+        height: 40,
+        fontSize: 20,
         cursor: "pointer",
-        fontSize: "20px",
+        flexShrink: 0,
+        zIndex: 5,
     };
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     return (
         <>
-            {location.pathname !== '/app' &&
-                <AppBar position="static" sx={{ backgroundColor: '#444447' }}>
+            {location.pathname !== "/app" && (
+                <AppBar position="static" sx={{ backgroundColor: "#444447" }}>
                     <Container maxWidth="xl">
                         <Toolbar
-                            disableGutters
                             sx={{
-                                display: 'flex',
-                                flexDirection: { xs: 'column', sm: 'row' },
-                                justifyContent: { xs: 'center', sm: 'space-between' },
-                                alignItems: 'center',
-                                width: '100%',
-                                py: 1,
-                                gap: { xs: 1, sm: 0 },
+                                flexDirection: isMobile ? "column" : "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
                             }}
                         >
-                            {isMobile ? (
-                                <Box
+                            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                                {location.pathname !== "/" && (
+                                    <HomeIcon sx={{ color: "#2fd300", fontSize: isMobile ? 32 : 48 }} />
+                                )}
+                                <Typography
                                     sx={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'start',
-                                        justifyContent: 'start',
-                                        width: '100%',
+                                        color: "#FFF44F",
+                                        fontWeight: 700,
+                                        fontSize: isMobile ? "1.5rem" : "2.7rem",
+                                        fontFamily: '"South Park Ext", sans-serif',
                                     }}
                                 >
-                                    <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center' }}>
-                                        <Typography
-                                            sx={{
-                                                color: '#FFF44F', fontWeight: 700, fontFamily: '"South Park Ext", sans-serif',
-                                                fontSize: '1.5rem',
-                                                textShadow: '2px 2px 0px #000, -1px -1px 0px #000',
-                                            }}
-                                        >
-                                            English cat
-                                        </Typography>
-                                        <Typography sx={{ color: '#FFF44F', fontWeight: 400, fontSize: '1rem', ml: 1 }}>
-                                            (v0.7)
-                                        </Typography>
-                                    </Box>
-                                    <Box
-                                        sx={{
-                                            position: { xs: 'absolute', sm: 'static' },
-                                            right: { xs: 10, sm: 'auto' },
-                                            top: { xs: 10, sm: 'auto' },
-                                        }}
-                                    >
-                                        <Tooltip title="Ссылка на наш сайт">
-                                            <a
-                                                href="https://www.kiber-rus.ru/"
-                                                target="_blank"
-                                                rel="noreferrer"
-                                                style={{ textDecoration: 'none' }}
-                                            >
-                                                <Avatar
-                                                    alt="User Avatar"
-                                                    src={cat}
-                                                    sx={{
-                                                        border: '2px solid white',
-                                                        width: { xs: 45, md: 55 },
-                                                        height: { xs: 45, md: 55 },
-                                                    }}
-                                                />
-                                            </a>
-                                        </Tooltip>
-                                    </Box>
-
-                                    {location.pathname !== '/' && (
-                                        <HomeIcon
-                                            sx={{
-                                                color: '#2fd300',
-                                                fontSize: 35,
-                                                mt: 1,
-                                            }}
-                                        />
-                                    )}
-                                </Box>
-
-                            ) : (
-
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'start',
-                                        gap: 1,
-                                        width: '100%',
-                                    }}
-                                >
-                                    {location.pathname !== '/' && (
-                                        <HomeIcon
-                                            sx={{
-                                                color: '#2fd300',
-                                                fontSize: 50,
-                                                mt: '-10px',
-                                            }}
-                                        />
-                                    )}
-                                    <Typography
-                                        sx={{
-                                            color: '#FFF44F',
-                                            fontWeight: 700,
-                                            fontFamily: '"South Park Ext", sans-serif',
-                                            fontSize: '2.7rem',
-                                            textShadow: '2px 2px 0px #000, -1px -1px 0px #000',
-                                            whiteSpace: 'nowrap',
-                                        }}
-                                    >
-                                        English cat
-                                    </Typography>
-
-                                    <Typography
-                                        sx={{
-                                            color: '#FFF44F',
-                                            fontWeight: 400,
-                                            fontSize: '2rem',
-                                            whiteSpace: 'nowrap',
-                                        }}
-                                    >
-                                        (v0.7)
-                                    </Typography>
-                                </Box>
-                            )}
-                            <Box
-                                sx={{
-                                    position: { xs: 'absolute', sm: 'static' },
-                                    right: { xs: 10, sm: 'auto' },
-                                    top: { xs: 10, sm: 'auto' },
-                                }}
-                            >
-                                <Tooltip title="Ссылка на наш сайт">
-                                    <a
-                                        href="https://www.kiber-rus.ru/"
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        style={{ textDecoration: 'none' }}
-                                    >
-                                        <Avatar
-                                            alt="User Avatar"
-                                            src={cat}
-                                            sx={{
-                                                border: '2px solid white',
-                                                width: { xs: 45, md: 55 },
-                                                height: { xs: 45, md: 55 },
-                                            }}
-                                        />
-                                    </a>
-                                </Tooltip>
+                                    English cat
+                                </Typography>
+                                <Typography sx={{ color: "#FFF44F", fontSize: isMobile ? "1rem" : "2rem" }}>
+                                    (v0.7)
+                                </Typography>
                             </Box>
 
-
+                            <Tooltip title="Ссылка на наш сайт">
+                                <a href="https://www.kiber-rus.ru/" target="_blank" rel="noreferrer">
+                                    <Avatar src={cat} sx={{ width: 45, height: 45 }} />
+                                </a>
+                            </Tooltip>
                         </Toolbar>
                     </Container>
                 </AppBar>
-            }
+            )}
 
             <Routes>
                 <Route
@@ -331,27 +232,18 @@ export const AppRoutes = () => {
                     element={
                         <div
                             style={{
-                                position: "relative",
-                                padding: window.innerWidth < 600 ? "40px 5px" : "40px", // Меньше отступов на мобилке
                                 display: "flex",
-                                justifyContent: "center",
                                 alignItems: "center",
-                                gap: window.innerWidth < 600 ? "5px" : "15px",
-                                width: "100%",
-                                boxSizing: "border-box",
-                                overflow: "hidden" // Предотвращает горизонтальный скролл страницы
+                                justifyContent: "center",
+                                gap: isMobile ? 6 : 15,
+                                padding: isMobile ? "30px 5px" : "40px",
+                                overflow: "hidden",
                             }}
                         >
                             <button
                                 onClick={prev}
                                 disabled={currentIndex === 0}
-                                style={{
-                                    ...arrowStyle,
-                                    opacity: currentIndex === 0 ? 0.5 : 1,
-                                    cursor: currentIndex === 0 ? "not-allowed" : "pointer",
-                                    zIndex: 10,
-                                    flexShrink: 0 // Стрелка тоже не должна сплющиваться
-                                }}
+                                style={{ ...arrowStyle, opacity: currentIndex === 0 ? 0.4 : 1 }}
                             >
                                 {"<"}
                             </button>
@@ -449,7 +341,8 @@ export const AppRoutes = () => {
                                                                 fontWeight:900,
                                                                 fontSize:19,
                                                                 width: "240px",
-                                                                marginTop: '-80px'
+                                                                marginTop: '-80px',
+                                                                textAlign:'center'
                                                             }}>
                                                                 {btn.label}
                                                             </p>
@@ -471,6 +364,7 @@ export const AppRoutes = () => {
                                                                     fontSize:19,
                                                                     width: "240px",
                                                                     marginTop: '40px',
+                                                                    textAlign:'center'
                                                                 }}>
                                                                     {btn.label}
                                                                 </p>
@@ -495,7 +389,8 @@ export const AppRoutes = () => {
                                                                         width: "240px",
                                                                         marginTop: '-80px',
                                                                         marginLeft:'13px',
-                                                                        color: 'black'
+                                                                        color: 'black',
+                                                                        textAlign:'center'
                                                                     }}>
                                                                         {btn.label}
                                                                     </p>
@@ -517,6 +412,7 @@ export const AppRoutes = () => {
                                                                         fontSize:19,
                                                                         marginTop: '55px',
                                                                         width: "250px",
+                                                                        textAlign:'center'
                                                                     }}>{btn.label}</p>
                                                                 </div>
                                                 }
@@ -530,10 +426,8 @@ export const AppRoutes = () => {
                                 disabled={currentIndex + visibleCount >= buttons.length}
                                 style={{
                                     ...arrowStyle,
-                                    opacity: currentIndex + visibleCount >= buttons.length ? 0.5 : 1,
-                                    cursor: currentIndex + visibleCount >= buttons.length ? "not-allowed" : "pointer",
-                                    zIndex: 10,
-                                    flexShrink: 0
+                                    opacity:
+                                        currentIndex + visibleCount >= buttons.length ? 0.4 : 1,
                                 }}
                             >
                                 {">"}
@@ -541,17 +435,480 @@ export const AppRoutes = () => {
                         </div>
                     }
                 />
-                <Route path="/free" element={<Free/>}/>
-                <Route path="/app" element={<App/>}/>
-                <Route path="/themes" element={<TopicsPage/>} />
-                <Route path="/themes/:topicId" element={<TopicDetailPage/>} />
-                <Route path="/about" element={<Placeholder title="О нас "/>}/>
-                <Route
-                    path="/achievements"
-                    element={<Placeholder title="Мои Достижения"/>}
-                />
-            </Routes>
 
+                <Route path="/free" element={<Free />} />
+                <Route path="/app" element={<App />} />
+                <Route path="/themes" element={<TopicsPage />} />
+                <Route path="/themes/:topicId" element={<TopicDetailPage />} />
+                <Route path="/about" element={<Placeholder title="О нас" />} />
+                <Route path="/achievements" element={<Placeholder title="Мои Достижения" />} />
+            </Routes>
         </>
     );
 };
+
+// export const AppRoutes = () => {
+//     const location = useLocation();
+//     const [hoveredIndex, setHoveredIndex] = useState<number|null>(null);
+//     const [isMobile, setIsMobile] = useState<boolean>(() => window.innerWidth < 600);
+//     const getCardStyle = (index: number): React.CSSProperties => {
+//         const isHovered = hoveredIndex === index;
+//         return {
+//             background: "#555",
+//             color: "#FFF44F",
+//             border: "2px solid black",
+//             borderRadius: "12px",
+//             cursor: "pointer",
+//             fontSize: "18px",
+//             flex: "0 0 auto",
+//             textAlign: "center",
+//             minWidth: "250px",
+//             minHeight: "430px",
+//             display: "flex",
+//             justifyContent: "center",
+//             alignItems: "center",
+//             transform: isHovered ? 'scale(1.15)' : 'scale(1)',
+//             transition: 'transform 0.3s ease-in-out',
+//         };
+//     };
+//     const [visibleCount, setVisibleCount] = useState<number>(1);
+//     const [currentIndex, setCurrentIndex] = useState(0);
+//     const MIN_VISIBLE = 1;
+//     const MAX_VISIBLE = 4;
+//     const buttons = [
+//         {to: "/free", label: "Выйграй бесплатный английский"},
+//         {to: "/app", label: "Тренажер по временам"},
+//         {to: "/themes", label: "Тренажер по темам английского"},
+//         {to: "/about", label: "О нас и связаться с нами"},
+//         {to: "/achievements", label: "Мои Достижения"},
+//     ];
+//     useEffect(() => {
+//         const handleResize = () => {
+//             setIsMobile(window.innerWidth < 600);
+//         };
+//
+//         window.addEventListener("resize", handleResize);
+//         return () => window.removeEventListener("resize", handleResize);
+//     }, []);
+//     useEffect(() => {
+//         const handleResize = () => {
+//             const width = window.innerWidth;
+//             if (width < 720) setVisibleCount(MIN_VISIBLE);
+//             else if (width < 890) setVisibleCount(2);
+//             else if (width < 1180) setVisibleCount(3);
+//             else setVisibleCount(MAX_VISIBLE);
+//         };
+//         handleResize();
+//
+//         window.addEventListener("resize", handleResize);
+//         return () => window.removeEventListener("resize", handleResize);
+//     }, []);
+//     const next = () => {
+//         if (currentIndex < buttons.length - visibleCount) {
+//             setCurrentIndex((prev) => prev + 1);
+//         }
+//     };
+//     const prev = () => {
+//         if (currentIndex > 0) {
+//             setCurrentIndex((prev) => prev - 1);
+//         }
+//     };
+//     const arrowStyle: React.CSSProperties = {
+//         background: "#333",
+//         color: "#FFF44F",
+//         border: "none",
+//         borderRadius: "50%",
+//         width: "40px",
+//         height: "40px",
+//         cursor: "pointer",
+//         fontSize: "20px",
+//     };
+//     const theme = useTheme();
+//     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+//     return (
+//         <>
+//             {location.pathname !== '/app' &&
+//                 <AppBar position="static" sx={{ backgroundColor: '#444447' }}>
+//                     <Container maxWidth="xl">
+//                         <Toolbar
+//                             disableGutters
+//                             sx={{
+//                                 display: 'flex',
+//                                 flexDirection: { xs: 'column', sm: 'row' },
+//                                 justifyContent: { xs: 'center', sm: 'space-between' },
+//                                 alignItems: 'center',
+//                                 width: '100%',
+//                                 py: 1,
+//                                 gap: { xs: 1, sm: 0 },
+//                             }}
+//                         >
+//                             {isMobile ? (
+//                                 <Box
+//                                     sx={{
+//                                         display: 'flex',
+//                                         flexDirection: 'column',
+//                                         alignItems: 'start',
+//                                         justifyContent: 'start',
+//                                         width: '100%',
+//                                     }}
+//                                 >
+//                                     <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center' }}>
+//                                         <Typography
+//                                             sx={{
+//                                                 color: '#FFF44F', fontWeight: 700, fontFamily: '"South Park Ext", sans-serif',
+//                                                 fontSize: '1.5rem',
+//                                                 textShadow: '2px 2px 0px #000, -1px -1px 0px #000',
+//                                             }}
+//                                         >
+//                                             English cat
+//                                         </Typography>
+//                                         <Typography sx={{ color: '#FFF44F', fontWeight: 400, fontSize: '1rem', ml: 1 }}>
+//                                             (v0.7)
+//                                         </Typography>
+//                                     </Box>
+//                                     <Box
+//                                         sx={{
+//                                             position: { xs: 'absolute', sm: 'static' },
+//                                             right: { xs: 10, sm: 'auto' },
+//                                             top: { xs: 10, sm: 'auto' },
+//                                         }}
+//                                     >
+//                                         <Tooltip title="Ссылка на наш сайт">
+//                                             <a
+//                                                 href="https://www.kiber-rus.ru/"
+//                                                 target="_blank"
+//                                                 rel="noreferrer"
+//                                                 style={{ textDecoration: 'none' }}
+//                                             >
+//                                                 <Avatar
+//                                                     alt="User Avatar"
+//                                                     src={cat}
+//                                                     sx={{
+//                                                         border: '2px solid white',
+//                                                         width: { xs: 45, md: 55 },
+//                                                         height: { xs: 45, md: 55 },
+//                                                     }}
+//                                                 />
+//                                             </a>
+//                                         </Tooltip>
+//                                     </Box>
+//
+//                                     {location.pathname !== '/' && (
+//                                         <HomeIcon
+//                                             sx={{
+//                                                 color: '#2fd300',
+//                                                 fontSize: 35,
+//                                                 mt: 1,
+//                                             }}
+//                                         />
+//                                     )}
+//                                 </Box>
+//
+//                             ) : (
+//
+//                                 <Box
+//                                     sx={{
+//                                         display: 'flex',
+//                                         alignItems: 'center',
+//                                         justifyContent: 'start',
+//                                         gap: 1,
+//                                         width: '100%',
+//                                     }}
+//                                 >
+//                                     {location.pathname !== '/' && (
+//                                         <HomeIcon
+//                                             sx={{
+//                                                 color: '#2fd300',
+//                                                 fontSize: 50,
+//                                                 mt: '-10px',
+//                                             }}
+//                                         />
+//                                     )}
+//                                     <Typography
+//                                         sx={{
+//                                             color: '#FFF44F',
+//                                             fontWeight: 700,
+//                                             fontFamily: '"South Park Ext", sans-serif',
+//                                             fontSize: '2.7rem',
+//                                             textShadow: '2px 2px 0px #000, -1px -1px 0px #000',
+//                                             whiteSpace: 'nowrap',
+//                                         }}
+//                                     >
+//                                         English cat
+//                                     </Typography>
+//
+//                                     <Typography
+//                                         sx={{
+//                                             color: '#FFF44F',
+//                                             fontWeight: 400,
+//                                             fontSize: '2rem',
+//                                             whiteSpace: 'nowrap',
+//                                         }}
+//                                     >
+//                                         (v0.7)
+//                                     </Typography>
+//                                 </Box>
+//                             )}
+//                             <Box
+//                                 sx={{
+//                                     position: { xs: 'absolute', sm: 'static' },
+//                                     right: { xs: 10, sm: 'auto' },
+//                                     top: { xs: 10, sm: 'auto' },
+//                                 }}
+//                             >
+//                                 <Tooltip title="Ссылка на наш сайт">
+//                                     <a
+//                                         href="https://www.kiber-rus.ru/"
+//                                         target="_blank"
+//                                         rel="noreferrer"
+//                                         style={{ textDecoration: 'none' }}
+//                                     >
+//                                         <Avatar
+//                                             alt="User Avatar"
+//                                             src={cat}
+//                                             sx={{
+//                                                 border: '2px solid white',
+//                                                 width: { xs: 45, md: 55 },
+//                                                 height: { xs: 45, md: 55 },
+//                                             }}
+//                                         />
+//                                     </a>
+//                                 </Tooltip>
+//                             </Box>
+//
+//
+//                         </Toolbar>
+//                     </Container>
+//                 </AppBar>
+//             }
+//
+//             <Routes>
+//                 <Route
+//                     path="/"
+//                     element={
+//                         <div
+//                             style={{
+//                                 position: "relative",
+//                                 padding: isMobile ? "40px 5px" : "40px", // Меньше отступов на мобилке
+//                                 display: "flex",
+//                                 justifyContent: "center",
+//                                 alignItems: "center",
+//                                 gap: isMobile  ? "5px" : "15px",
+//                                 width: "100%",
+//                                 boxSizing: "border-box",
+//                                 overflow: "hidden" // Предотвращает горизонтальный скролл страницы
+//                             }}
+//                         >
+//                             <button
+//                                 onClick={prev}
+//                                 disabled={currentIndex === 0}
+//                                 style={{
+//                                     ...arrowStyle,
+//                                     opacity: currentIndex === 0 ? 0.5 : 1,
+//                                     cursor: currentIndex === 0 ? "not-allowed" : "pointer",
+//                                     zIndex: 10,
+//                                     flexShrink: 0 // Стрелка тоже не должна сплющиваться
+//                                 }}
+//                             >
+//                                 {"<"}
+//                             </button>
+//
+//                             <div style={{
+//                                 display: "flex",
+//                                 gap: window.innerWidth < 600 ? "15px" : "30px",
+//                                 flexWrap: "nowrap", // Запрещаем перенос строк
+//                                 justifyContent: "center",
+//                                 alignItems: "center"
+//                             }}>
+//                                 {buttons
+//                                     .slice(currentIndex, currentIndex + visibleCount)
+//                                     .map((btn, index) => (
+//                                         <Link
+//                                             key={index}
+//                                             to={btn.to}
+//                                             style={{
+//                                                 textDecoration: "none",
+//                                                 flexShrink: 0 // ГЛАВНОЕ: запрещает сплющивание карточки
+//                                             }}
+//                                         >
+//                                             <div
+//                                                 style={{
+//                                                     ...getCardStyle(index),
+//                                                     display: "flex",
+//                                                     flexDirection: "column",
+//                                                     alignItems: "center",
+//                                                     position: 'relative'
+//                                                 }}
+//                                                 onMouseEnter={() => setHoveredIndex(index)}
+//                                                 onMouseLeave={() => setHoveredIndex(null)}
+//                                             >
+//                                                 {btn.to === '/free'?
+//                                                     <div
+//                                                         style={{
+//                                                             position: 'relative',
+//                                                             cursor: 'pointer',
+//                                                             width: "250px",
+//                                                             height: "434px", // Ограничиваем высоту контейнера
+//                                                             borderRadius: "12px",
+//                                                             overflow: 'hidden' // Чтобы градиент не вылезал за скругления
+//                                                         }}
+//                                                     >
+//                                                         <img
+//                                                             src={free}
+//                                                             style={{
+//                                                                 width: "250px",
+//                                                                 height: "434px",
+//                                                                 display: "block",
+//                                                                 transition: "all 0.3s ease",
+//                                                             }}
+//                                                         />
+//
+//                                                         {/* Слой градиентного затемнения */}
+//                                                         <div style={{
+//                                                             position: 'absolute',
+//                                                             bottom: 0,
+//                                                             left: 0,
+//                                                             width: '100%',
+//                                                             height: '50%', // Затемняем нижнюю половину
+//                                                             background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%)',
+//                                                             pointerEvents: 'none' // Чтобы клики проходили сквозь слой
+//                                                         }} />
+//
+//                                                         <p style={{
+//                                                             fontFamily: 'sans-serif',
+//                                                             fontWeight: 900,
+//                                                             fontSize: 19,
+//                                                             width: "240px",
+//                                                             position: 'absolute', // Позиционируем точно над низом
+//                                                             bottom: '20px',       // Отступ от края
+//                                                             left: '50%',
+//                                                             transform: 'translateX(-50%)', // Центрируем по горизонтали
+//                                                             margin: 0,
+//                                                             textAlign: 'center',
+//                                                             zIndex: 2
+//                                                         }}>
+//                                                             {btn.label}
+//                                                         </p>
+//                                                     </div>
+//                                                     :btn.to === '/app' ?
+//                                                         <div>
+//                                                             <img
+//                                                                 src={cat3}
+//                                                                 style={{
+//                                                                     borderRadius: "12px",
+//                                                                     width: "250px",
+//                                                                     height: "434px",
+//                                                                     marginTop: '-1px'
+//                                                                 }}
+//                                                             />
+//                                                             <p style={{
+//                                                                 fontFamily: 'sans-serif',
+//                                                                 fontWeight:900,
+//                                                                 fontSize:19,
+//                                                                 width: "240px",
+//                                                                 marginTop: '-80px'
+//                                                             }}>
+//                                                                 {btn.label}
+//                                                             </p>
+//                                                         </div>
+//                                                         : btn.to == '/achievements' ?
+//                                                             <div>
+//                                                                 <img
+//                                                                     alt="achievements"
+//                                                                     src={cubok}
+//                                                                     style={{
+//                                                                         marginTop: '15%',
+//                                                                         width: 200,
+//                                                                         height: 240,
+//                                                                     }}
+//                                                                 />
+//                                                                 <p style={{
+//                                                                     fontFamily: 'sans-serif',
+//                                                                     fontWeight:900,
+//                                                                     fontSize:19,
+//                                                                     width: "240px",
+//                                                                     marginTop: '40px',
+//                                                                 }}>
+//                                                                     {btn.label}
+//                                                                 </p>
+//                                                             </div>
+//                                                             : btn.to == '/themes' ?
+//                                                                 <div >
+//                                                                     <img
+//                                                                         src={thems2}
+//                                                                         style={{
+//                                                                             borderRadius: "12px",
+//                                                                             border:'#FFF44F 1px solid',
+//                                                                             width: "101%",
+//                                                                             height: "433px",
+//                                                                             marginTop: '-6px',
+//                                                                             marginLeft: '-2px',
+//                                                                         }}
+//                                                                     />
+//                                                                     <p style={{
+//                                                                         fontFamily: 'sans-serif',
+//                                                                         fontWeight:900,
+//                                                                         fontSize:19,
+//                                                                         width: "240px",
+//                                                                         marginTop: '-80px',
+//                                                                         marginLeft:'13px',
+//                                                                         color: 'black'
+//                                                                     }}>
+//                                                                         {btn.label}
+//                                                                     </p>
+//                                                                 </div>
+//                                                                 :
+//                                                                 <div>
+//                                                                     <img
+//                                                                         src={about}
+//                                                                         style={{
+//                                                                             borderRadius: "12px",
+//                                                                             width: "250px",
+//                                                                             height: "250px",
+//                                                                             marginTop: '40px'
+//                                                                         }}
+//                                                                     />
+//                                                                     <p style={{
+//                                                                         fontFamily: 'sans-serif',
+//                                                                         fontWeight:900,
+//                                                                         fontSize:19,
+//                                                                         marginTop: '55px',
+//                                                                         width: "250px",
+//                                                                     }}>{btn.label}</p>
+//                                                                 </div>
+//                                                 }
+//                                             </div>
+//                                         </Link>
+//                                     ))}
+//                             </div>
+//
+//                             <button
+//                                 onClick={next}
+//                                 disabled={currentIndex + visibleCount >= buttons.length}
+//                                 style={{
+//                                     ...arrowStyle,
+//                                     opacity: currentIndex + visibleCount >= buttons.length ? 0.5 : 1,
+//                                     cursor: currentIndex + visibleCount >= buttons.length ? "not-allowed" : "pointer",
+//                                     zIndex: 10,
+//                                     flexShrink: 0
+//                                 }}
+//                             >
+//                                 {">"}
+//                             </button>
+//                         </div>
+//                     }
+//                 />
+//                 <Route path="/free" element={<Free/>}/>
+//                 <Route path="/app" element={<App/>}/>
+//                 <Route path="/themes" element={<TopicsPage/>} />
+//                 <Route path="/themes/:topicId" element={<TopicDetailPage/>} />
+//                 <Route path="/about" element={<Placeholder title="О нас "/>}/>
+//                 <Route
+//                     path="/achievements"
+//                     element={<Placeholder title="Мои Достижения"/>}
+//                 />
+//             </Routes>
+//
+//         </>
+//     );
+// };
