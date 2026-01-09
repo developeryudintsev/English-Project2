@@ -541,6 +541,15 @@ export const AppRoutes = () => {
                         </div>
                     }
                 />
+                <Route path="/free" element={<Free/>}/>
+                <Route path="/app" element={<App/>}/>
+                <Route path="/themes" element={<TopicsPage/>} />
+                <Route path="/themes/:topicId" element={<TopicDetailPage/>} />
+                <Route path="/about" element={<Placeholder title="О нас "/>}/>
+                <Route
+                    path="/achievements"
+                    element={<Placeholder title="Мои Достижения"/>}
+                />
             </Routes>
 
         </>
