@@ -325,7 +325,6 @@ export const AppRoutes = () => {
                 </AppBar>
             }
 
-
             <Routes>
                 <Route
                     path="/"
@@ -333,11 +332,14 @@ export const AppRoutes = () => {
                         <div
                             style={{
                                 position: "relative",
-                                padding: "40px ",
+                                padding: window.innerWidth < 600 ? "40px 5px" : "40px", // Меньше отступов на мобилке
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                gap: "10px",
+                                gap: window.innerWidth < 600 ? "5px" : "15px",
+                                width: "100%",
+                                boxSizing: "border-box",
+                                overflow: "hidden" // Предотвращает горизонтальный скролл страницы
                             }}
                         >
                             <button
@@ -347,18 +349,39 @@ export const AppRoutes = () => {
                                     ...arrowStyle,
                                     opacity: currentIndex === 0 ? 0.5 : 1,
                                     cursor: currentIndex === 0 ? "not-allowed" : "pointer",
+                                    zIndex: 10,
+                                    flexShrink: 0 // Стрелка тоже не должна сплющиваться
                                 }}
                             >
                                 {"<"}
                             </button>
 
-                            <div style={{display: "flex", gap: "30px"}}>
+                            <div style={{
+                                display: "flex",
+                                gap: window.innerWidth < 600 ? "15px" : "30px",
+                                flexWrap: "nowrap", // Запрещаем перенос строк
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}>
                                 {buttons
                                     .slice(currentIndex, currentIndex + visibleCount)
                                     .map((btn, index) => (
-                                        <Link key={index} to={btn.to} style={{textDecoration: "none"}}>
+                                        <Link
+                                            key={index}
+                                            to={btn.to}
+                                            style={{
+                                                textDecoration: "none",
+                                                flexShrink: 0 // ГЛАВНОЕ: запрещает сплющивание карточки
+                                            }}
+                                        >
                                             <div
-                                                style={getCardStyle(index)}
+                                                style={{
+                                                    ...getCardStyle(index),
+                                                    display: "flex",
+                                                    flexDirection: "column",
+                                                    alignItems: "center",
+                                                    position: 'relative'
+                                                }}
                                                 onMouseEnter={() => setHoveredIndex(index)}
                                                 onMouseLeave={() => setHoveredIndex(null)}
                                             >
@@ -411,35 +434,14 @@ export const AppRoutes = () => {
                                                         </p>
                                                     </div>
                                                     :btn.to === '/app' ?
-                                                    <div>
-                                                        <img
-                                                            src={cat3}
-                                                            style={{
-                                                                borderRadius: "12px",
-                                                                width: "250px",
-                                                                height: "434px",
-                                                                marginTop: '-1px'
-                                                            }}
-                                                        />
-                                                        <p style={{
-                                                            fontFamily: 'sans-serif',
-                                                            fontWeight:900,
-                                                            fontSize:19,
-                                                            width: "240px",
-                                                            marginTop: '-80px'
-                                                        }}>
-                                                            {btn.label}
-                                                        </p>
-                                                    </div>
-                                                    : btn.to == '/achievements' ?
                                                         <div>
                                                             <img
-                                                                alt="achievements"
-                                                                src={cubok}
+                                                                src={cat3}
                                                                 style={{
-                                                                    marginTop: '15%',
-                                                                    width: 200,
-                                                                    height: 240,
+                                                                    borderRadius: "12px",
+                                                                    width: "250px",
+                                                                    height: "434px",
+                                                                    marginTop: '-1px'
                                                                 }}
                                                             />
                                                             <p style={{
@@ -447,22 +449,20 @@ export const AppRoutes = () => {
                                                                 fontWeight:900,
                                                                 fontSize:19,
                                                                 width: "240px",
-                                                                marginTop: '40px',
+                                                                marginTop: '-80px'
                                                             }}>
                                                                 {btn.label}
                                                             </p>
                                                         </div>
-                                                        : btn.to == '/themes' ?
-                                                            <div >
+                                                        : btn.to == '/achievements' ?
+                                                            <div>
                                                                 <img
-                                                                    src={thems2}
+                                                                    alt="achievements"
+                                                                    src={cubok}
                                                                     style={{
-                                                                        borderRadius: "12px",
-                                                                        border:'#FFF44F 1px solid',
-                                                                        width: "101%",
-                                                                        height: "433px",
-                                                                        marginTop: '-6px',
-                                                                        marginLeft: '-2px',
+                                                                        marginTop: '15%',
+                                                                        width: 200,
+                                                                        height: 240,
                                                                     }}
                                                                 />
                                                                 <p style={{
@@ -470,32 +470,55 @@ export const AppRoutes = () => {
                                                                     fontWeight:900,
                                                                     fontSize:19,
                                                                     width: "240px",
-                                                                    marginTop: '-80px',
-                                                                    marginLeft:'13px',
-                                                                    color: 'black'
+                                                                    marginTop: '40px',
                                                                 }}>
                                                                     {btn.label}
                                                                 </p>
                                                             </div>
-                                                            :
-                                                            <div>
-                                                                <img
-                                                                    src={about}
-                                                                    style={{
-                                                                        borderRadius: "12px",
+                                                            : btn.to == '/themes' ?
+                                                                <div >
+                                                                    <img
+                                                                        src={thems2}
+                                                                        style={{
+                                                                            borderRadius: "12px",
+                                                                            border:'#FFF44F 1px solid',
+                                                                            width: "101%",
+                                                                            height: "433px",
+                                                                            marginTop: '-6px',
+                                                                            marginLeft: '-2px',
+                                                                        }}
+                                                                    />
+                                                                    <p style={{
+                                                                        fontFamily: 'sans-serif',
+                                                                        fontWeight:900,
+                                                                        fontSize:19,
+                                                                        width: "240px",
+                                                                        marginTop: '-80px',
+                                                                        marginLeft:'13px',
+                                                                        color: 'black'
+                                                                    }}>
+                                                                        {btn.label}
+                                                                    </p>
+                                                                </div>
+                                                                :
+                                                                <div>
+                                                                    <img
+                                                                        src={about}
+                                                                        style={{
+                                                                            borderRadius: "12px",
+                                                                            width: "250px",
+                                                                            height: "250px",
+                                                                            marginTop: '40px'
+                                                                        }}
+                                                                    />
+                                                                    <p style={{
+                                                                        fontFamily: 'sans-serif',
+                                                                        fontWeight:900,
+                                                                        fontSize:19,
+                                                                        marginTop: '55px',
                                                                         width: "250px",
-                                                                        height: "250px",
-                                                                        marginTop: '40px'
-                                                                    }}
-                                                                />
-                                                                <p style={{
-                                                                    fontFamily: 'sans-serif',
-                                                                    fontWeight:900,
-                                                                    fontSize:19,
-                                                                    marginTop: '55px',
-                                                                    width: "250px",
-                                                                }}>{btn.label}</p>
-                                                            </div>
+                                                                    }}>{btn.label}</p>
+                                                                </div>
                                                 }
                                             </div>
                                         </Link>
@@ -504,14 +527,13 @@ export const AppRoutes = () => {
 
                             <button
                                 onClick={next}
-                                disabled={currentIndex >= buttons.length - visibleCount}
+                                disabled={currentIndex + visibleCount >= buttons.length}
                                 style={{
                                     ...arrowStyle,
-                                    opacity: currentIndex >= buttons.length - visibleCount ? 0.5 : 1,
-                                    cursor:
-                                        currentIndex >= buttons.length - visibleCount
-                                            ? "not-allowed"
-                                            : "pointer",
+                                    opacity: currentIndex + visibleCount >= buttons.length ? 0.5 : 1,
+                                    cursor: currentIndex + visibleCount >= buttons.length ? "not-allowed" : "pointer",
+                                    zIndex: 10,
+                                    flexShrink: 0
                                 }}
                             >
                                 {">"}
@@ -519,17 +541,8 @@ export const AppRoutes = () => {
                         </div>
                     }
                 />
-
-                <Route path="/free" element={<Free/>}/>
-                <Route path="/app" element={<App/>}/>
-                <Route path="/themes" element={<TopicsPage/>} />
-                <Route path="/themes/:topicId" element={<TopicDetailPage/>} />
-                <Route path="/about" element={<Placeholder title="О нас "/>}/>
-                <Route
-                    path="/achievements"
-                    element={<Placeholder title="Мои Достижения"/>}
-                />
             </Routes>
+
         </>
     );
 };
