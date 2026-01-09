@@ -122,7 +122,7 @@ export const AppRoutes = () => {
             transition: 'transform 0.3s ease-in-out',
         };
     };
-    const [visibleCount, setVisibleCount] = useState<number>(4);
+    const [visibleCount, setVisibleCount] = useState<number>(1);
     const [currentIndex, setCurrentIndex] = useState(0);
     const MIN_VISIBLE = 1;
     const MAX_VISIBLE = 4;
@@ -142,6 +142,7 @@ export const AppRoutes = () => {
             else setVisibleCount(MAX_VISIBLE);
         };
         handleResize();
+
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);

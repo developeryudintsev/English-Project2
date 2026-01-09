@@ -419,7 +419,6 @@ export const FreePage = () => {
         }
     };
     if (!currentQuestion) return null;
-
     return (
         <Box sx={{
             display: "flex", justifyContent: "center", alignItems: "center",
@@ -593,9 +592,8 @@ export const FreePage = () => {
                             </Box>
                         </Box>
 
-                        {/* Вопрос и ответы */}
-                        <Box sx={{mt: 2}}>
-                            <Typography variant="h5" sx={{color: "white", mb: 4, minHeight: "60px"}}>
+                        <Box sx={{mt: '1%'}}>
+                            <Typography variant="h5" sx={{color: "white", mb: '3%', minHeight: "60px"}}>
                                 {currentQuestion.question}
                                 <IconButton
                                     onClick={() => speakText(currentQuestion.question, "ru")}
