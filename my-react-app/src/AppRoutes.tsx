@@ -185,38 +185,82 @@ export const AppRoutes = () => {
                     <Container maxWidth="xl">
                         <Toolbar
                             sx={{
-                                flexDirection: isMobile ? "column" : "row",
+                                display: "flex",
+                                flexDirection: "row",        // ⬅️ ВСЕГДА В ОДНУ СТРОКУ
                                 alignItems: "center",
                                 justifyContent: "space-between",
+                                minHeight: 64,
                             }}
                         >
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                            {/* Левая часть */}
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 1,
+                                    flexGrow: 1,              // ⬅️ занимает всё доступное место
+                                    overflow: "hidden",
+                                }}
+                            >
                                 {location.pathname !== "/" && (
-                                    <HomeIcon sx={{ color: "#2fd300", fontSize: isMobile ? 32 : 48 }} />
+                                    <HomeIcon
+                                        sx={{
+                                            color: "#2fd300",
+                                            fontSize: isMobile ? 32 : 48,
+                                            flexShrink: 0,
+                                        }}
+                                    />
                                 )}
+
                                 <Typography
                                     sx={{
                                         color: "#FFF44F",
                                         fontWeight: 700,
-                                        fontSize: isMobile ? "1.5rem" : "2.7rem",
+                                        fontSize: isMobile ? "1.3rem" : "2.7rem",
                                         fontFamily: '"South Park Ext", sans-serif',
+                                        whiteSpace: "nowrap",   // ⬅️ не переносить
+                                        textOverflow: "ellipsis",
+                                        overflow: "hidden",
                                     }}
                                 >
                                     English cat
                                 </Typography>
-                                <Typography sx={{ color: "#FFF44F", fontSize: isMobile ? "1rem" : "2rem" }}>
+
+                                <Typography
+                                    sx={{
+                                        color: "#FFF44F",
+                                        fontSize: isMobile ? "0.9rem" : "2rem",
+                                        whiteSpace: "nowrap",
+                                        flexShrink: 0,
+                                    }}
+                                >
                                     (v0.7)
                                 </Typography>
                             </Box>
 
+                            {/* Аватар справа */}
                             <Tooltip title="Ссылка на наш сайт">
-                                <a href="https://www.kiber-rus.ru/" target="_blank" rel="noreferrer">
-                                    <Avatar src={cat} sx={{ width: 45, height: 45 }} />
+                                <a
+                                    href="https://www.kiber-rus.ru/"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <Avatar
+                                        src={cat}
+                                        sx={{
+                                            width: isMobile ? 40 : 55,
+                                            height: isMobile ? 40 : 55,
+                                            flexShrink: 0,       // ⬅️ никогда не сжимается
+                                            ml: 1,
+                                        }}
+                                    />
                                 </a>
                             </Tooltip>
                         </Toolbar>
                     </Container>
                 </AppBar>
+
             )}
 
             <Routes>
