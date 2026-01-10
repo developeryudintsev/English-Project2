@@ -332,8 +332,8 @@ export const AppRoutes = () => {
                                                                 style={{
                                                                     borderRadius: "12px",
                                                                     width: "250px",
-                                                                    height: "434px",
-                                                                    marginTop: '-1px'
+                                                                    height: "103%",
+                                                                    marginTop: '0px'
                                                                 }}
                                                             />
                                                             <p style={{
