@@ -6,6 +6,7 @@ type VideoCatProps = {
     showCondition: boolean;
     size?: "small" | "medium" | "normal";
     free?:boolean;
+    freeSize?:number;
 };
 
 export const VideoCat: React.FC<VideoCatProps> = ({
@@ -14,7 +15,8 @@ export const VideoCat: React.FC<VideoCatProps> = ({
                                                       toggelVideoCat,
                                                       showCondition,
                                                       size = "normal",
-                                                      free=false
+                                                      free=false,
+                                                      freeSize=120
                                                   }) => {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [loaded, setLoaded] = useState(false);
@@ -37,7 +39,7 @@ export const VideoCat: React.FC<VideoCatProps> = ({
         return () => window.removeEventListener("resize", updateSize);
     }, []);
 
-    const sizePx = responsiveSize === "small" ? 60 : responsiveSize === "medium" ? 90 : 120;
+    const sizePx = responsiveSize === "small" ? 80 : responsiveSize === "medium" ? 90 : 120;
 
     const handleCanPlay = () => {
         setLoaded(true);
@@ -94,8 +96,8 @@ export const VideoCat: React.FC<VideoCatProps> = ({
                 onCanPlay={handleCanPlay}
                 onEnded={() => setToggelVideoCatFoo()}
                 style={{
-                    width: `${free?170:sizePx}px`,
-                    height: `${free?170:sizePx}px`,
+                    width: `${free?freeSize:sizePx}px`,
+                    height: `${free?freeSize:sizePx}px`,
                     borderRadius: "50%",
                     objectFit: "cover",
                     objectPosition: "top center",

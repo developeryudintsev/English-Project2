@@ -423,7 +423,7 @@ export const FreePage = () => {
     return (
         <Box sx={{
             display: "flex", justifyContent: "center", alignItems: "center",
-            marginTop:width<500?'-20%':'0%',
+            marginTop:width<500?'-10%':'0%',
             minHeight: "88vh", width: "100vw",
         }}>
             <Paper elevation={3} sx={{
@@ -527,7 +527,7 @@ export const FreePage = () => {
                                             }}
                                             toggelVideoCat={toggelVideoCat}
                                             showCondition={true}
-                                            // free={true}
+
                                         />
                                     </Box>
 
@@ -554,10 +554,9 @@ export const FreePage = () => {
                                             <img
                                                 src={win}
                                                 style={{
-
-                                                    height: width<500?'140px':'240px',
+                                                    height: width<500?'180px':'240px',
                                                     position: 'absolute',
-                                                    top: width<500?'-80px':'-160px',   // Смещаем вверх, чтобы она "лежала" на кнопке
+                                                    top: width<500?'-115px':'-160px',   // Смещаем вверх, чтобы она "лежала" на кнопке
                                                     right: width<500?'30px':'10px', // Смещаем вправо
                                                     transform: 'rotate(45deg)', // Поворот на 45 градусов вправо
                                                     zIndex: 10,     // Самый верхний слой (поверх кнопки)
