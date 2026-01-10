@@ -584,8 +584,8 @@ export const FreePage = () => {
                                             color: "white",
                                             borderColor: "#FFF44F",
                                             textTransform: "none",
-                                            minWidth: "200px",
-                                            height: '60px'
+                                            minWidth: width<500?'100px':"200px",
+                                            height: width<500?'30px':'60px'
                                         }}
                                     >
                                         {q.word}
@@ -594,7 +594,7 @@ export const FreePage = () => {
                             </Box>
                         </Box>
 
-                        <Box sx={{mt: '1%'}}>
+                        <Box sx={{mt: '-1%'}}>
                             <Typography variant="h5" sx={{color: "white", mb: '3%', minHeight: "60px"}}>
                                 {currentQuestion.question}
                                 <IconButton
