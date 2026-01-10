@@ -192,7 +192,6 @@ export const AppRoutes = () => {
                                 minHeight: 64,
                             }}
                         >
-                            {/* Левая часть */}
                             <Box
                                 sx={{
                                     display: "flex",
@@ -238,7 +237,6 @@ export const AppRoutes = () => {
                                 </Typography>
                             </Box>
 
-                            {/* Аватар справа */}
                             <Tooltip title="Ссылка на наш сайт">
                                 <a
                                     href="https://www.kiber-rus.ru/"
