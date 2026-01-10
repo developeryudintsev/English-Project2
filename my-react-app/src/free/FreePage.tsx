@@ -595,7 +595,7 @@ export const FreePage = () => {
                         </Box>
 
                         <Box sx={{mt: '-1%'}}>
-                            <Typography variant="h5" sx={{color: "white", mb: '3%', minHeight: "60px"}}>
+                            <Typography variant="h5" sx={{color: "white", mb: '1%',fontSize:width<500?'13px':'25px', minHeight: "60px"}}>
                                 {currentQuestion.question}
                                 <IconButton
                                     onClick={() => speakText(currentQuestion.question, "ru")}
@@ -622,7 +622,7 @@ export const FreePage = () => {
                                                 "&:hover": {bgcolor: "#FFF44F"}
                                             }}
                                         >
-                                            <span style={{color: 'black'}}>
+                                            <span style={{color: 'black',fontSize:width<500?'12px':'20px'}}>
                                             {ans.text}
                                                 </span>
                                         </Button>
