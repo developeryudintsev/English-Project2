@@ -527,6 +527,7 @@ export const FreePage = () => {
                                             }}
                                             toggelVideoCat={toggelVideoCat}
                                             showCondition={true}
+                                            // free={true}
                                         />
                                     </Box>
 
@@ -554,10 +555,10 @@ export const FreePage = () => {
                                                 src={win}
                                                 style={{
 
-                                                    height: '240px',
+                                                    height: width<500?'140px':'240px',
                                                     position: 'absolute',
-                                                    top: '-160px',   // Смещаем вверх, чтобы она "лежала" на кнопке
-                                                    right: '10px', // Смещаем вправо
+                                                    top: width<500?'-80px':'-160px',   // Смещаем вверх, чтобы она "лежала" на кнопке
+                                                    right: width<500?'30px':'10px', // Смещаем вправо
                                                     transform: 'rotate(45deg)', // Поворот на 45 градусов вправо
                                                     zIndex: 10,     // Самый верхний слой (поверх кнопки)
                                                     pointerEvents: 'none' // Чтобы клик сквозь картинку попадал на кнопку
@@ -586,7 +587,7 @@ export const FreePage = () => {
                                             borderColor: "#FFF44F",
                                             textTransform: "none",
                                             minWidth: width<500?'100px':"200px",
-                                            height: width<500?'30px':'60px'
+                                            height: width<500?'40px':'60px'
                                         }}
                                     >
                                         {q.word}
