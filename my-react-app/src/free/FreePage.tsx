@@ -423,7 +423,7 @@ export const FreePage = () => {
     return (
         <Box sx={{
             display: "flex", justifyContent: "center", alignItems: "center",
-            marginTop:'-2%',
+            marginTop:width<500?'-20%':'0%',
             minHeight: "88vh", width: "100vw",
         }}>
             <Paper elevation={3} sx={{
