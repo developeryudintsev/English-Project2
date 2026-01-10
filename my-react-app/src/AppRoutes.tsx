@@ -361,6 +361,7 @@ export const AppRoutes = () => {
                                                                     src={cubok}
                                                                     style={{
                                                                         marginTop: '15%',
+                                                                        marginLeft: '11%',
                                                                         width: 200,
                                                                         height: 240,
                                                                     }}
@@ -377,14 +378,21 @@ export const AppRoutes = () => {
                                                                 </p>
                                                             </div>
                                                             : btn.to == '/themes' ?
-                                                                <div >
+                                                                <div  style={{
+                                                                    position: 'relative',
+                                                                    cursor: 'pointer',
+                                                                    width: "250px",
+                                                                    height: "434px", // Ограничиваем высоту контейнера
+                                                                    borderRadius: "12px",
+                                                                    overflow: 'hidden' // Чтобы градиент не вылезал за скругления
+                                                                }}>
                                                                     <img
                                                                         src={thems2}
                                                                         style={{
                                                                             borderRadius: "12px",
                                                                             border:'#FFF44F 1px solid',
                                                                             width: "101%",
-                                                                            height: "433px",
+                                                                            height: "101%",
                                                                             marginTop: '-6px',
                                                                             marginLeft: '-2px',
                                                                         }}
@@ -403,7 +411,14 @@ export const AppRoutes = () => {
                                                                     </p>
                                                                 </div>
                                                                 :
-                                                                <div>
+                                                                <div  style={{
+                                                                    position: 'relative',
+                                                                    cursor: 'pointer',
+                                                                    width: "250px",
+                                                                    height: "434px", // Ограничиваем высоту контейнера
+                                                                    borderRadius: "12px",
+                                                                    overflow: 'hidden' // Чтобы градиент не вылезал за скругления
+                                                                }}>
                                                                     <img
                                                                         src={about}
                                                                         style={{
