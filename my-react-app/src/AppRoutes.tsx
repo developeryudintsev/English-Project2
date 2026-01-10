@@ -17,8 +17,6 @@ import about from "./picture/about3.png";
 import {TopicsPage} from "./topics/TopicsPage";
 import {TopicDetailPage} from "./topics/TopicDetailPage";
 import {AboutMyself, Text, TextAbout} from "./TopicsObj/TopicsObj";
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
 import {Free} from "./free/Free";
 
 interface VocabularyWord {
