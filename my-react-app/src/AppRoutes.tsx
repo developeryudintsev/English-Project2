@@ -99,12 +99,10 @@ const Placeholder = ({title}: { title: string }) => (
 );
 export const AppRoutes = () => {
     const location = useLocation();
-
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 600);
     const [visibleCount, setVisibleCount] = useState<number>(1);
     const [currentIndex, setCurrentIndex] = useState<number>(0);
-
     const buttons = [
         { to: "/free", label: "Выйграй бесплатный английский" },
         { to: "/app", label: "Тренажер по временам" },
@@ -113,7 +111,6 @@ export const AppRoutes = () => {
         { to: "/achievements", label: "Мои Достижения" },
     ];
 
-    /** 📱 responsive logic */
     useEffect(() => {
         const handleResize = () => {
             const width = window.innerWidth;
@@ -130,8 +127,6 @@ export const AppRoutes = () => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
-
-    /** 🛡 защита currentIndex */
     useEffect(() => {
         const maxIndex = Math.max(0, buttons.length - visibleCount);
         if (currentIndex > maxIndex) {
@@ -249,7 +244,7 @@ export const AppRoutes = () => {
                             <div style={{
                                 display: "flex",
                                 gap: window.innerWidth < 600 ? "15px" : "30px",
-                                flexWrap: "nowrap", // Запрещаем перенос строк
+                                flexWrap: "nowrap",
                                 justifyContent: "center",
                                 alignItems: "center"
                             }}>
@@ -324,7 +319,14 @@ export const AppRoutes = () => {
                                                         </p>
                                                     </div>
                                                     :btn.to === '/app' ?
-                                                        <div>
+                                                        <div  style={{
+                                                            position: 'relative',
+                                                            cursor: 'pointer',
+                                                            width: "250px",
+                                                            height: "434px", // Ограничиваем высоту контейнера
+                                                            borderRadius: "12px",
+                                                            overflow: 'hidden' // Чтобы градиент не вылезал за скругления
+                                                        }}>
                                                             <img
                                                                 src={cat3}
                                                                 style={{
@@ -346,7 +348,14 @@ export const AppRoutes = () => {
                                                             </p>
                                                         </div>
                                                         : btn.to == '/achievements' ?
-                                                            <div>
+                                                            <div  style={{
+                                                                position: 'relative',
+                                                                cursor: 'pointer',
+                                                                width: "250px",
+                                                                height: "434px", // Ограничиваем высоту контейнера
+                                                                borderRadius: "12px",
+                                                                overflow: 'hidden' // Чтобы градиент не вылезал за скругления
+                                                            }}>
                                                                 <img
                                                                     alt="achievements"
                                                                     src={cubok}
