@@ -325,48 +325,60 @@ export const FreePage = () => {
     const [correctAnswerText, setCorrectAnswerText] = useState<string>("");
     const [russianVoice, setRussianVoice] = useState<SpeechSynthesisVoice | null>(null);
     const [englishVoice, setEnglishVoice] = useState<SpeechSynthesisVoice | null>(null);
+    const isTelegram =
+        typeof window !== "undefined" &&
+        Boolean((window as any).Telegram?.WebApp);
     useEffect(() => {
         if (!("speechSynthesis" in window)) return;
-
-        const pickMaleVoice = (voices: SpeechSynthesisVoice[], lang: "ru" | "en") => {
-            const list = voices.filter(v => v.lang.startsWith(lang));
-
-            if (!list.length) return null;
-
-            // 🧔‍♂️ Пытаемся найти мужской голос
-            const male = list.find(v =>
-                /male|man|alex|ivan|dmitry|max|sergey|daniel|mark/i.test(v.name)
-            );
-
-            return male || list[0] || null;
-        };
 
         const loadVoices = () => {
             const voices = window.speechSynthesis.getVoices();
             if (!voices.length) return;
 
-            setRussianVoice(pickMaleVoice(voices, "ru"));
-            setEnglishVoice(pickMaleVoice(voices, "en"));
+            const ruMale =
+                voices.find(v =>
+                    v.lang.startsWith("ru") &&
+                    /male|dmitry|pavel|yuri|alex/i.test(v.name.toLowerCase())
+                ) || voices.find(v => v.lang.startsWith("ru"));
+
+            const enMale =
+                voices.find(v =>
+                    v.lang.startsWith("en") &&
+                    /male|google|daniel|alex/i.test(v.name.toLowerCase())
+                ) || voices.find(v => v.lang.startsWith("en"));
+
+            setRussianVoice(ruMale || null);
+            setEnglishVoice(enMale || null);
         };
 
-        // ⚠️ Telegram FIX — обычный onvoiceschanged часто НЕ РАБОТАЕТ
         window.speechSynthesis.onvoiceschanged = loadVoices;
-
-        // ⏱️ Пробуем несколько раз
         loadVoices();
-        const t1 = setTimeout(loadVoices, 300);
-        const t2 = setTimeout(loadVoices, 1200);
-
-        return () => {
-            clearTimeout(t1);
-            clearTimeout(t2);
-            window.speechSynthesis.onvoiceschanged = null;
-        };
     }, []);
+    const playAudio = (url: string) => {
+        const audio = new Audio(url);
+        audio.volume = 1;
+        audio.play().catch(() => {});
+    };
+
     const speakText = (text: string, lang: "ru" | "en") => {
+        if (!text) return;
+
+        // 🟢 TELEGRAM → AUDIO
+        if (isTelegram) {
+            const encoded = encodeURIComponent(text);
+
+            const url =
+                lang === "ru"
+                    ? `https://your-server.ru/tts/ru?text=${encoded}`
+                    : `https://your-server.ru/tts/en?text=${encoded}`;
+
+            playAudio(url);
+            return;
+        }
+
+        // 🔵 BROWSER → speechSynthesis
         if (!("speechSynthesis" in window)) return;
 
-        // ❗ Telegram требует остановки предыдущего
         window.speechSynthesis.cancel();
 
         const utterance = new SpeechSynthesisUtterance(text);
@@ -375,11 +387,11 @@ export const FreePage = () => {
             if (russianVoice) utterance.voice = russianVoice;
             utterance.lang = "ru-RU";
             utterance.rate = 1;
-            utterance.pitch = 0.8; // ⬅️ ниже — звучит «мужче»
+            utterance.pitch = 0.9;
         } else {
             if (englishVoice) utterance.voice = englishVoice;
             utterance.lang = "en-US";
-            utterance.rate = 0.8;
+            utterance.rate = 0.7;
             utterance.pitch = 1;
         }
 
