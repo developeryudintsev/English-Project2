@@ -659,6 +659,12 @@ export const FreePage = () => {
                                 minHeight: "60px"
                             }}>
                                 {currentQuestion.question}
+                                <Button onClick={() => {
+                                    const a = new Audio("assets/zvuki.mp3");
+                                    a.play();
+                                }}>
+                                    TEST SOUND
+                                </Button>
                                 <IconButton
                                     onClick={() => speakText(currentQuestion.question, "ru")}
                                     sx={{color: "#FFF44F"}}
