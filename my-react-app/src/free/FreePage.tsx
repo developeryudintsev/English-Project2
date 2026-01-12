@@ -332,39 +332,57 @@ export const FreePage = () => {
             const voices = window.speechSynthesis.getVoices();
             if (!voices.length) return;
 
-            const ru = voices.find(v => v.lang.startsWith("ru"));
-            const en = voices.find(v => v.lang.startsWith("en"));
+            // 🔍 ВСЕ русские голоса
+            const ruVoices = voices.filter(v =>
+                v.lang.toLowerCase().startsWith("ru")
+            );
 
-            setRussianVoice(ru || null);
-            setEnglishVoice(en || null);
+            // 🎙️ Пытаемся найти МУЖСКОЙ русский голос
+            const ruMale = ruVoices.find(v =>
+                /male|man|alex|ivan|pavel|dmitry|max/i.test(v.name)
+            );
+
+            // 🔁 fallback — любой русский
+            const ruFallback = ruVoices[0] || null;
+
+            // 🇬🇧 английский (оставляем как есть)
+            const enVoice =
+                voices.find(v => v.lang.startsWith("en") && /male|man|alex|daniel/i.test(v.name)) ||
+                voices.find(v => v.lang.startsWith("en")) ||
+                null;
+
+            setRussianVoice(ruMale || ruFallback);
+            setEnglishVoice(enVoice);
         };
 
-        window.speechSynthesis.onvoiceschanged = loadVoices;
         loadVoices();
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+
+        return () => {
+            window.speechSynthesis.onvoiceschanged = null;
+        };
     }, []);
     const speakText = (text: string, lang: "ru" | "en") => {
         if (!("speechSynthesis" in window)) return;
 
-        // Останавливаем текущую речь, если она идет
         window.speechSynthesis.cancel();
 
         const utterance = new SpeechSynthesisUtterance(text);
 
         if (lang === "ru") {
-            // Если нашли голос в системе — используем, если нет — просто ставим язык
             if (russianVoice) {
                 utterance.voice = russianVoice;
             }
             utterance.lang = "ru-RU";
-            utterance.rate = 1.0;
-            utterance.pitch = 0.9; // Слегка понижаем для более мужского тембра
+            utterance.rate = 1;
+            utterance.pitch = 0.8; // ниже = более "мужской"
         } else {
             if (englishVoice) {
                 utterance.voice = englishVoice;
             }
             utterance.lang = "en-US";
-            utterance.rate = 0.7; // Твоя просьба: английский медленнее
-            utterance.pitch = 1.0;
+            utterance.rate = 0.8;
+            utterance.pitch = 1;
         }
 
         window.speechSynthesis.speak(utterance);
