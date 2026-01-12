@@ -177,20 +177,20 @@ export const AppRoutes = () => {
         flexShrink: 0,
         zIndex: 5,
     };
-    // if (!location) {
-    //     return (
-    //         <div style={{
-    //             minHeight: "100vh",
-    //             background: "#444447",
-    //             color: "#FFF44F",
-    //             display: "flex",
-    //             alignItems: "center",
-    //             justifyContent: "center"
-    //         }}>
-    //             Загрузка…
-    //         </div>
-    //     );
-    // }
+    if (!location) {
+        return (
+            <div style={{
+                minHeight: "100vh",
+                background: "#444447",
+                color: "#FFF44F",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+            }}>
+                Загрузка…
+            </div>
+        );
+    }
     return (
         <>
             {location.pathname !== "/app" && (

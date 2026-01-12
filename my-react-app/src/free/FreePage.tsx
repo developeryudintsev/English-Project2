@@ -295,24 +295,7 @@ export const FreePage = () => {
             ]
         }
     ]);
-    // const [width, setWidth] = useState<number>(() => {
-    //     if (typeof window === "undefined") return 375; // SSR / Telegram
-    //     return window.innerWidth || 375;
-    // });
 
-    // useEffect(() => {
-    //     const handleResize = () => {
-    //         setWidth(window.innerWidth || 375);
-    //     };
-    //
-    //     window.addEventListener("resize", handleResize);
-    //     window.addEventListener("orientationchange", handleResize);
-    //
-    //     return () => {
-    //         window.removeEventListener("resize", handleResize);
-    //         window.removeEventListener("orientationchange", handleResize)
-    //     };
-    // }, []);
     const useIsMobile = (breakpoint = 700) => {
         const [isMobile, setIsMobile] = useState<boolean>(() => {
             if (typeof window === "undefined") return false;
