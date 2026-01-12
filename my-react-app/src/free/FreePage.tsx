@@ -363,8 +363,9 @@ export const FreePage = () => {
     const speakText = (text: string, lang: "ru" | "en") => {
         if (!text) return;
 
-        // в этом условии что -то не так ведь у меня не показался алерт
         if (isTelegram) {
+            alert("Telegram detected"); // ← для проверки
+
             const encoded = encodeURIComponent(text);
 
             const url =
@@ -373,7 +374,7 @@ export const FreePage = () => {
                     : `https://your-server.ru/tts/en?text=${encoded}`;
 
             playAudio(url);
-
+            return; // ⬅️ ⬅️ ⬅️ КРИТИЧЕСКИ ВАЖНО
         }
 
         // 🔵 BROWSER → speechSynthesis
