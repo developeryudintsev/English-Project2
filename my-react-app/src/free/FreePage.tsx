@@ -305,18 +305,34 @@ export const FreePage = () => {
             setWidth(window.innerWidth || 375);
         };
 
-        // важно для Telegram / iOS
         window.addEventListener("resize", handleResize);
         window.addEventListener("orientationchange", handleResize);
 
         return () => {
             window.removeEventListener("resize", handleResize);
-            window.removeEventListener("orientationchange", handleResize);
+            window.removeEventListener("orientationchange", handleResize)
         };
     }, []);
-    const isMobile = width < 700;
-    const isMobileWrong = width < 900;
+    const useIsMobile = (breakpoint = 700) => {
+        const [isMobile, setIsMobile] = useState<boolean>(() => {
+            if (typeof window === "undefined") return false;
+            return window.innerWidth < breakpoint;
+        });
 
+        useEffect(() => {
+            const handleResize = () => {
+                setIsMobile(window.innerWidth < breakpoint);
+            };
+
+            handleResize();
+            window.addEventListener("resize", handleResize);
+
+            return () => window.removeEventListener("resize", handleResize);
+        }, [breakpoint]);
+
+        return isMobile;
+    };
+const isMobile=useIsMobile(700)
     const [questions, setQuestions] = useState<any[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<any>(null);
     const [toggelModal, setToggelModal] = useState<0 | 1 | 2 | 3>(0);
@@ -444,7 +460,7 @@ export const FreePage = () => {
     return (
         <Box sx={{
             display: "flex", justifyContent: "center", alignItems: "center",
-            marginTop:width<500?'-10%':'0%',
+            marginTop:isMobile?'-10%':'0%',
             minHeight: "88vh", width: "100vw",
         }}>
             <Paper elevation={3} sx={{
@@ -477,7 +493,7 @@ export const FreePage = () => {
                                 toggelVideoCat={toggelVideoCat}
                                 showCondition={true}
                                 free={isMobile?true:false}
-                                freeSize={isMobileWrong?170:120}
+                                freeSize={isMobile?170:120}
                             />
                         </Box>
                         <Box sx={{color: "#FFF44F", textAlign: "center", marginTop: '-10%'}}>
