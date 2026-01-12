@@ -394,7 +394,7 @@ export const FreePage = () => {
     const [answerStatus, setAnswerStatus] = useState<"none" | "correct" | "wrong">("none");
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [correctAnswerText, setCorrectAnswerText] = useState<string>("");
-    const { speak, isReady } = useTelegramSpeech();
+    const { speak } = useTelegramSpeech();
     const unlockAudio = () => {
         const u = new SpeechSynthesisUtterance("");
         window.speechSynthesis.speak(u);
