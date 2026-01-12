@@ -39,7 +39,7 @@ export const VideoCat: React.FC<VideoCatProps> = ({
         return () => window.removeEventListener("resize", updateSize);
     }, []);
 
-    const sizePx = responsiveSize === "small" ? 80 : responsiveSize === "medium" ? 90 : 120;
+    const sizePx = responsiveSize === "small" ? 90 : responsiveSize === "medium" ? 100 : 120;
 
     const handleCanPlay = () => {
         setLoaded(true);

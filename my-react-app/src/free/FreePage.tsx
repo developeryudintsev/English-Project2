@@ -295,7 +295,28 @@ export const FreePage = () => {
             ]
         }
     ]);
-    const width = window.innerWidth;
+    const [width, setWidth] = useState<number>(() => {
+        if (typeof window === "undefined") return 375; // SSR / Telegram
+        return window.innerWidth || 375;
+    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWidth(window.innerWidth || 375);
+        };
+
+        // важно для Telegram / iOS
+        window.addEventListener("resize", handleResize);
+        window.addEventListener("orientationchange", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+            window.removeEventListener("orientationchange", handleResize);
+        };
+    }, []);
+    const isMobile = width < 700;
+    const isMobileWrong = width < 900;
+
     const [questions, setQuestions] = useState<any[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<any>(null);
     const [toggelModal, setToggelModal] = useState<0 | 1 | 2 | 3>(0);
@@ -455,7 +476,8 @@ export const FreePage = () => {
                                 }}
                                 toggelVideoCat={toggelVideoCat}
                                 showCondition={true}
-                                free={width<500?true:false}
+                                free={isMobile?true:false}
+                                freeSize={isMobileWrong?170:120}
                             />
                         </Box>
                         <Box sx={{color: "#FFF44F", textAlign: "center", marginTop: '-10%'}}>
@@ -527,7 +549,6 @@ export const FreePage = () => {
                                             }}
                                             toggelVideoCat={toggelVideoCat}
                                             showCondition={true}
-
                                         />
                                     </Box>
 
@@ -554,10 +575,10 @@ export const FreePage = () => {
                                             <img
                                                 src={win}
                                                 style={{
-                                                    height: width<500?'180px':'240px',
+                                                    height: isMobile?'180px':'240px',
                                                     position: 'absolute',
-                                                    top: width<500?'-115px':'-160px',   // Смещаем вверх, чтобы она "лежала" на кнопке
-                                                    right: width<500?'30px':'10px', // Смещаем вправо
+                                                    top:isMobile?'-115px':'-160px',   // Смещаем вверх, чтобы она "лежала" на кнопке
+                                                    right: isMobile?'30px':'10px', // Смещаем вправо
                                                     transform: 'rotate(45deg)', // Поворот на 45 градусов вправо
                                                     zIndex: 10,     // Самый верхний слой (поверх кнопки)
                                                     pointerEvents: 'none' // Чтобы клик сквозь картинку попадал на кнопку
@@ -585,8 +606,8 @@ export const FreePage = () => {
                                             color: "white",
                                             borderColor: "#FFF44F",
                                             textTransform: "none",
-                                            minWidth: width<500?'100px':"200px",
-                                            height: width<500?'40px':'60px'
+                                            minWidth: isMobile?'100px':"200px",
+                                            height: isMobile?'40px':'60px'
                                         }}
                                     >
                                         {q.word}
@@ -596,7 +617,7 @@ export const FreePage = () => {
                         </Box>
 
                         <Box sx={{mt: '-1%'}}>
-                            <Typography variant="h5" sx={{color: "white", mb: '1%',fontSize:width<500?'13px':'25px', minHeight: "60px"}}>
+                            <Typography variant="h5" sx={{color: "white", mb: '1%',fontSize:isMobile?'17px':'25px', minHeight: "60px"}}>
                                 {currentQuestion.question}
                                 <IconButton
                                     onClick={() => speakText(currentQuestion.question, "ru")}
@@ -623,7 +644,7 @@ export const FreePage = () => {
                                                 "&:hover": {bgcolor: "#FFF44F"}
                                             }}
                                         >
-                                            <span style={{color: 'black',fontSize:width<500?'12px':'20px'}}>
+                                            <span style={{color: 'black',fontSize:isMobile?'15px':'20px'}}>
                                             {ans.text}
                                                 </span>
                                         </Button>
