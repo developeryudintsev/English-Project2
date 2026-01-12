@@ -298,7 +298,7 @@ export const AppRoutes = () => {
 
                             <div style={{
                                 display: "flex",
-                                gap: window.innerWidth < 600 ? "15px" : "30px",
+                                gap: "20px" ,
                                 flexWrap: "nowrap",
                                 justifyContent: "center",
                                 alignItems: "center"

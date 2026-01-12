@@ -6,6 +6,25 @@ import win from "../picture/win.png";
 import {v1} from "uuid";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 
+const useIsMobile = (breakpoint = 700) => {
+    const [isMobile, setIsMobile] = useState<boolean>(() => {
+        if (typeof window === "undefined") return false;
+        return window.innerWidth < breakpoint;
+    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < breakpoint);
+        };
+
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, [breakpoint]);
+
+    return isMobile;
+};
 export const FreePage = () => {
     const [allData] = useState([
         {
@@ -296,26 +315,7 @@ export const FreePage = () => {
         }
     ]);
 
-    const useIsMobile = (breakpoint = 700) => {
-        const [isMobile, setIsMobile] = useState<boolean>(() => {
-            if (typeof window === "undefined") return false;
-            return window.innerWidth < breakpoint;
-        });
-
-        useEffect(() => {
-            const handleResize = () => {
-                setIsMobile(window.innerWidth < breakpoint);
-            };
-
-            handleResize();
-            window.addEventListener("resize", handleResize);
-
-            return () => window.removeEventListener("resize", handleResize);
-        }, [breakpoint]);
-
-        return isMobile;
-    };
-const isMobile=useIsMobile(700)
+    const isMobile = useIsMobile(700)
     const [questions, setQuestions] = useState<any[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<any>(null);
     const [toggelModal, setToggelModal] = useState<0 | 1 | 2 | 3>(0);
@@ -326,34 +326,24 @@ const isMobile=useIsMobile(700)
     const [russianVoice, setRussianVoice] = useState<SpeechSynthesisVoice | null>(null);
     const [englishVoice, setEnglishVoice] = useState<SpeechSynthesisVoice | null>(null);
     useEffect(() => {
+        if (!("speechSynthesis" in window)) return;
+
         const loadVoices = () => {
-            // Получаем все голоса
-            let voices = window.speechSynthesis.getVoices();
+            const voices = window.speechSynthesis.getVoices();
+            if (!voices.length) return;
 
-            // 1. Ищем РУССКИЙ (сначала мужской, если нет — любой русский)
-            const ruMale = voices.find(v => v.lang.includes("ru") && /male|dmitry|pavel|yuri/i.test(v.name));
-            const ruAny = voices.find(v => v.lang.includes("ru"));
+            const ru = voices.find(v => v.lang.startsWith("ru"));
+            const en = voices.find(v => v.lang.startsWith("en"));
 
-            // 2. Ищем АНГЛИЙСКИЙ (сначала мужской, если нет — любой английский)
-            const enMale = voices.find(v => v.lang.includes("en") && /male|google/i.test(v.name));
-            const enAny = voices.find(v => v.lang.includes("en"));
-
-            // Если голоса еще не загрузились (бывает в Chrome), пробуем снова через 100мс
-            if (voices.length === 0) {
-                setTimeout(loadVoices, 100);
-                return;
-            }
-
-            setRussianVoice(ruMale || ruAny || voices[0]); // Если русского вообще нет, берем самый первый системный
-            setEnglishVoice(enMale || enAny || voices[0]);
+            setRussianVoice(ru || null);
+            setEnglishVoice(en || null);
         };
 
-        // Обязательно вешаем обработчик для Chrome
         window.speechSynthesis.onvoiceschanged = loadVoices;
         loadVoices();
     }, []);
     const speakText = (text: string, lang: "ru" | "en") => {
-        if (!text) return;
+        if (!("speechSynthesis" in window)) return;
 
         // Останавливаем текущую речь, если она идет
         window.speechSynthesis.cancel();
@@ -439,11 +429,26 @@ const isMobile=useIsMobile(700)
             setToggelModal(1);
         }
     };
-    if (!currentQuestion) return null;
+    if (!currentQuestion) {
+        return (
+            <Box
+                sx={{
+                    minHeight: "100vh",
+                    bgcolor: "#444447",
+                    color: "#FFF44F",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center"
+                }}
+            >
+                Загрузка…
+            </Box>
+        );
+    }
     return (
         <Box sx={{
             display: "flex", justifyContent: "center", alignItems: "center",
-            marginTop:isMobile?'-10%':'0%',
+            marginTop: isMobile ? '-10%' : '0%',
             minHeight: "88vh", width: "100vw",
         }}>
             <Paper elevation={3} sx={{
@@ -463,8 +468,9 @@ const isMobile=useIsMobile(700)
                 {answerStatus === "wrong" ? (
                     <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", gap: 3, py: 4}}>
                         <Typography variant="h5" sx={{color: "#FFF44F", fontWeight: "bold", px: 2}}>
-                            Не расстраивайся, мы приглашаем тебя на одно бесплатное онлайн занятие по <a style={{color: "#FFF44F"}}
-                                                                                         href="https://www.kiber-rus.ru/english/">английскому
+                            Не расстраивайся, мы приглашаем тебя на одно бесплатное онлайн занятие по <a
+                            style={{color: "#FFF44F"}}
+                            href="https://www.kiber-rus.ru/english/">английскому
                             языку</a>!
                         </Typography>
 
@@ -475,8 +481,8 @@ const isMobile=useIsMobile(700)
                                 }}
                                 toggelVideoCat={toggelVideoCat}
                                 showCondition={true}
-                                free={isMobile?true:false}
-                                freeSize={isMobile?170:120}
+                                free={isMobile ? true : false}
+                                freeSize={isMobile ? 170 : 120}
                             />
                         </Box>
                         <Box sx={{color: "#FFF44F", textAlign: "center", marginTop: '-10%'}}>
@@ -574,10 +580,10 @@ const isMobile=useIsMobile(700)
                                             <img
                                                 src={win}
                                                 style={{
-                                                    height: isMobile?'180px':'240px',
+                                                    height: isMobile ? '180px' : '240px',
                                                     position: 'absolute',
-                                                    top:isMobile?'-115px':'-160px',   // Смещаем вверх, чтобы она "лежала" на кнопке
-                                                    right: isMobile?'30px':'10px', // Смещаем вправо
+                                                    top: isMobile ? '-115px' : '-160px',   // Смещаем вверх, чтобы она "лежала" на кнопке
+                                                    right: isMobile ? '30px' : '10px', // Смещаем вправо
                                                     transform: 'rotate(45deg)', // Поворот на 45 градусов вправо
                                                     zIndex: 10,     // Самый верхний слой (поверх кнопки)
                                                     pointerEvents: 'none' // Чтобы клик сквозь картинку попадал на кнопку
@@ -605,8 +611,8 @@ const isMobile=useIsMobile(700)
                                             color: "white",
                                             borderColor: "#FFF44F",
                                             textTransform: "none",
-                                            minWidth: isMobile?'100px':"200px",
-                                            height: isMobile?'40px':'60px'
+                                            minWidth: isMobile ? '100px' : "200px",
+                                            height: isMobile ? '40px' : '60px'
                                         }}
                                     >
                                         {q.word}
@@ -616,7 +622,12 @@ const isMobile=useIsMobile(700)
                         </Box>
 
                         <Box sx={{mt: '-1%'}}>
-                            <Typography variant="h5" sx={{color: "white", mb: '1%',fontSize:isMobile?'17px':'25px', minHeight: "60px"}}>
+                            <Typography variant="h5" sx={{
+                                color: "white",
+                                mb: '1%',
+                                fontSize: isMobile ? '17px' : '25px',
+                                minHeight: "60px"
+                            }}>
                                 {currentQuestion.question}
                                 <IconButton
                                     onClick={() => speakText(currentQuestion.question, "ru")}
@@ -643,7 +654,7 @@ const isMobile=useIsMobile(700)
                                                 "&:hover": {bgcolor: "#FFF44F"}
                                             }}
                                         >
-                                            <span style={{color: 'black',fontSize:isMobile?'15px':'20px'}}>
+                                            <span style={{color: 'black', fontSize: isMobile ? '15px' : '20px'}}>
                                             {ans.text}
                                                 </span>
                                         </Button>
