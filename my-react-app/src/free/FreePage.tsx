@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {ModalCamponent} from "../modal/Modal";
 import {Box, Button, IconButton, Paper, Typography} from "@mui/material";
 import {VideoCat} from "../camponent/VideoCat";
@@ -459,6 +459,20 @@ export const FreePage = () => {
             setToggelModal(1);
         }
     };
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+
+    const playSound = () => {
+        if (!audioRef.current) {
+            audioRef.current = new Audio("assets/zvuki.mp3");
+            audioRef.current.preload = "auto";
+        }
+
+        audioRef.current.currentTime = 0;
+        audioRef.current.play().catch(e => {
+            console.log("Audio error:", e);
+            alert("Audio blocked");
+        });
+    };
     if (!currentQuestion) {
         return (
             <Box
@@ -475,6 +489,7 @@ export const FreePage = () => {
             </Box>
         );
     }
+
     return (
         <Box sx={{
             display: "flex", justifyContent: "center", alignItems: "center",
@@ -659,12 +674,10 @@ export const FreePage = () => {
                                 minHeight: "60px"
                             }}>
                                 {currentQuestion.question}
-                                <Button onClick={() => {
-                                    const a = new Audio("assets/zvuki.mp3");
-                                    a.play();
-                                }}>
+
+                                <button onClick={playSound}>
                                     TEST SOUND
-                                </Button>
+                                </button>
                                 <IconButton
                                     onClick={() => speakText(currentQuestion.question, "ru")}
                                     sx={{color: "#FFF44F"}}
