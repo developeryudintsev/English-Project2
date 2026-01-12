@@ -65,7 +65,7 @@ export const VideoCat: React.FC<VideoCatProps> = ({
     }, [showCondition, toggelVideoCat]);
 
     return (
-        <div style={{ position: "relative", width: sizePx, height: sizePx }}>
+        <div style={{ position: "relative", width: `${free?freeSize:sizePx}px`, height: `${free?freeSize:sizePx}px` }}>
             {!loaded && (
                 <div
                     style={{
@@ -92,7 +92,6 @@ export const VideoCat: React.FC<VideoCatProps> = ({
                 ref={videoRef}
                 src={src}
                 playsInline
-                // muted
                 onCanPlay={handleCanPlay}
                 onEnded={() => setToggelVideoCatFoo()}
                 style={{
