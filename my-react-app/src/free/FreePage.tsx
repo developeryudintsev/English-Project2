@@ -1,11 +1,11 @@
-import {useEffect, useRef, useState,useCallback} from "react";
+import {useEffect, useState} from "react";
 import {ModalCamponent} from "../modal/Modal";
 import {Box, Button, IconButton, Paper, Typography} from "@mui/material";
 import {VideoCat} from "../camponent/VideoCat";
 import win from "../picture/win.png";
 import {v1} from "uuid";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
-type Lang = "ru" | "en";
+
 const useIsMobile = (breakpoint = 700) => {
     const [isMobile, setIsMobile] = useState<boolean>(() => {
         if (typeof window === "undefined") return false;
@@ -25,77 +25,6 @@ const useIsMobile = (breakpoint = 700) => {
 
     return isMobile;
 };
-export const useTelegramSpeech = () => {
-    const [ruVoice, setRuVoice] = useState<SpeechSynthesisVoice | null>(null);
-    const [enVoice, setEnVoice] = useState<SpeechSynthesisVoice | null>(null);
-    const voicesLoaded = useRef(false);
-
-    const loadVoices = useCallback(() => {
-        if (!("speechSynthesis" in window)) return;
-
-        const voices = window.speechSynthesis.getVoices();
-        if (!voices.length) return;
-
-        const ru = voices.filter(v => v.lang.startsWith("ru"));
-        const en = voices.filter(v => v.lang.startsWith("en"));
-
-        const ruMale =
-            ru.find(v => /male|man|alex|ivan|dmitry|max/i.test(v.name)) ||
-            ru[0] ||
-            null;
-
-        const enMale =
-            en.find(v => /male|man|alex|daniel/i.test(v.name)) ||
-            en[0] ||
-            null;
-
-        setRuVoice(ruMale);
-        setEnVoice(enMale);
-        voicesLoaded.current = true;
-    }, []);
-
-    useEffect(() => {
-        if (!("speechSynthesis" in window)) return;
-
-        // 🟡 Telegram FIX — грузим с задержкой
-        const t1 = setTimeout(loadVoices, 300);
-        const t2 = setTimeout(loadVoices, 1200);
-
-        return () => {
-            clearTimeout(t1);
-            clearTimeout(t2);
-        };
-    }, [loadVoices]);
-
-    const speak = useCallback((text: string, lang: Lang) => {
-        if (!("speechSynthesis" in window)) return;
-
-        // ❗ Telegram требует user interaction
-        window.speechSynthesis.cancel();
-
-        const u = new SpeechSynthesisUtterance(text);
-
-        if (lang === "ru") {
-            if (ruVoice) u.voice = ruVoice;
-            u.lang = "ru-RU";
-            u.rate = 1;
-            u.pitch = 0.8;
-        } else {
-            if (enVoice) u.voice = enVoice;
-            u.lang = "en-US";
-            u.rate = 0.8;
-            u.pitch = 1;
-        }
-
-        window.speechSynthesis.speak(u);
-    }, [ruVoice, enVoice]);
-
-    return {
-        speak,
-        isReady: voicesLoaded.current,
-    };
-};
-
 export const FreePage = () => {
     const [allData] = useState([
         {
@@ -394,12 +323,68 @@ export const FreePage = () => {
     const [answerStatus, setAnswerStatus] = useState<"none" | "correct" | "wrong">("none");
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [correctAnswerText, setCorrectAnswerText] = useState<string>("");
-    const { speak } = useTelegramSpeech();
-    const unlockAudio = () => {
-        const u = new SpeechSynthesisUtterance("");
-        window.speechSynthesis.speak(u);
-    };
+    const [russianVoice, setRussianVoice] = useState<SpeechSynthesisVoice | null>(null);
+    const [englishVoice, setEnglishVoice] = useState<SpeechSynthesisVoice | null>(null);
+    useEffect(() => {
+        if (!("speechSynthesis" in window)) return;
 
+        const pickMaleVoice = (voices: SpeechSynthesisVoice[], lang: "ru" | "en") => {
+            const list = voices.filter(v => v.lang.startsWith(lang));
+
+            if (!list.length) return null;
+
+            // 🧔‍♂️ Пытаемся найти мужской голос
+            const male = list.find(v =>
+                /male|man|alex|ivan|dmitry|max|sergey|daniel|mark/i.test(v.name)
+            );
+
+            return male || list[0] || null;
+        };
+
+        const loadVoices = () => {
+            const voices = window.speechSynthesis.getVoices();
+            if (!voices.length) return;
+
+            setRussianVoice(pickMaleVoice(voices, "ru"));
+            setEnglishVoice(pickMaleVoice(voices, "en"));
+        };
+
+        // ⚠️ Telegram FIX — обычный onvoiceschanged часто НЕ РАБОТАЕТ
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+
+        // ⏱️ Пробуем несколько раз
+        loadVoices();
+        const t1 = setTimeout(loadVoices, 300);
+        const t2 = setTimeout(loadVoices, 1200);
+
+        return () => {
+            clearTimeout(t1);
+            clearTimeout(t2);
+            window.speechSynthesis.onvoiceschanged = null;
+        };
+    }, []);
+    const speakText = (text: string, lang: "ru" | "en") => {
+        if (!("speechSynthesis" in window)) return;
+
+        // ❗ Telegram требует остановки предыдущего
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+
+        if (lang === "ru") {
+            if (russianVoice) utterance.voice = russianVoice;
+            utterance.lang = "ru-RU";
+            utterance.rate = 1;
+            utterance.pitch = 0.8; // ⬅️ ниже — звучит «мужче»
+        } else {
+            if (englishVoice) utterance.voice = englishVoice;
+            utterance.lang = "en-US";
+            utterance.rate = 0.8;
+            utterance.pitch = 1;
+        }
+
+        window.speechSynthesis.speak(utterance);
+    };
 
     useEffect(() => {
         const shuffled = [...allData].sort(() => 0.5 - Math.random());
@@ -662,10 +647,7 @@ export const FreePage = () => {
                             }}>
                                 {currentQuestion.question}
                                 <IconButton
-                                    onClick={() => {
-                                        unlockAudio()
-                                        speak(currentQuestion.question, "ru")
-                                    }}
+                                    onClick={() => speakText(currentQuestion.question, "ru")}
                                     sx={{color: "#FFF44F"}}
                                 >
                                     <VolumeUpIcon/>
@@ -694,10 +676,7 @@ export const FreePage = () => {
                                                 </span>
                                         </Button>
                                         <IconButton
-                                            onClick={() => {
-                                                unlockAudio()
-                                                speak(ans.text, "en")
-                                            }}
+                                            onClick={() => speakText(ans.text, "en")}
                                             sx={{ml: 1, color: '#FFF44F'}}
                                         >
                                             <VolumeUpIcon/>
