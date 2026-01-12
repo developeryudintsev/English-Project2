@@ -295,10 +295,10 @@ export const FreePage = () => {
             ]
         }
     ]);
-    const [width, setWidth] = useState<number>(() => {
-        if (typeof window === "undefined") return 375; // SSR / Telegram
-        return window.innerWidth || 375;
-    });
+    // const [width, setWidth] = useState<number>(() => {
+    //     if (typeof window === "undefined") return 375; // SSR / Telegram
+    //     return window.innerWidth || 375;
+    // });
 
     useEffect(() => {
         const handleResize = () => {
