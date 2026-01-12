@@ -363,7 +363,7 @@ export const FreePage = () => {
     const speakText = (text: string, lang: "ru" | "en") => {
         if (!text) return;
 
-        в этом условии что -то не так ведь у меня не показался алерт
+        // в этом условии что -то не так ведь у меня не показался алерт
         if (isTelegram) {
             const encoded = encodeURIComponent(text);
 
