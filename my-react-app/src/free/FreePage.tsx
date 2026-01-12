@@ -373,6 +373,7 @@ export const FreePage = () => {
                     : `https://your-server.ru/tts/en?text=${encoded}`;
 
             playAudio(url);
+            alert('hello')
             return;
         }
 
