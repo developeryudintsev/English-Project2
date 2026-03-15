@@ -387,7 +387,7 @@ export const FreePage = () => {
         if (lang === "ru") {
             if (russianVoice) utterance.voice = russianVoice;
             utterance.lang = "ru-RU";
-            utterance.rate = 1;
+            utterance.rate = 0.7;
             utterance.pitch = 0.9;
         } else {
             if (englishVoice) utterance.voice = englishVoice;

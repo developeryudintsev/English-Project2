@@ -285,7 +285,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         if (lang === "ru" && russianVoice) {
             utterance.voice = russianVoice;
             utterance.lang = russianVoice.lang;
-            utterance.rate = 1;
+            utterance.rate = 0.7;
         } else if (lang === "en" && englishVoice) {
             utterance.voice = englishVoice;
             // utterance.lang = englishVoice.lang;
