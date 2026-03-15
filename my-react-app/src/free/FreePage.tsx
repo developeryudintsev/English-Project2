@@ -392,7 +392,7 @@ export const FreePage = () => {
         } else {
             if (englishVoice) utterance.voice = englishVoice;
             utterance.lang = "en-US";
-            utterance.rate = 0.3;
+            utterance.rate = 0.6;
             utterance.pitch = 1;
         }
 
