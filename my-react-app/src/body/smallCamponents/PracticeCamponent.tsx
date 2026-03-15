@@ -285,13 +285,16 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         if (lang === "ru" && russianVoice) {
             utterance.voice = russianVoice;
             utterance.lang = russianVoice.lang;
+            utterance.rate = 1;
         } else if (lang === "en" && englishVoice) {
             utterance.voice = englishVoice;
-            utterance.lang = englishVoice.lang;
+            // utterance.lang = englishVoice.lang;
+            utterance.rate = 0.65;
+            utterance.pitch = 1;
         } else {
             utterance.lang = lang === "ru" ? "ru-RU" : "en-US";
         }
-        utterance.rate = 1;
+        // utterance.rate = 1;
         utterance.pitch = 1;
         window.speechSynthesis.speak(utterance);
     };
