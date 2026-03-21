@@ -13,7 +13,7 @@ import cat3 from "./picture/cat3.jpg";
 import free from "./picture/free.jpg";
 import thems2 from "./picture/thems2.jpg";
 import cubok from "./picture/klipartz.com.png";
-import about from "./picture/about3.png";
+import about from "./picture/about4.png";
 import {TopicsPage} from "./topics/TopicsPage";
 import {TopicDetailPage} from "./topics/TopicDetailPage";
 import {AboutMyself, Text, TextAbout} from "./TopicsObj/TopicsObj";
