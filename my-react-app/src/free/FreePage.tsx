@@ -316,6 +316,7 @@ export const FreePage = () => {
     ]);
 
     const isMobile = useIsMobile(700)
+    const isSuperMobile = useIsMobile(310)
     const [questions, setQuestions] = useState<any[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<any>(null);
     const [toggelModal, setToggelModal] = useState<0 | 1 | 2 | 3>(0);
@@ -478,7 +479,7 @@ export const FreePage = () => {
     return (
         <Box sx={{
             display: "flex", justifyContent: "center", alignItems: "center",
-            marginTop: isMobile ? '-7%' : '0%',
+            marginTop: isSuperMobile?'5%':isMobile ? '-7%' : '0%',
             minHeight: "88vh", width: "100vw",
         }}>
             <Paper elevation={3} sx={{
