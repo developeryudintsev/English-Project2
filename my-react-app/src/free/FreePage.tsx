@@ -316,7 +316,7 @@ export const FreePage = () => {
     ]);
 
     const isMobile = useIsMobile(700)
-    const isSuperMobile = useIsMobile(311)
+    const isSuperMobile = useIsMobile(320)
     const [questions, setQuestions] = useState<any[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<any>(null);
     const [toggelModal, setToggelModal] = useState<0 | 1 | 2 | 3>(0);
