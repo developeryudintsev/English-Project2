@@ -47,6 +47,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                                         toggleTheory,
                                                                         setShowPractice,
                                                                         setToggleVC,
+                                                                        setStar,
                                                                     }) => {
     const [type, setType] = useState<changeType>(".");
     const [currentIndex, setCurrentIndex] = useState<Record<changeType, number>>({
@@ -82,6 +83,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
     useEffect(() => {
         const allDone = questions.every((q) => q.isDone);
         setCongratulation(allDone);
+        setStar(questions.filter(q => q.isDone).length+1)
     }, [questions, type]);
     useEffect(() => {
         // Симулируем загрузку видео при монтировании компонента

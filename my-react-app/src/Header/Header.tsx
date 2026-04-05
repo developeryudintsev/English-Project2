@@ -154,7 +154,6 @@ export const Header = (props: HeaderType) => {
             </Box>
         );
     };
-    // console.log(props.time==="Simple Present")
     return (
         <AppBar position="static" sx={{backgroundColor: '#444447'}}>
             <Container maxWidth="xl">
