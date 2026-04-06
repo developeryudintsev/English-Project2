@@ -344,25 +344,22 @@ export const Header = (props: HeaderType) => {
                             <Box sx={{
                                 display: 'flex',
                                 alignItems: 'start',
-                                justifyContent: 'center',
-                                width: '95%',
-                                px: 1,
-                                gap: 0
+                                width: '100%', // Занимаем всю ширину родителя без выхода за границы
+                                px: 1,         // Внутренние отступы, чтобы не прилипало к краям
+                                boxSizing: 'border-box' // Гарантирует, что px не расширит Box больше 100%
                             }}>
-
                                 <FormControl sx={{
-                                    minWidth: isSuperSmall ? 190 : 230,
+                                    width: '100%', // FormControl на всю доступную ширину
                                 }} size="small">
                                     <Select
                                         value={props.time}
                                         onChange={(e) => props.handleChange(e.target.value as timeType)}
                                         displayEmpty
-                                        inputProps={{'aria-label': 'Select tense'}}
                                         sx={{
                                             backgroundColor: 'white',
                                             borderRadius: 1,
-                                            width: '110%',
-                                            minWidth: '150px'
+                                            width: '100%', // Select на всю ширину FormControl
+                                            minWidth: '150px', // Минимальный порог, после которого появится скролл (опционально)
                                         }}
                                     >
                                         <MenuItem value='Simple Present'>Simple Present</MenuItem>
