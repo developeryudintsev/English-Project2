@@ -56,7 +56,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         "!": 0,
         '.?!': 0,
     });
-    console.log(currentIndex)
     const [fullData, setFullData] = useState<DataType | null>(null);
     const [questions, setQuestions] = useState<QuestionType[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<QuestionType | null>(null);
@@ -81,10 +80,24 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
     const visibleQuestions = questions.slice(startIndex, startIndex + itemsPerPage);
     const [progress, setProgress] = useState<{ done: number, total: number }>({done: 0, total: 0});
     useEffect(() => {
-        const allDone = questions.every((q) => q.isDone);
-        setCongratulation(allDone);
-        setStar(questions.filter(q => q.isDone).length+1)
-    }, [questions, type]);
+        if (fullData) {
+            // 1. Собираем все TimeData (Simple Past, Present, Future)
+            const times = Object.values(fullData.simple);
+
+            // 2. Из каждого TimeData достаем массивы вопросов (., ?, !, ?!)
+            const allQuestions = times.flatMap(timeData =>
+                Object.values(timeData).flat()
+            );
+
+            // 3. Проверяем, все ли задачи выполнены
+            const allDone = allQuestions.every(q => q.isDone);
+            setCongratulation(allDone);
+
+            // 4. Считаем количество выполненных и обновляем звезды
+            const doneCount = allQuestions.filter(q => q.isDone).length;
+            setStar(doneCount + 1);
+        }
+    }, [fullData,questions, type]);
     useEffect(() => {
         // Симулируем загрузку видео при монтировании компонента
         const timer = setTimeout(() => {
