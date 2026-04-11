@@ -48,6 +48,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                                         setShowPractice,
                                                                         setToggleVC,
                                                                         setStar,
+                                                                        star
                                                                     }) => {
     const [type, setType] = useState<changeType>(".");
     const [currentIndex, setCurrentIndex] = useState<Record<changeType, number>>({
@@ -79,7 +80,9 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
     const startIndex = page * itemsPerPage;
     const visibleQuestions = questions.slice(startIndex, startIndex + itemsPerPage);
     const [progress, setProgress] = useState<{ done: number, total: number }>({done: 0, total: 0});
+
     useEffect(() => {
+        setStar(progress.done)
         if (fullData) {
             // 1. Собираем все TimeData (Simple Past, Present, Future)
             const times = Object.values(fullData.simple);
@@ -95,11 +98,12 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
 
             // 4. Считаем количество выполненных и обновляем звезды
             const doneCount = allQuestions.filter(q => q.isDone).length;
+            console.log(doneCount,allQuestions)
+
             setStar(doneCount + 1);
         }
     }, [fullData,questions, type]);
     useEffect(() => {
-        // Симулируем загрузку видео при монтировании компонента
         const timer = setTimeout(() => {
             setVideoLoading(false);
         }, 2000); // 2 секунды загрузки
@@ -409,7 +413,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
             >
                 {toggelModal === 1 && answerStatus === 'wrong' && (
                     <ModalCamponent open={toggelModal === 1} onClose={CloseButton}>
-                        <Box sx={{height: '350px'}}>
+                        <Box sx={{minHeight: '350px'}}>
                             <Box
                                 sx={{
                                     display: "flex",
