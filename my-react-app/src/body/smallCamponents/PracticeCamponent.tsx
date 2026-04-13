@@ -48,7 +48,6 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                                                         setShowPractice,
                                                                         setToggleVC,
                                                                         setStar,
-                                                                        star
                                                                     }) => {
     const [type, setType] = useState<changeType>(".");
     const [currentIndex, setCurrentIndex] = useState<Record<changeType, number>>({
@@ -57,6 +56,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         "!": 0,
         '.?!': 0,
     });
+    console.log(currentIndex)
     const [fullData, setFullData] = useState<DataType | null>(null);
     const [questions, setQuestions] = useState<QuestionType[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<QuestionType | null>(null);
