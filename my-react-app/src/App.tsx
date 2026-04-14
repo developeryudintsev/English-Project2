@@ -6,7 +6,6 @@ import {FutureSimple} from "./Present/FutureSimple";
 import {Body} from "./body/Body";
 import {PracticeComponent} from "./body/smallCamponents/PracticeCamponent";
 import {Box} from "@mui/material";
-import {getQuestions} from "./Data/Data";
 import type {SvgIconProps} from '@mui/material/SvgIcon';
 import SvgIcon from '@mui/material/SvgIcon';
 import {Link} from "react-router-dom";
