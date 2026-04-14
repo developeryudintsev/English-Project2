@@ -1346,7 +1346,7 @@ export const data: DataType = {
                 },
                 {
                     id: v1(),
-                    question: "ы это видели?",
+                    question: "Ты это видели?",
                     isDone: false,
                     word: 'saw',
                     answers: [
