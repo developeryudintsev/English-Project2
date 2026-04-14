@@ -80,29 +80,45 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
     const startIndex = page * itemsPerPage;
     const visibleQuestions = questions.slice(startIndex, startIndex + itemsPerPage);
     const [progress, setProgress] = useState<{ done: number, total: number }>({done: 0, total: 0});
-
     useEffect(() => {
-        setStar(progress.done)
         if (fullData) {
-            // 1. Собираем все TimeData (Simple Past, Present, Future)
+            // 1. Собираем все TimeData (Past, Present, Future) в один массив
             const times = Object.values(fullData.simple);
 
-            // 2. Из каждого TimeData достаем массивы вопросов (., ?, !, ?!)
-            const allQuestions = times.flatMap(timeData =>
-                Object.values(timeData).flat()
-            );
+            // 2. Определяем целевые разделы
+            const targetKeys = [".", "?", "!", ".?!"];
 
-            // 3. Проверяем, все ли задачи выполнены
-            const allDone = allQuestions.every(q => q.isDone);
-            setCongratulation(allDone);
+            let completedSections = 0;
+            let totalQuestionsCount = 0;
+            let doneQuestionsCount = 0;
 
-            // 4. Считаем количество выполненных и обновляем звезды
-            const doneCount = allQuestions.filter(q => q.isDone).length;
-            console.log(doneCount,allQuestions)
+            times.forEach(timeData => {
+                targetKeys.forEach(key => {
+                    const questions = timeData[key];
+                    if (questions && questions.length > 0) {
+                        totalQuestionsCount += questions.length;
 
-            setStar(doneCount + 1);
+                        // Проверяем, все ли вопросы в этом конкретном разделе выполнены
+                        const isSectionDone = questions.every(q => q.isDone);
+                        const hasDoneQuestions = questions.filter(q => q.isDone).length;
+
+                        doneQuestionsCount += hasDoneQuestions;
+
+                        if (isSectionDone) {
+                            completedSections++;
+                        }
+                    }
+                });
+            });
+
+            // 3. Устанавливаем звезды по количеству ПОЛНОСТЬЮ пройденных разделов
+            setStar(completedSections+1);
+
+            // 4. Поздравление, если вообще все вопросы во всех целевых разделах готовы
+            setCongratulation(totalQuestionsCount > 0 && doneQuestionsCount === totalQuestionsCount);
         }
     }, [fullData,questions, type]);
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setVideoLoading(false);

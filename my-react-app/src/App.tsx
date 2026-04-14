@@ -52,28 +52,6 @@ export const App = () => {
         }
     };
 
-    useEffect(() => {
-        const fetchProgress = async () => {
-            const data = await getQuestions();
-            if (data) {
-                let completed = 0;
-                let total = 0;
-
-                Object.values(data.simple).forEach((timeBlock) => {
-                    Object.values(timeBlock).forEach((lesson) => {
-                        lesson.forEach((q) => {
-                            total++;
-                            if (q.isDone) completed++;
-                        });
-                    });
-                });
-
-                setStar(completed);
-            }
-        };
-
-        fetchProgress();
-    }, []);
 
     useEffect(() => {
         if (showPractice) {
