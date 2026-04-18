@@ -6,7 +6,7 @@ import win from "../picture/win.png";
 import {v1} from "uuid";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 
-const useIsMobile = (breakpoint = 700) => {
+export const useIsMobile = (breakpoint = 700) => {
     const [isMobile, setIsMobile] = useState<boolean>(() => {
         if (typeof window === "undefined") return false;
         return window.innerWidth < breakpoint;
@@ -77,8 +77,8 @@ export const FreePage = () => {
             isDone: false,
             word: 'know',
             answers: [
-                {text: "Does it know English?", isCorrect: true},
                 {text: "Do it know English?", isCorrect: false},
+                {text: "Does it know English?", isCorrect: true},
                 {text: "It know English?", isCorrect: false}
             ]
         },
@@ -88,9 +88,10 @@ export const FreePage = () => {
             isDone: false,
             word: 'take',
             answers: [
-                {text: "We don't buy sweets in the shop", isCorrect: true},
                 {text: "We doesn't buy sweets in the shop", isCorrect: false},
-                {text: "We not buy sweets in the shop", isCorrect: false}
+                {text: "We not buy sweets in the shop", isCorrect: false},
+                {text: "We don't buy sweets in the shop", isCorrect: true},
+
             ]
         },
         {
@@ -154,8 +155,8 @@ export const FreePage = () => {
             isDone: false,
             word: 'give',
             answers: [
-                {text: "Do we give change at the cash desk?", isCorrect: true},
                 {text: "Does we give change at the cash desk?", isCorrect: false},
+                {text: "Do we give change at the cash desk?", isCorrect: true},
                 {text: "We give change at the cash desk?", isCorrect: false}
             ]
         },
@@ -187,9 +188,10 @@ export const FreePage = () => {
             isDone: false,
             word: 'tell',
             answers: [
-                {text: "Do you tell jokes at work?", isCorrect: true}, // Исправлено: jokes вместо anecdotes
                 {text: "Does you tell jokes at work?", isCorrect: false},
-                {text: "You tell jokes at work?", isCorrect: false}
+                {text: "You tell jokes at work?", isCorrect: false},
+                {text: "Do you tell jokes at work?", isCorrect: true},
+
             ]
         },
         {

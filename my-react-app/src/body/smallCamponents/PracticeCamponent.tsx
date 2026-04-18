@@ -26,8 +26,10 @@ import {ModalCamponent} from "../../modal/Modal";
 import CloseIcon from "@mui/icons-material/Close";
 import Rating from '@mui/material/Rating';
 import type {timeType} from "../../App";
+import {useIsMobile} from "../../free/FreePage";
+import win from "../../picture/win.png";
 
-export type changeType = "." | "?" | "!"|'.?!';
+export type changeType = "." | "?" | "!" | '.?!';
 type PracticeComponentProps = {
     time: timeType;
     toggle: boolean;
@@ -67,14 +69,15 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
     const [congratulation, setCongratulation] = useState(false);
     const [videoLoading, setVideoLoading] = useState(true);
     const isFinished = congratulation;
-    let [toggelModal, setToggelModal] = useState<0 | 1 | 2>(0)
+    let [toggelModal, setToggelModal] = useState<0 | 1 | 2 | 3>(0)
     let [toggelVideoCat, setToggelVideoCat] = useState<0 | 1 | 2 | 3>(0)
-    let typeSentence =type ==='.?!' ?'микс':
+    let typeSentence = type === '.?!' ? 'микс' :
         type === "."
             ? "утвердительное"
             : type === "?"
                 ? "вопросительное"
                 : "отрицательное";
+    const isMobile = useIsMobile(700)
     const [page, setPage] = useState(0);
     const itemsPerPage = 9;
     const startIndex = page * itemsPerPage;
@@ -112,12 +115,12 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
             });
 
             // 3. Устанавливаем звезды по количеству ПОЛНОСТЬЮ пройденных разделов
-            setStar(completedSections+1);
+            setStar(completedSections + 1);
 
             // 4. Поздравление, если вообще все вопросы во всех целевых разделах готовы
             setCongratulation(totalQuestionsCount > 0 && doneQuestionsCount === totalQuestionsCount);
         }
-    }, [fullData,questions, type]);
+    }, [fullData, questions, type]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -279,27 +282,33 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         wordFoo(newQuestion[0].id)
         console.log(newQuestion[0])
     }
-    useEffect(()=>{
+    useEffect(() => {
         const loadProgress = async () => {
             const stored = await getQuestions();
             if (!stored) return;
-            if(!stored.simple[time]){
+            if (!stored.simple[time]) {
                 newData()
             }
         };
 
         loadProgress();
 
-    },[questions])
+    }, [questions])
+
     const handleNextQuestion = () => {
         const next = questions.find((q) => !q.isDone);
+
+        // Если все вопросы завершены
+        if (questions.every(q => q.isDone)) {
+            setToggelModal(3);
+            return; // Выходим из функции, чтобы не выполнять логику ниже
+        }
+
         if (next) {
             const nextIndex = questions.indexOf(next);
             const nextPage = Math.floor(nextIndex / itemsPerPage);
 
-            // Обновляем страницу на ту, где находится неотвеченный вопрос
             setPage(nextPage);
-
             setCurrentQuestion(next);
             setCurrentIndex((prev) => ({
                 ...prev,
@@ -308,6 +317,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         } else {
             setCongratulation(false);
         }
+
         setAnswerStatus("none");
         setSelectedAnswer(null);
     };
@@ -424,7 +434,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                 animation: "blinkRed 1s infinite",
                                 ...blinkAnimation,
                             }
-                            : { border: "2px solid transparent" }),
+                            : {border: "2px solid transparent"}),
                 }}
             >
                 {toggelModal === 1 && answerStatus === 'wrong' && (
@@ -621,228 +631,308 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                         </Box>
                     </ModalCamponent>
                 )}
-                        <Box
-                            sx={{
-                                width: "100%",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                flexWrap: "wrap",
-                                gap: "10px",
-                                padding: "0px 0",
-                                position: "relative",
-                                cursor: "pointer"
-                            }}
-                            onClick={() => ButtonFoo(toggle)}
-                        >
-                            <Typography
-                                sx={{
-                                    color: "#FFF44F",
-                                    fontFamily: "Roboto, sans-serif",
-                                    userSelect: "none"
+                {toggelModal === 3 && (
+                    <ModalCamponent open={true}>
+                        <Box sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            bgcolor: "#34fb08",
+                            position: "relative",
+                            minWidth: "300px",
+                            pb: 3, // Отступ снизу модалки
+                        }}>
+                            <Box sx={{
+                                width: '100%',
+                                backgroundColor: 'white',
+                                py: "15px",
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                mb: 3,
+                            }}>
+                                <Typography sx={{
+                                    color: '#279010',
+                                    fontWeight: "bold",
+                                    textAlign: 'center',
+                                    px: 2,
+                                    fontSize: toggelModal === 3 ? '1rem' : '1.3rem',
+                                    lineHeight: 1.2,
+                                }}>
+                                    {`вы прошли ${time} ${typeSentence} предложения. Поздравляем! Вы получаете звезду⭐`}
+                                </Typography>
+                            </Box>
+
+                            <Box sx={{mb: 2}}>
+                                <VideoCat
+                                    src={'/RightS6.mp4'}
+                                    setToggelVideoCatFoo={() => {
+                                    }}
+                                    toggelVideoCat={toggelVideoCat}
+                                    showCondition={true}
+                                />
+                            </Box>
+
+                            {toggelModal === 3 && (
+                                <Box sx={{position: 'relative', mt: 1}}>
+                                    <Button
+                                        variant="contained"
+                                        onClick={() => window.location.reload()}
+                                        sx={{
+                                            bgcolor: "#FFF44F",
+                                            color: "#000",
+                                            "&:hover": {bgcolor: "#fff"},
+                                            textTransform: 'none',
+                                            fontWeight: 'bold',
+                                            px: 4,
+                                            zIndex: 20,
+                                            position: 'relative'
+                                        }}
+                                    >
+                                        Начать новый тест
+                                    </Button>
+                                    <img
+                                        src={win}
+                                        style={{
+                                            height: isMobile ? '180px' : '240px',
+                                            position: 'absolute',
+                                            top: isMobile ? '-115px' : '-160px',
+                                            right: isMobile ? '30px' : '10px',
+                                            transform: 'rotate(45deg)',
+                                            zIndex: 10,
+                                            pointerEvents: 'none'
+                                        }}
+                                        alt="win"
+                                    />
+                                </Box>
+                            )}
+                        </Box>
+                    </ModalCamponent>
+                )}
+
+                <Box
+                    sx={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexWrap: "wrap",
+                        gap: "10px",
+                        padding: "0px 0",
+                        position: "relative",
+                        cursor: "pointer"
+                    }}
+                    onClick={() => ButtonFoo(toggle)}
+                >
+                    <Typography
+                        sx={{
+                            color: "#FFF44F",
+                            fontFamily: "Roboto, sans-serif",
+                            userSelect: "none"
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {!toggle ? (
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    flexWrap: "wrap",
+                                    gap: "10px",
+                                    maxWidth: "980px",
                                 }}
                                 onClick={(e) => e.stopPropagation()}
                             >
-                                {!toggle ? (
-                                    <div
-                                        style={{
+                                <span
+                                    onClick={() => ButtonFoo(toggle)}>Практика – {time} ({progress.done}/{progress.total})</span>
+                            </div>
+                        ) : (
+                            <div onClick={(e) => e.stopPropagation()}>
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        flexWrap: "wrap",
+                                        gap: 2,
+                                        marginTop: "-5px",
+                                        pr: 3,
+                                        maxWidth: "100%",
+                                    }}
+                                >
+                                    {isFinished && (
+                                        <Box sx={{position: "relative", width: 56, height: 56}}>
+                                            <Rating
+                                                name="done-star"
+                                                value={1}
+                                                max={1}
+                                                readOnly
+                                                sx={{fontSize: 56, color: "#FFF44F"}}
+                                            />
+                                        </Box>
+                                    )}
+                                    <FormControl
+                                        onClick={(e) => e.stopPropagation()}
+                                        sx={{minWidth: 160}}
+                                        size="small"
+                                    >
+                                        <Select
+                                            value={type}
+                                            onChange={(e) => {
+                                                const newType = e.target.value as changeType;
+                                                setType(newType);
+                                            }}
+                                            displayEmpty
+                                            inputProps={{"aria-label": "Select tense"}}
+                                            sx={{
+                                                backgroundColor: "white",
+                                                borderRadius: 1,
+                                                width: "100%",
+                                            }}
+                                        >
+                                            <MenuItem value=".">утвердительное</MenuItem>
+                                            <MenuItem value="?">вопросительное</MenuItem>
+                                            <MenuItem value="!">отрицательное</MenuItem>
+                                            <MenuItem value=".?!">микс</MenuItem>
+                                        </Select>
+                                    </FormControl>
+
+                                    <Button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setToggelModal(2);
+                                        }}
+                                        sx={{
+                                            backgroundColor: "#ff0202",
+                                            color: "black",
+                                            textTransform: "none",
+                                            height: "40px",
+                                        }}
+                                    >
+                                        очистить результаты
+                                    </Button>
+                                </Box>
+
+                                <div style={{margin: 3}}>Выбери глагол или просто иди по порядку</div>
+
+                                <Box sx={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
+                                    <Box
+                                        sx={{
                                             display: "flex",
                                             alignItems: "center",
-                                            justifyContent: "space-between",
-                                            flexWrap: "wrap",
-                                            gap: "10px",
-                                            maxWidth: "980px",
+                                            justifyContent: "center",
+                                            gap: 2,
+                                            width: "100%",
                                         }}
                                         onClick={(e) => e.stopPropagation()}
                                     >
-                                        <span onClick={() => ButtonFoo(toggle)}>Практика – {time} ({progress.done}/{progress.total})</span>
-                                    </div>
-                                ) : (
-                                    <div onClick={(e) => e.stopPropagation()}>
-                                        <Box
-                                            sx={{
-                                                display: "flex",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                flexWrap: "wrap",
-                                                gap: 2,
-                                                marginTop: "-5px",
-                                                pr: 3,
-                                                maxWidth: "100%",
-                                            }}
-                                        >
-                                            {isFinished && (
-                                                <Box sx={{ position: "relative", width: 56, height: 56 }}>
-                                                    <Rating
-                                                        name="done-star"
-                                                        value={1}
-                                                        max={1}
-                                                        readOnly
-                                                        sx={{ fontSize: 56, color: "#FFF44F" }}
-                                                    />
-                                                </Box>
-                                            )}
-                                            <FormControl
-                                                onClick={(e) => e.stopPropagation()}
-                                                sx={{ minWidth: 160 }}
-                                                size="small"
-                                            >
-                                                <Select
-                                                    value={type}
-                                                    onChange={(e) => {
-                                                        const newType = e.target.value as changeType;
-                                                        setType(newType);
-                                                    }}
-                                                    displayEmpty
-                                                    inputProps={{ "aria-label": "Select tense" }}
-                                                    sx={{
-                                                        backgroundColor: "white",
-                                                        borderRadius: 1,
-                                                        width: "100%",
-                                                    }}
-                                                >
-                                                    <MenuItem value=".">утвердительное</MenuItem>
-                                                    <MenuItem value="?">вопросительное</MenuItem>
-                                                    <MenuItem value="!">отрицательное</MenuItem>
-                                                    <MenuItem value=".?!">микс</MenuItem>
-                                                </Select>
-                                            </FormControl>
-
+                                        {questions.length > itemsPerPage && (
                                             <Button
+                                                variant="outlined"
+                                                disabled={page === 0}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    setToggelModal(2);
+                                                    LeftSlider();
                                                 }}
                                                 sx={{
-                                                    backgroundColor: "#ff0202",
-                                                    color: "black",
-                                                    textTransform: "none",
-                                                    height: "40px",
+                                                    fontSize: 40,
+                                                    border: "#FFF44F",
+                                                    color: "#FFF44F",
+                                                    minWidth: "40px",
                                                 }}
                                             >
-                                                очистить результаты
+                                                {`<`}
                                             </Button>
+                                        )}
+
+                                        <Box
+                                            sx={{
+                                                display: "grid",
+                                                gridTemplateColumns: "repeat(3, 1fr)",
+                                                gap: 1,
+                                                width: "70%",
+                                            }}
+                                        >
+                                            {visibleQuestions.map((m) => {
+                                                const isCurrent = currentQuestion?.id === m.id;
+                                                return (
+                                                    <Button
+                                                        key={m.id}
+                                                        variant={m.isDone ? "contained" : "outlined"}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            wordFoo(m.id);
+                                                        }}
+                                                        size="medium"
+                                                        sx={{
+                                                            backgroundColor: isCurrent
+                                                                ? "#1976d2"
+                                                                : m.isDone
+                                                                    ? "#FFF44F"
+                                                                    : "transparent",
+                                                            borderColor: "#FFF44F",
+                                                            color: isCurrent ? "white" : "black",
+                                                            textTransform: "none",
+                                                            paddingY: 2,
+                                                            fontSize: "1.1rem",
+                                                            "&:hover": {
+                                                                backgroundColor: isCurrent
+                                                                    ? "#1565c0"
+                                                                    : m.isDone
+                                                                        ? "#ffea00"
+                                                                        : "#555",
+                                                                color: "white",
+                                                            },
+                                                        }}
+                                                    >
+                                                        {m.word}
+                                                    </Button>
+                                                );
+                                            })}
                                         </Box>
 
-                                        <div style={{ margin: 3 }}>Выбери глагол или просто иди по порядку</div>
-
-                                        <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-                                            <Box
-                                                sx={{
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                    gap: 2,
-                                                    width: "100%",
+                                        {questions.length > itemsPerPage && (
+                                            <Button
+                                                variant="outlined"
+                                                disabled={startIndex + itemsPerPage >= questions.length}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    RightSlider();
                                                 }}
-                                                onClick={(e) => e.stopPropagation()}
+                                                sx={{
+                                                    fontSize: 40,
+                                                    border: "#FFF44F",
+                                                    color: "#FFF44F",
+                                                    minWidth: "40px",
+                                                }}
                                             >
-                                                {questions.length > itemsPerPage && (
-                                                    <Button
-                                                        variant="outlined"
-                                                        disabled={page === 0}
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            LeftSlider();
-                                                        }}
-                                                        sx={{
-                                                            fontSize: 40,
-                                                            border: "#FFF44F",
-                                                            color: "#FFF44F",
-                                                            minWidth: "40px",
-                                                        }}
-                                                    >
-                                                        {`<`}
-                                                    </Button>
-                                                )}
+                                                {`>`}
+                                            </Button>
+                                        )}
+                                    </Box>
+                                </Box>
+                            </div>
+                        )}
+                    </Typography>
 
-                                                <Box
-                                                    sx={{
-                                                        display: "grid",
-                                                        gridTemplateColumns: "repeat(3, 1fr)",
-                                                        gap: 1,
-                                                        width: "70%",
-                                                    }}
-                                                >
-                                                    {visibleQuestions.map((m) => {
-                                                        const isCurrent = currentQuestion?.id === m.id;
-                                                        return (
-                                                            <Button
-                                                                key={m.id}
-                                                                variant={m.isDone ? "contained" : "outlined"}
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    wordFoo(m.id);
-                                                                }}
-                                                                size="medium"
-                                                                sx={{
-                                                                    backgroundColor: isCurrent
-                                                                        ? "#1976d2"
-                                                                        : m.isDone
-                                                                            ? "#FFF44F"
-                                                                            : "transparent",
-                                                                    borderColor: "#FFF44F",
-                                                                    color: isCurrent ? "white" : "black",
-                                                                    textTransform: "none",
-                                                                    paddingY: 2,
-                                                                    fontSize: "1.1rem",
-                                                                    "&:hover": {
-                                                                        backgroundColor: isCurrent
-                                                                            ? "#1565c0"
-                                                                            : m.isDone
-                                                                                ? "#ffea00"
-                                                                                : "#555",
-                                                                        color: "white",
-                                                                    },
-                                                                }}
-                                                            >
-                                                                {m.word}
-                                                            </Button>
-                                                        );
-                                                    })}
-                                                </Box>
-
-                                                {questions.length > itemsPerPage && (
-                                                    <Button
-                                                        variant="outlined"
-                                                        disabled={startIndex + itemsPerPage >= questions.length}
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            RightSlider();
-                                                        }}
-                                                        sx={{
-                                                            fontSize: 40,
-                                                            border: "#FFF44F",
-                                                            color: "#FFF44F",
-                                                            minWidth: "40px",
-                                                        }}
-                                                    >
-                                                        {`>`}
-                                                    </Button>
-                                                )}
-                                            </Box>
-                                        </Box>
-                                    </div>
-                                )}
-                            </Typography>
-
-                            {/* ICON BUTTON ↑ тоже блокируем всплытие */}
-                            <IconButton
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    ButtonFoo(toggle);
-                                }}
-                                sx={{
-                                    color: "#FFF44F",
-                                    position: "absolute",
-                                    right: -8,
-                                    top: "12px",
-                                    transform: "translateY(-50%)",
-                                }}
-                                size="small"
-                            >
-                                <InfoOutlinedIcon />
-                            </IconButton>
+                    {/* ICON BUTTON ↑ тоже блокируем всплытие */}
+                    <IconButton
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            ButtonFoo(toggle);
+                        }}
+                        sx={{
+                            color: "#FFF44F",
+                            position: "absolute",
+                            right: -8,
+                            top: "12px",
+                            transform: "translateY(-50%)",
+                        }}
+                        size="small"
+                    >
+                        <InfoOutlinedIcon/>
+                    </IconButton>
                 </Box>
                 {toggle && currentQuestion && (
                     <span>
@@ -965,8 +1055,10 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                     variant="contained"
                                     sx={{
                                         flexGrow: 1,
-                                        maxWidth: "300px",
-                                        width: "100%",
+                                        // maxWidth: "300px",
+                                        width: "351px",
+                                        marginLeft: '-45px',
+                                        // width: "100%",
                                         mt: 2,
                                         backgroundColor: "#FFF44F",
                                         color: "black",
@@ -1001,8 +1093,8 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                 variant="contained"
                                 sx={{
                                     flexGrow: 1,
-                                    maxWidth: "300px",
-                                    width: "100%",
+                                    width: "351px",
+                                    marginLeft: '-45px',
                                     mt: 2,
                                     backgroundColor: "#FFF44F",
                                     color: "black",
