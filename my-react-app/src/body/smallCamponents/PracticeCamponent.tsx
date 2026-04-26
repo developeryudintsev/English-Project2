@@ -229,42 +229,48 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         }
     }, [questions, type, time]);
     const handleAnswer = async (answerText: string, id: string) => {
-
         if (answerStatus !== "none") return;
         setSelectedAnswer(answerText);
         setToggelModal(1);
 
         if (currentQuestion && fullData) {
             const correctAnswer = currentQuestion.answers.find((ans) => ans.isCorrect);
-            if (correctAnswer && correctAnswer.text === answerText) {
 
+            if (correctAnswer && correctAnswer.text === answerText) {
                 setAnswerStatus("correct");
-                setToggelVideoCat(2)
-                const updatedQuestion = {...currentQuestion, isDone: true};
-                setQuestions((prev) => prev.map((q) => (q.id === id ? updatedQuestion : q)));
+                setToggelVideoCat(2);
+
+                const updatedQuestion = { ...currentQuestion, isDone: true };
+
+                // Обновляем локальный стейт вопросов
+                const updatedQuestions = questions.map((q) => (q.id === id ? updatedQuestion : q));
+                setQuestions(updatedQuestions);
                 setCurrentQuestion(updatedQuestion);
+
                 const updatedData: DataType = {
                     ...fullData,
                     simple: {
                         ...fullData.simple,
                         [time]: {
                             ...fullData.simple[time],
-                            [type]: questions.map((q) => (q.id === id ? updatedQuestion : q)),
+                            [type]: updatedQuestions,
                         },
                     },
                 };
-                const exest = updatedData['simple'][time][type].find((q) => !q.isDone);
-                if (!exest) {
-                    setToggelVideoCat(3)
+
+                // ПРОВЕРКА: Если после этого ответа не осталось невыполненных вопросов
+                const hasMoreQuestions = updatedQuestions.some((q) => !q.isDone);
+
+                if (!hasMoreQuestions) {
+                    setToggelVideoCat(3); // Финальное видео
+                    setToggelModal(3);    // 👈 Открываем модалку победы только здесь
                 }
-                if (!exest) {
-                    setToggelVideoCat(3); // 👈 победа
-                }
+
                 setFullData(updatedData);
                 await updateQuestion(updatedData);
             } else {
                 setAnswerStatus("wrong");
-                setToggelVideoCat(1)
+                setToggelVideoCat(1);
             }
         }
     };
@@ -299,10 +305,10 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
         const next = questions.find((q) => !q.isDone);
 
         // Если все вопросы завершены
-        if (questions.every(q => q.isDone)) {
-            setToggelModal(3);
-            return; // Выходим из функции, чтобы не выполнять логику ниже
-        }
+        // if (questions.every(q => q.isDone)) {
+        //     setToggelModal(3);
+        //     return; // Выходим из функции, чтобы не выполнять логику ниже
+        // }
 
         if (next) {
             const nextIndex = questions.indexOf(next);
@@ -659,7 +665,7 @@ export const PracticeComponent: React.FC<PracticeComponentProps> = ({
                                     fontSize: toggelModal === 3 ? '1rem' : '1.3rem',
                                     lineHeight: 1.2,
                                 }}>
-                                    {`вы прошли ${time} ${typeSentence} предложения. Поздравляем! Вы получаете звезду⭐`}
+                                    {`Вы прошли ${time} ${typeSentence} предложения. Поздравляем! Вы получаете звезду⭐`}
                                 </Typography>
                             </Box>
 
