@@ -92,8 +92,6 @@ export const setRatingMap = async (map: RatingMap) => {
     const db = await initDB();
     await db.put(RATING_STORE, {id: RATING_ID, payload: map});
 };
-
-// --- ИСПРАВЛЕНИЕ: Функция updateRatingFor теперь ожидает длинный ключ ---
 export const updateRatingFor = async (tense: TenseKey, lessonKey: string) => {
     const map = await getRatingMap();
 
@@ -113,14 +111,10 @@ export const updateRatingFor = async (tense: TenseKey, lessonKey: string) => {
     const db = await initDB();
     await db.put(RATING_STORE, {id: RATING_ID, payload: updated});
 };
-// --- КОНЕЦ ИСПРАВЛЕНИЯ ---
-
-
 export const saveRatingMap = async (rating: RatingMap) => {
     const db = await initDB();
     await db.put(RATING_STORE, {id: ROOT_ID, payload: rating});
 };
-
 export const updateQuestion = async (updatedData: DataType) => {
     const db = await initDB();
     const rec: DBRecord = {id: ROOT_ID, payload: updatedData};
@@ -129,8 +123,6 @@ export const updateQuestion = async (updatedData: DataType) => {
     const newRating = calculateRating(updatedData);
     await saveRatingMap(newRating);
 };
-
-// --- ИСПРАВЛЕНИЕ: Функция calculateRating теперь использует длинные ключи ---
 const calculateRating = (data: DataType): RatingMap => {
     const result: RatingMap = {simple: {'Simple Past': {}, 'Simple Present': {}, 'Simple Future': {}}};
     (['Simple Present', 'Simple Past', 'Simple Future'] as const).forEach((tense) => {
@@ -144,9 +136,6 @@ const calculateRating = (data: DataType): RatingMap => {
     });
     return result;
 };
-// --- КОНЕЦ ИСПРАВЛЕНИЯ ---
-
-
 type DBRecord = {
     id: string;
     payload: DataType;
@@ -473,8 +462,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'say',
                     answers: [
-                        {text: "Do I say?", isCorrect: true},
                         {text: "Does I say?", isCorrect: false},
+                        {text: "Do I say?", isCorrect: true},
                         {text: "I say?", isCorrect: false},
                     ],
                 },
@@ -484,9 +473,10 @@ export const data: DataType = {
                     isDone: false,
                     word: 'go',
                     answers: [
-                        {text: "Do you go?", isCorrect: true},
                         {text: "Does you go?", isCorrect: false},
                         {text: "You goes?", isCorrect: false},
+                        {text: "Do you go?", isCorrect: true},
+
                     ],
                 },
                 {
@@ -517,8 +507,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'know',
                     answers: [
-                        {text: "Does it know?", isCorrect: true},
                         {text: "Do it know?", isCorrect: false},
+                        {text: "Does it know?", isCorrect: true},
                         {text: "It knows?", isCorrect: false},
                     ],
                 },
@@ -528,9 +518,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'take',
                     answers: [
+                        {text: "We takes?", isCorrect: false},
                         {text: "Do we take?", isCorrect: true},
                         {text: "Does we take?", isCorrect: false},
-                        {text: "We takes?", isCorrect: false},
                     ],
                 },
                 {
@@ -539,9 +529,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'see',
                     answers: [
-                        {text: "Do they see?", isCorrect: true},
                         {text: "Does they see?", isCorrect: false},
                         {text: "They sees?", isCorrect: false},
+                        {text: "Do they see?", isCorrect: true},
                     ],
                 },
                 {
@@ -550,9 +540,10 @@ export const data: DataType = {
                     isDone: false,
                     word: 'come',
                     answers: [
-                        {text: "Do I come?", isCorrect: true},
                         {text: "Does I come?", isCorrect: false},
                         {text: "I comes?", isCorrect: false},
+                        {text: "Do I come?", isCorrect: true},
+
                     ],
                 },
                 {
@@ -583,8 +574,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'want',
                     answers: [
-                        {text: "Does it want?", isCorrect: true},
                         {text: "Do it want?", isCorrect: false},
+                        {text: "Does it want?", isCorrect: true},
                         {text: "It wants?", isCorrect: false},
                     ],
                 },
@@ -594,8 +585,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'give',
                     answers: [
-                        {text: "Do we give?", isCorrect: true},
                         {text: "Does we give?", isCorrect: false},
+                        {text: "Do we give?", isCorrect: true},
                         {text: "We gives?", isCorrect: false},
                     ],
                 },
@@ -605,9 +596,10 @@ export const data: DataType = {
                     isDone: false,
                     word: 'use',
                     answers: [
-                        {text: "Do they use?", isCorrect: true},
                         {text: "Does they use?", isCorrect: false},
                         {text: "They uses?", isCorrect: false},
+                        {text: "Do they use?", isCorrect: true},
+
                     ],
                 },
                 {
@@ -627,9 +619,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'tell',
                     answers: [
-                        {text: "Do you tell?", isCorrect: true},
                         {text: "Does you tell?", isCorrect: false},
                         {text: "You tells?", isCorrect: false},
+                        {text: "Do you tell?", isCorrect: true},
                     ],
                 },
                 {
@@ -649,8 +641,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'work',
                     answers: [
-                        {text: "Does she work?", isCorrect: true},
                         {text: "Do she work?", isCorrect: false},
+                        {text: "Does she work?", isCorrect: true},
                         {text: "She works?", isCorrect: false},
                     ],
                 },
@@ -660,8 +652,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'feel',
                     answers: [
-                        {text: "Does it feel?", isCorrect: true},
                         {text: "Do it feel?", isCorrect: false},
+                        {text: "Does it feel?", isCorrect: true},
                         {text: "It feels?", isCorrect: false},
                     ],
                 },
@@ -671,8 +663,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'try',
                     answers: [
-                        {text: "Do we try?", isCorrect: true},
                         {text: "Does we try?", isCorrect: false},
+                        {text: "Do we try?", isCorrect: true},
                         {text: "We trys?", isCorrect: false},
                     ],
                 },
@@ -693,9 +685,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'call',
                     answers: [
-                        {text: "Do I call?", isCorrect: true},
                         {text: "Does I call?", isCorrect: false},
                         {text: "I calls?", isCorrect: false},
+                        {text: "Do I call?", isCorrect: true},
                     ],
                 },
                 {
@@ -704,9 +696,10 @@ export const data: DataType = {
                     isDone: false,
                     word: 'need',
                     answers: [
-                        {text: "Do you need?", isCorrect: true},
                         {text: "Does you need?", isCorrect: false},
                         {text: "You needs?", isCorrect: false},
+                        {text: "Do you need?", isCorrect: true},
+
                     ],
                 },
                 {
@@ -715,9 +708,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'keep',
                     answers: [
+                        {text: "He keeps?", isCorrect: false},
                         {text: "Does he keep?", isCorrect: true},
                         {text: "Do he keep?", isCorrect: false},
-                        {text: "He keeps?", isCorrect: false},
                     ],
                 },
                 {
@@ -726,9 +719,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'let',
                     answers: [
-                        {text: "Does she let?", isCorrect: true},
                         {text: "Do she let?", isCorrect: false},
                         {text: "She lets?", isCorrect: false},
+                        {text: "Does she let?", isCorrect: true},
                     ],
                 },
                 {
@@ -737,9 +730,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'begin',
                     answers: [
-                        {text: "Do we begin?", isCorrect: true},
                         {text: "Does we begin?", isCorrect: false},
                         {text: "We begins?", isCorrect: false},
+                        {text: "Do we begin?", isCorrect: true},
                     ],
                 },
                 {
@@ -772,9 +765,10 @@ export const data: DataType = {
                     isDone: false,
                     word: 'go',
                     answers: [
-                        {text: "You do not go", isCorrect: true},
                         {text: "You does not go", isCorrect: false},
                         {text: "You not go", isCorrect: false},
+                        {text: "You do not go", isCorrect: true},
+
                     ],
                 },
                 {
@@ -783,8 +777,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'get',
                     answers: [
-                        {text: "He does not get", isCorrect: true},
                         {text: "He do not get", isCorrect: false},
+                        {text: "He does not get", isCorrect: true},
+
                         {text: "He did not get", isCorrect: false},
                     ],
                 },
@@ -794,9 +789,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'make',
                     answers: [
+                        {text: "She did not make", isCorrect: false},
                         {text: "She does not make", isCorrect: true},
                         {text: "She do not make", isCorrect: false},
-                        {text: "She did not make", isCorrect: false},
                     ],
                 },
                 {
@@ -805,9 +800,10 @@ export const data: DataType = {
                     isDone: false,
                     word: 'know',
                     answers: [
-                        {text: "It does not know", isCorrect: true},
                         {text: "It not know", isCorrect: false},
                         {text: "It didn’t know", isCorrect: false},
+                        {text: "It does not know", isCorrect: true},
+
                     ],
                 },
                 {
@@ -816,9 +812,10 @@ export const data: DataType = {
                     isDone: false,
                     word: 'take',
                     answers: [
-                        {text: "We do not take", isCorrect: true},
                         {text: "We does not take", isCorrect: false},
                         {text: "We not take", isCorrect: false},
+                        {text: "We do not take", isCorrect: true},
+
                     ],
                 },
                 {
@@ -838,8 +835,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'came',
                     answers: [
-                        {text: "I do not come", isCorrect: true},
                         {text: "I did not came", isCorrect: false},
+                        {text: "I do not come", isCorrect: true},
                         {text: "I not come", isCorrect: false},
                     ],
                 },
@@ -849,8 +846,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'think',
                     answers: [
-                        {text: "You do not think", isCorrect: true},
                         {text: "You not think", isCorrect: false},
+                        {text: "You do not think", isCorrect: true},
                         {text: "You doesn’t think", isCorrect: false},
                     ],
                 },
@@ -893,8 +890,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'use',
                     answers: [
-                        {text: "They do not use", isCorrect: true},
                         {text: "They not use", isCorrect: false},
+                        {text: "They do not use", isCorrect: true},
                         {text: "They uses not", isCorrect: false},
                     ],
                 },
@@ -904,8 +901,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'find',
                     answers: [
-                        {text: "I do not find", isCorrect: true},
                         {text: "I not find", isCorrect: false},
+                        {text: "I do not find", isCorrect: true},
                         {text: "I did not find", isCorrect: false},
                     ],
                 },
@@ -915,9 +912,10 @@ export const data: DataType = {
                     isDone: false,
                     word: 'tell',
                     answers: [
-                        {text: "You do not tell", isCorrect: true},
                         {text: "You not tell", isCorrect: false},
                         {text: "You did not tell", isCorrect: false},
+                        {text: "You do not tell", isCorrect: true},
+
                     ],
                 },
                 {
@@ -937,8 +935,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'work',
                     answers: [
-                        {text: "She does not work", isCorrect: true},
                         {text: "She not work", isCorrect: false},
+                        {text: "She does not work", isCorrect: true},
                         {text: "She did not work", isCorrect: false},
                     ],
                 },
@@ -948,8 +946,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'fell',
                     answers: [
-                        {text: "It does not feel", isCorrect: true},
                         {text: "It not feel", isCorrect: false},
+                        {text: "It does not feel", isCorrect: true},
                         {text: "It didn’t feel", isCorrect: false},
                     ],
                 },
@@ -959,8 +957,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'try',
                     answers: [
-                        {text: "We do not try", isCorrect: true},
                         {text: "We not try", isCorrect: false},
+
+                        {text: "We do not try", isCorrect: true},
                         {text: "We did not try", isCorrect: false},
                     ],
                 },
@@ -992,9 +991,10 @@ export const data: DataType = {
                     isDone: false,
                     word: 'need',
                     answers: [
-                        {text: "You do not need", isCorrect: true},
                         {text: "You not need", isCorrect: false},
                         {text: "You needs not", isCorrect: false},
+                        {text: "You do not need", isCorrect: true},
+
                     ],
                 },
                 {
@@ -1014,9 +1014,10 @@ export const data: DataType = {
                     isDone: false,
                     word: 'let',
                     answers: [
-                        {text: "She does not let", isCorrect: true},
                         {text: "She not let", isCorrect: false},
                         {text: "She did not let", isCorrect: false},
+                        {text: "She does not let", isCorrect: true},
+
                     ],
                 },
                 {
@@ -1400,9 +1401,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'go',
                     answers: [
-                        { text: "You went", isCorrect: true },
                         { text: "You go", isCorrect: false },
                         { text: "Did you go", isCorrect: false },
+                        { text: "You went", isCorrect: true },
                     ],
                 },
                 {
@@ -1422,8 +1423,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'make',
                     answers: [
-                        { text: "She made", isCorrect: true },
                         { text: "She make", isCorrect: false },
+                        { text: "She made", isCorrect: true },
                         { text: "She maked", isCorrect: false },
                     ],
                 },
@@ -1433,8 +1434,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'know',
                     answers: [
-                        { text: "Did it know?", isCorrect: true },
                         { text: "Does it know?", isCorrect: false },
+                        { text: "Did it know?", isCorrect: true },
                         { text: "It knew?", isCorrect: false },
                     ],
                 },
@@ -1444,8 +1445,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'take',
                     answers: [
-                        { text: "We did not take", isCorrect: true },
                         { text: "We not took", isCorrect: false },
+                        { text: "We did not take", isCorrect: true },
                         { text: "We does not take", isCorrect: false },
                     ],
                 },
@@ -1455,8 +1456,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'see',
                     answers: [
-                        { text: "They saw", isCorrect: true },
                         { text: "They see", isCorrect: false },
+                        { text: "They saw", isCorrect: true },
                         { text: "They sees", isCorrect: false },
                     ],
                 },
@@ -1488,9 +1489,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'look',
                     answers: [
-                        { text: "She looked", isCorrect: true },
                         { text: "She looks", isCorrect: false },
                         { text: "She look", isCorrect: false },
+                        { text: "She looked", isCorrect: true },
                     ],
                 },
             ],
@@ -1553,9 +1554,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'go',
                     answers: [
-                        {text: "You will go", isCorrect: true},
                         {text: "You go", isCorrect: false},
                         {text: "Will you went", isCorrect: false},
+                        {text: "You will go", isCorrect: true},
                     ],
                 },
                 {
@@ -1564,8 +1565,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'get',
                     answers: [
-                        {text: "He will not get", isCorrect: true},
                         {text: "He does not get", isCorrect: false},
+                        {text: "He will not get", isCorrect: true},
                         {text: "He will not got", isCorrect: false},
                     ],
                 },
@@ -1575,8 +1576,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'make',
                     answers: [
-                        {text: "She will make", isCorrect: true},
                         {text: "She makes", isCorrect: false},
+                        {text: "She will make", isCorrect: true},
                         {text: "She will made", isCorrect: false},
                     ],
                 },
@@ -1586,9 +1587,10 @@ export const data: DataType = {
                     isDone: false,
                     word: 'know',
                     answers: [
-                        {text: "Will it know?", isCorrect: true},
                         {text: "Does it know?", isCorrect: false},
                         {text: "It will knows?", isCorrect: false},
+                        {text: "Will it know?", isCorrect: true},
+
                     ],
                 },
                 {
@@ -1597,9 +1599,9 @@ export const data: DataType = {
                     isDone: false,
                     word: 'take',
                     answers: [
-                        {text: "We will not take", isCorrect: true},
                         {text: "We not will take", isCorrect: false},
                         {text: "We do not take", isCorrect: false},
+                        {text: "We will not take", isCorrect: true},
                     ],
                 },
                 {
@@ -1608,9 +1610,10 @@ export const data: DataType = {
                     isDone: false,
                     word: 'see',
                     answers: [
-                        {text: "They will see", isCorrect: true},
                         {text: "They see", isCorrect: false},
                         {text: "They will saw", isCorrect: false},
+                        {text: "They will see", isCorrect: true},
+
                     ],
                 },
                 {
@@ -1619,8 +1622,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'come',
                     answers: [
-                        {text: "Will I come?", isCorrect: true},
                         {text: "Do I come?", isCorrect: false},
+                        {text: "Will I come?", isCorrect: true},
                         {text: "I will came?", isCorrect: false},
                     ],
                 },
@@ -1630,8 +1633,8 @@ export const data: DataType = {
                     isDone: false,
                     word: 'think',
                     answers: [
-                        {text: "You will not think", isCorrect: true},
                         {text: "You do not think", isCorrect: false},
+                        {text: "You will not think", isCorrect: true},
                         {text: "You will not thought", isCorrect: false},
                     ],
                 },
