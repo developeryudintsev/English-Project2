@@ -43,8 +43,6 @@ export const clipsReverse: Record<changeType, string[]> = {
         'https://vk.com/video_ext.php?oid=885405802&id=456239252&autoplay=0'
     ],
     'микс':[
-        'https://vk.com/video_ext.php?oid=885405802&id=456239270&autoplay=0',
-        'https://vk.com/video_ext.php?oid=885405802&id=456239272&autoplay=0',
         'https://vk.com/video_ext.php?oid=885405802&id=456239273&autoplay=0',
         'https://vk.com/video_ext.php?oid=885405802&id=456239274&autoplay=0',
         'https://vk.com/video_ext.php?oid=885405802&id=456239275&autoplay=0',
@@ -59,13 +57,21 @@ export const clipsReverse: Record<changeType, string[]> = {
         'https://vk.com/video_ext.php?oid=885405802&id=456239299&autoplay=0',
         'https://vk.com/video_ext.php?oid=885405802&id=456239301&autoplay=0',
         'https://vk.com/video_ext.php?oid=885405802&id=456239302&autoplay=0',
-        'https://vk.com/video_ext.php?oid=885405803&id=456239305&autoplay=0',
-        'https://vk.com/video_ext.php?oid=885405803&id=456239307&autoplay=0',
-        'https://vk.com/video_ext.php?oid=885405803&id=456239308&autoplay=0',
-        'https://vk.com/video_ext.php?oid=885405803&id=456239309&autoplay=0',
-        'https://vk.com/video_ext.php?oid=885405803&id=456239310&autoplay=0',
-        'https://vk.com/video_ext.php?oid=885405803&id=456239312&autoplay=0',
-        'https://vk.com/video_ext.php?oid=885405803&id=456239313&autoplay=0',
+        'https://vk.com/clip_ext.php?oid=885405802&id=456239303&autoplay=0',
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239304&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239305&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239307&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239308&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239309&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239310&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239312&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239313&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239316&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239317&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239318&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239319&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239320&autoplay=0",
+        "https://vk.com/clip_ext.php?oid=885405802&id=456239321&autoplay=0",
     ]
 };
 
